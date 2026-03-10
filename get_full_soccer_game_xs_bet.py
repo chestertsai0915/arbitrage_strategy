@@ -1,84 +1,137 @@
 import requests
 import time
 from datetime import datetime
+from typing import List, Dict
 
-def get_all_soccer_markets():
-    base_url = "https://api.sx.bet"
-    endpoint = f"{base_url}/markets/active"
-    headers = {"Accept": "application/json"}
-    
-    # 準備一個空的清單，用來收集每一頁的比賽
-    all_soccer_markets = []
-    
-    # 初始的下一頁鑰匙是空的
-    next_key = None
-    page_count = 1
-    
-    print(" 開始向 SX Bet 請求所有足球 (Soccer) 活躍主盤口...\n")
-    
-    while True:
-        # 基本參數
-        params = {
-            "sportIds": 5, 
-            "onlyMainLine": "true",
-            "pageSize": 50
-        }
-        
-        # 如果有 next_key (代表要抓第二頁以後)，就把 paginationKey 塞進參數裡
-        if next_key:
-            params["paginationKey"] = next_key
+# 引入核心架構
+from core_matching import StandardEvent, BasePlatformNormalizer, TeamNameMapper
+
+# ==========================================
+# 1. 數據收集器 (Data Fetcher) - SX Bet
+# ==========================================
+class SXBetFetcher:
+    """專門負責與 SX Bet API 溝通，獲取原始資料 (包含分頁邏輯)"""
+    def __init__(self):
+        self.base_url = "https://api.sx.bet"
+        self.endpoint = f"{self.base_url}/markets/active"
+        self.headers = {"Accept": "application/json"}
+
+    def fetch_soccer_games(self) -> List[Dict]:
+        print("\n[SX Bet] 開始獲取足球賽事資料 (支援自動分頁)...")
+        all_soccer_markets = []
+        next_key = None
+        page_count = 1
+
+        while True:
+            params = {
+                "sportIds": 5, 
+                "onlyMainLine": "true",
+                "pageSize": 50
+            }
             
-        try:
-            print(f" 正在抓取第 {page_count} 頁...")
-            response = requests.get(endpoint, headers=headers, params=params, timeout=10)
-            
-            if response.status_code == 200:
-                result = response.json()
-                data = result.get('data', {})
+            if next_key:
+                params["paginationKey"] = next_key
                 
-                # 拿出這一頁的比賽
-                current_page_markets = data.get('markets', [])
-                all_soccer_markets.extend(current_page_markets) # 把這一頁的比賽裝進總清單
+            try:
+                response = requests.get(self.endpoint, headers=self.headers, params=params, timeout=10)
                 
-                # 更新 next_key
-                next_key = data.get('nextKey')
-                
-                # 如果 next_key 是空的 (None 或空字串)，代表已經沒有下一頁了
-                if not next_key:
-                    print(" 已經抓取到最後一頁！")
+                if response.status_code == 200:
+                    result = response.json()
+                    data = result.get('data', {})
+                    
+                    # 抓出這一頁的比賽陣列
+                    current_page_markets = data.get('markets', [])
+                    all_soccer_markets.extend(current_page_markets)
+                    
+                    # 處理下一頁
+                    next_key = data.get('nextKey')
+                    if not next_key:
+                        break
+                    
+                    page_count += 1
+                    time.sleep(0.5) # 遵守速率限制
+                    
+                else:
+                    print(f"[SX Bet] 第 {page_count} 頁請求失敗，狀態碼: {response.status_code}")
                     break
-                
-                page_count += 1
-                
-                # 為了保護你的 IP 不被 API 伺服器因為「請求過快」而封鎖，稍微暫停一下
-                time.sleep(0.5) 
-                
-            else:
-                print(f" 第 {page_count} 頁請求失敗，狀態碼: {response.status_code}")
+                    
+            except Exception as e:
+                print(f"[SX Bet] 發生錯誤: {e}")
                 break
+
+        print(f"[SX Bet] 成功獲取 {len(all_soccer_markets)} 場原始賽事資料！")
+        return all_soccer_markets
+
+
+# ==========================================
+# 2. 平台轉換器 (Platform Normalizer) - SX Bet
+# ==========================================
+class SXBetNormalizer(BasePlatformNormalizer):
+    """負責將 SX Bet 的原始資料轉換為跨平台標準格式"""
+    def __init__(self, name_mapper: TeamNameMapper):
+        super().__init__(platform_name="SX_Bet", name_mapper=name_mapper)
+
+    def parse_events(self, raw_data_list: List[Dict]) -> List[StandardEvent]:
+        standard_events = []
+        for raw_event in raw_data_list:
+            try:
+                raw_home = raw_event.get("outcomeOneName", "")
+                raw_away = raw_event.get("outcomeTwoName", "")
                 
-        except Exception as e:
-            print(f" 發生錯誤: {e}")
-            break
+                if not raw_home or not raw_away:
+                    continue
+                
+                # 名稱標準化
+                std_home = self.name_mapper.get_standard_name(raw_home)
+                std_away = self.name_mapper.get_standard_name(raw_away)
+                
+                # 時間解析 (修正 Timestamp 錯誤)
+                time_str = raw_event.get("gameTime")
+                if time_str:
+                    try:
+                        # 嘗試當作 Timestamp (整數數字) 來解析
+                        start_time = datetime.fromtimestamp(int(time_str))
+                    except ValueError:
+                        # 萬一它又給了 ISO 字串，我們有備用方案
+                        start_time = datetime.fromisoformat(str(time_str).replace("Z", "+00:00"))
+                else:
+                    start_time = datetime.now()
 
-    # --- 迴圈結束，開始印出總結果 ---
-    if all_soccer_markets:
-        print("\n" + "="*70)
-        print(f" 大功告成！總共抓取到 {len(all_soccer_markets)} 場足球賽事。")
-        print("="*70)
-        
-        # 預覽前 5 筆跟最後 5 筆來確認資料
-        print(f"\n--- 前 3 場比賽預覽 ---")
-        for market in all_soccer_markets[:3]:
-            print(f"{market.get('teamOneName')} vs {market.get('teamTwoName')} | {market.get('leagueLabel')}")
-            
-        print(f"\n--- 最後 3 場比賽預覽 ---")
-        for market in all_soccer_markets[-3:]:
-            print(f"{market.get('teamOneName')} vs {market.get('teamTwoName')} | {market.get('leagueLabel')}")
-            
-        print("\n 你現在擁有完整的足球比賽清單了！")
-        # 挑選第一場比賽的 Hash 供下一步使用
-        print(f" 範例 Market Hash: {all_soccer_markets[0].get('marketHash')}")
+                event = StandardEvent(
+                    home_team=std_home,
+                    away_team=std_away,
+                    start_time=start_time,
+                    platform=self.platform_name,
+                    platform_event_id=str(raw_event.get("marketHash")),
+                    raw_data=raw_event 
+                )
+                standard_events.append(event)
+                
+            except Exception as e:
+                # 這裡印出錯誤，幫助我們繼續除錯
+                print(f"[SX Bet] 解析單筆賽事失敗: {e}")
+                continue
+                
+        return standard_events
 
+
+# ==========================================
+# 3. 執行測試區塊
+# ==========================================
 if __name__ == "__main__":
-    get_all_soccer_markets()
+    mapper = TeamNameMapper()
+    
+    sx_fetcher = SXBetFetcher()
+    sx_normalizer = SXBetNormalizer(mapper)
+    
+    raw_games = sx_fetcher.fetch_soccer_games()
+    
+    if raw_games:
+        std_games = sx_normalizer.parse_events(raw_games)
+        
+        print("\n--- SX Bet 標準化結果展示 (前 3 筆) ---")
+        for game in std_games[:3]:
+            print(f"[{game.platform}] {game.home_team} vs {game.away_team}")
+            print(f"原始 Market Hash: {game.platform_event_id}")
+            print(f"全局匹配ID: {game.match_id}")
+            print("-" * 30)
