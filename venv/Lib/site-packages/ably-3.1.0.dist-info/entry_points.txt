@@ -1,0 +1,2 @@
+[console_scripts]
+unasync = ably.scripts.unasync:run
