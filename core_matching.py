@@ -10,20 +10,18 @@ import re
 @dataclass
 class StandardEvent:
     """標準化的比賽資料結構"""
-    home_team: str          # 標準化後的主場球隊名稱 (已全小寫)
-    away_team: str          # 標準化後的客場球隊名稱 (已全小寫)
-    start_time: datetime    # 比賽開始時間
-    platform: str           # 來源平台
-    platform_event_id: str  # 該平台上的原始比賽 ID
-    raw_data: dict          # 保留原始資料以供除錯
+    home_team: str          
+    away_team: str          
+    start_time: datetime    
+    platform: str           
+    platform_event_id: str  
+    market_type: str        # 🎯 [新增] 玩法類型 (例如: "moneyline", "spread", "total")
+    market_name: str        # 🎯 [新增] 具體的盤口名稱 (例如: "Over 2.5", "Atletico Madrid -1")
+    raw_data: dict          
 
     @property
     def match_id(self) -> str:
-        """產生一個唯一的比賽 ID，用來將不同平台的同一場比賽分組"""
-        # 取出日期的部分，例如: "2024-05-12"
         date_str = self.start_time.strftime("%Y-%m-%d")
-        
-        # 組合 ID: home_away_date
         return f"{self.home_team}_{self.away_team}_{date_str}"
 
 
@@ -31,17 +29,23 @@ class StandardEvent:
 # 2. 名稱標準化引擎 (簡化版)
 # ==========================================
 class TeamNameMapper:
+    """處理球隊名稱標準化：一律轉小寫並清理字串"""
+    
     def get_standard_name(self, raw_name: str) -> str:
-        if not raw_name: return "unknown"
-        
-        # 1. 轉小寫並去除頭尾空白
+        if not raw_name:
+            return "unknown"
+            
+        # 1. 轉成全部小寫並去除頭尾空白
         clean = raw_name.lower().strip()
+
+        # 🎯 2. [新增] 移除讓分盤的數字尾巴 (例如 " -1", " +1.5", "-0.5")
+        # 正則表達式解釋：尋找字串「結尾($)」是否包含「+或-」，加上「數字(可能包含小數點)」
+        clean = re.sub(r'\s*[+\-]\d+(\.\d+)?\s*$', '', clean)
         
-        # 2. 移除常見的足球隊尾綴雜訊 (例如 fc, cf, afc)
-        # 用正則表達式把字尾獨立的 fc 拿掉 (例如 "portsmouth fc" -> "portsmouth")
+        # 3. 移除常見的足球隊尾綴雜訊 (例如 fc, cf, afc)
         clean = re.sub(r'\b(fc|cf|afc|united)\b', '', clean).strip()
         
-        # 3. 把連續空白或符號換成底線
+        # 4. 把字串中間的「多個連續空白」或「連字號 -」替換成單一底線
         clean = re.sub(r'[\s\-]+', '_', clean)
         
         return clean

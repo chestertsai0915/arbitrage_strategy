@@ -22,7 +22,7 @@ def test_all_parsers():
         sx_std = sx_normalizer.parse_events(sx_raw)
         print(f"\n[SX Bet] 成功解析 {len(sx_std)} 筆賽事。前 3 筆結果：")
         for g in sx_std[:3]:
-            print(f" 👉 主場: {g.home_team:<15} | 客場: {g.away_team:<15}")
+            print(f"  主場: {g.home_team:<15} | 客場: {g.away_team:<15}")
             print(f"    全局匹配ID: {g.match_id}")
             print("-" * 40)
 
@@ -41,8 +41,8 @@ def test_all_parsers():
         print(f"\n[Polymarket] 成功解析 {len(poly_std)} 筆賽事。前 3 筆結果：")
         for g in poly_std[:3]:
             # 為了方便對照，我們把原始標題也印出來
-            print(f" 📦 原始標題: {g.raw_data.get('title')}")
-            print(f" 👉 主場: {g.home_team:<15} | 客場: {g.away_team:<15}")
+            print(f"  原始標題: {g.raw_data.get('title')}")
+            print(f"  主場: {g.home_team:<15} | 客場: {g.away_team:<15}")
             print(f"    全局匹配ID: {g.match_id}")
             print("-" * 40)
 

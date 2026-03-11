@@ -74,7 +74,7 @@ class SXBetNormalizer(BasePlatformNormalizer):
         standard_events = []
         for raw_event in raw_data_list:
             try:
-                # 🎯 1. 找回真正的球隊名稱來建立 Match ID
+                #  1. 找回真正的球隊名稱來建立 Match ID
                 raw_home = raw_event.get("teamOneName", "")
                 raw_away = raw_event.get("teamTwoName", "")
                 
@@ -84,7 +84,7 @@ class SXBetNormalizer(BasePlatformNormalizer):
                 std_home = self.name_mapper.get_standard_name(raw_home)
                 std_away = self.name_mapper.get_standard_name(raw_away)
                 
-                # 🎯 2. 判斷這是什麼盤口 (SX Bet 通常有 type 欄位，或者我們從 outcome 判斷)
+                #  2. 判斷這是什麼盤口 (SX Bet 通常有 type 欄位，或者我們從 outcome 判斷)
                 outcome_1 = raw_event.get("outcomeOneName", "").lower()
                 
                 if "over" in outcome_1 or "under" in outcome_1:
@@ -141,9 +141,4 @@ if __name__ == "__main__":
     if raw_games:
         std_games = sx_normalizer.parse_events(raw_games)
         
-        print("\n--- SX Bet 標準化結果展示 (前 3 筆) ---")
-        for game in std_games[:3]:
-            print(f"[{game.platform}] {game.home_team} vs {game.away_team}")
-            print(f"原始 Market Hash: {game.platform_event_id}")
-            print(f"全局匹配ID: {game.match_id}")
-            print("-" * 30)
+ 
