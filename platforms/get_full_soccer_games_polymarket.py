@@ -102,7 +102,7 @@ class PolymarketNormalizer(BasePlatformNormalizer):
                 std_home = self.name_mapper.get_standard_name(raw_home)
                 std_away = self.name_mapper.get_standard_name(raw_away)
                 
-                # 🎯 專心使用 endDate
+                #  專心使用 endDate
                 time_str = raw_event.get("endDate")
                 if time_str:
                     try:
@@ -112,9 +112,7 @@ class PolymarketNormalizer(BasePlatformNormalizer):
                 else:
                     continue 
 
-                # 過濾舊比賽
-                if start_time < current_time:
-                    continue
+                
 
                 event = StandardEvent(
                     home_team=std_home,

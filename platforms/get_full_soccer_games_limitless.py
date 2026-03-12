@@ -88,9 +88,14 @@ class LimitlessNormalizer(BasePlatformNormalizer):
             try:
                 title = raw_event.get("title", "")
                 
-                # 🎯 1. 處理球隊名稱 (從標題中找出包含 vs 的段落)
+                # 將標題以逗號分隔，例如: ["⚽ EFL Champ", " Coventry vs Southampton", " Mar 14", " 2026"]
+                title_parts = title.split(",")
+                
+                # ==========================================
+                # 1. 處理球隊名稱 (從標題中找出包含 vs 的段落)
+                # ==========================================
                 match_segment = ""
-                for segment in title.split(","):
+                for segment in title_parts:
                     if "vs" in segment.lower():
                         match_segment = segment
                         break
@@ -99,11 +104,11 @@ class LimitlessNormalizer(BasePlatformNormalizer):
                     continue 
 
                 match_segment = match_segment.replace(" vs. ", " vs ")
-                parts = match_segment.split(" vs ")
+                teams = match_segment.split(" vs ")
 
-                if len(parts) == 2:
-                    raw_home = parts[0].strip()
-                    raw_away = parts[1].strip()
+                if len(teams) == 2:
+                    raw_home = teams[0].strip()
+                    raw_away = teams[1].strip()
                 else:
                     continue
                 
@@ -111,30 +116,40 @@ class LimitlessNormalizer(BasePlatformNormalizer):
                 std_home = self.name_mapper.get_standard_name(raw_home)
                 std_away = self.name_mapper.get_standard_name(raw_away)
                 
-                # 🎯 2. 使用專屬欄位 expirationDate 解析時間
-                # 例如: "Mar 13, 2026"
-                time_str = raw_event.get("expirationDate")
+                # ==========================================
+                # 2. 解析時間：優先從 title 擷取精準開踢日 (附雙重保險)
+                # ==========================================
+                start_time = None
                 
-                if time_str:
+                # 嘗試從標題最後兩段組合出日期 (例如 "Mar 14" 和 "2026" -> "Mar 14, 2026")
+                if len(title_parts) >= 3:
+                    date_str = f"{title_parts[-2].strip()}, {title_parts[-1].strip()}"
                     try:
-                        # 將 "Mar 13, 2026" 轉換為 datetime 物件
-                        start_time = datetime.strptime(time_str.strip(), "%b %d, %Y")
-                        # 標記為 UTC 時區
+                        # 將 "Mar 14, 2026" 轉換為 datetime 物件，並加上 UTC 時區
+                        start_time = datetime.strptime(date_str, "%b %d, %Y")
                         start_time = start_time.replace(tzinfo=timezone.utc)
                     except ValueError:
-                        # 如果偶爾遇到格式不符，改用 endDate 備用
-                        fallback = raw_event.get("endDate")
-                        if fallback:
-                            try:
-                                start_time = datetime.fromisoformat(str(fallback).replace("Z", "+00:00"))
-                            except:
-                                start_time = current_time
-                        else:
-                            start_time = current_time
-                else:
-                    start_time = current_time
+                        pass # 如果標題格式突然變了導致解析失敗，就安靜地放行，交給下方備援機制
 
-                # 🎯 3. 過濾掉舊比賽 (用日期比較)
+                #  備援機制：如果標題沒有日期，或是標題解析失敗，才退回使用 expirationDate / endDate
+                if start_time is None:
+                    time_str = raw_event.get("expirationDate")
+                    if time_str:
+                        try:
+                            start_time = datetime.strptime(time_str.strip(), "%b %d, %Y")
+                            start_time = start_time.replace(tzinfo=timezone.utc)
+                        except ValueError:
+                            fallback = raw_event.get("endDate")
+                            if fallback:
+                                try:
+                                    start_time = datetime.fromisoformat(str(fallback).replace("Z", "+00:00"))
+                                except ValueError:
+                                    start_time = current_time
+                            else:
+                                start_time = current_time
+                    else:
+                        start_time = current_time
+                #  3. 過濾掉舊比賽 (用日期比較)
                 if start_time.date() < current_time.date():
                     continue
 
