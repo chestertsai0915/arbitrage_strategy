@@ -159,7 +159,7 @@ class LimitlessNormalizer(BasePlatformNormalizer):
                     away_team=std_away,
                     start_time=start_time,
                     platform=self.platform_name,
-                    platform_event_id=str(raw_event.get("id")), 
+                    platform_event_id=str(raw_event.get("slug")), 
                     market_type="moneyline",        
                     market_name=raw_event.get("title"), 
                     raw_data=raw_event 

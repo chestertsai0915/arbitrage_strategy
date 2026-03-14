@@ -15,8 +15,8 @@ class StandardEvent:
     start_time: datetime    
     platform: str           
     platform_event_id: str  
-    market_type: str        # 🎯 [新增] 玩法類型 (例如: "moneyline", "spread", "total")
-    market_name: str        # 🎯 [新增] 具體的盤口名稱 (例如: "Over 2.5", "Atletico Madrid -1")
+    market_type: str        #  [新增] 玩法類型 (例如: "moneyline", "spread", "total")
+    market_name: str        #  [新增] 具體的盤口名稱 (例如: "Over 2.5", "Atletico Madrid -1")
     raw_data: dict          
 
     @property

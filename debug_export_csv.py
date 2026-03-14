@@ -1,7 +1,7 @@
 import csv
 from core_matching import TeamNameMapper
 
-# 🌟 從我們做好的模組包中匯入工具
+#  從我們做好的模組包中匯入工具
 from platforms import (
     SXBetFetcher, SXBetNormalizer,
     PolymarketFetcher, PolymarketNormalizer,
@@ -22,7 +22,7 @@ def export_all_platforms_to_csv():
     all_records = []
 
     print("="*60)
-    print(" 🚀 [Debug 模式] 開始抓取全網資料並匯出 CSV...")
+    print("  [Debug 模式] 開始抓取全網資料並匯出 CSV...")
     print("="*60)
 
     # 3. 迴圈跑遍所有平台，把資料抓下來並標準化
@@ -38,7 +38,7 @@ def export_all_platforms_to_csv():
         for event in std_events:
             record = {
                 "Platform": event.platform,
-                "Match_ID": event.match_id,           # 🎯 你最需要檢查的配對 ID
+                "Match_ID": event.match_id,         
                 "Market_Type": event.market_type,
                 "Market_Name": event.market_name,
                 "Home_Team": event.home_team,

@@ -117,9 +117,7 @@ class TotalSearch:
                     "platform_event_id": e.platform_event_id
                 })
 
-        with open("matches_db_debug.json", "w", encoding="utf-8") as f:
-            json.dump(debug_data, f, indent=4, ensure_ascii=False)
-        print(" 已經將分組後的完整資料儲存為 matches_db_debug.json！")
+        
 
         # 過濾出 2 個平台以上的交集
         overlapping_matches = []
@@ -157,17 +155,7 @@ class TotalSearch:
 
         # 輸出終端機報表
         if overlapping_matches:
-            print(f"\n 找到 {len(overlapping_matches)} 場有交集的比賽：\n")
-            for match_id, events in overlapping_matches:
-                sample_event = events[0]
-                plats_str = ", ".join(list(set(e.platform for e in events)))
-                
-                print(f" {sample_event.home_team} vs {sample_event.away_team} ({plats_str})")
-                print(f"   代表配對 ID: {match_id}")
-                for e in events:
-                    # 順便印出它原本的名字，讓你感受一下演算法的神奇！
-                    print(f"    - [{e.platform}] ({e.match_id}) | 盤口名: {e.market_name[:30]}")
-                print("-" * 50)
+            return overlapping_matches
 
 
 
