@@ -80,7 +80,7 @@ class TotalSearch:
 
       
         print("\n" + "="*60)
-        print("  第二階段：啟動 AI 模糊配對引擎 (相似度 >= 80 分)")
+        print("  第二階段：模糊配對 (相似度 >= 80 分)")
         print("="*60)
         
         matches_db = {} # 這裡不再用 defaultdict，改用普通的 dict

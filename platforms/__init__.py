@@ -1,14 +1,19 @@
-# 透過相對路徑 (.) 將各檔案中的類別匯入到這個資料夾層級
-from .get_full_soccer_games_sxbet import SXBetFetcher, SXBetNormalizer
-from .get_full_soccer_games_polymarket import PolymarketFetcher, PolymarketNormalizer
-from .get_full_soccer_games_limitless import LimitlessFetcher, LimitlessNormalizer
+from .sxbet import SXBetAPI
+from .polymarket import PolymarketAPI
+from .limitless import LimitlessAPI
 
-# (選項) 使用 __all__ 來明確定義：當別人 import platforms 時，只開放這些類別
+# 2. 🌟 建立平台註冊表 (Registry)
+# 未來如果有新平台 (例如 BinanceAPI)，只要 import 進來並把它塞進這個 List 即可
+AVAILABLE_PLATFORMS = [
+    SXBetAPI,
+    PolymarketAPI,
+    LimitlessAPI
+]
+
+# 3. 使用 __all__ 限制外部 import 的內容
 __all__ = [
-    "SXBetFetcher",
-    "SXBetNormalizer",
-    "PolymarketFetcher",
-    "PolymarketNormalizer",
-    "LimitlessFetcher",
-    "LimitlessNormalizer"
+    "AVAILABLE_PLATFORMS",
+    "SXBetAPI",
+    "PolymarketAPI",
+    "LimitlessAPI"
 ]
