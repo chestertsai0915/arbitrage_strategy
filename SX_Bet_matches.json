@@ -1,0 +1,884 @@
+[
+    {
+        "match_id": "brentford_wolverhampton_wanderers_2026-03-16",
+        "home_team": "brentford",
+        "away_team": "wolverhampton_wanderers",
+        "start_time": "2026-03-16 20:00:00 UTC",
+        "market_name": "Brentford vs Wolverhampton Wanderers",
+        "platform": "SX_Bet",
+        "platform_event_id": "brentford_wolverhampton_wanderers_2026-03-16",
+        "token_mapping": {
+            "brentford": "0x78d1a4a3c83db90baad42279f92a16c1d85bad7d4faecf68503c5628cf78a669",
+            "wolverhampton_wanderers": "0x0399a477eae211c19bbd874cd48c8aeeb19e6a13cc64fc7a768046ad5b7a174e",
+            "Draw": "0x575c604d067c62b14c1a2e26a3b9c72a1dd278afc23223037e0e8e2103616bda"
+        }
+    },
+    {
+        "match_id": "tottenham_hotspur_atletico_madrid_2026-03-18",
+        "home_team": "tottenham_hotspur",
+        "away_team": "atletico_madrid",
+        "start_time": "2026-03-18 20:00:00 UTC",
+        "market_name": "Tottenham Hotspur vs Atletico Madrid",
+        "platform": "SX_Bet",
+        "platform_event_id": "tottenham_hotspur_atletico_madrid_2026-03-18",
+        "token_mapping": {
+            "Draw": "0x829c7670fefac0069709bf07335b7488fc3a081aac3cefc9a2307b76986af310",
+            "atletico_madrid": "0xbb793d87b3b696a06793e0a37d6501927ab60b85823a12aaa08656e3c44df133",
+            "tottenham_hotspur": "0x89e4623025d6f27a9fa85760e6c6dfd04f47c1e9e7c5c7d669f713e5bbcd276e"
+        }
+    },
+    {
+        "match_id": "bayern_munich_atalanta_2026-03-18",
+        "home_team": "bayern_munich",
+        "away_team": "atalanta",
+        "start_time": "2026-03-18 20:00:00 UTC",
+        "market_name": "FC Bayern Munich vs Atalanta",
+        "platform": "SX_Bet",
+        "platform_event_id": "bayern_munich_atalanta_2026-03-18",
+        "token_mapping": {
+            "Draw": "0x94c86276f62ad589c7a509491a39d1e009b3c165d54bbe6af8e4046bfe878d07",
+            "bayern_munich": "0x2a015f49d56a037ed6f4e25ebfe15b81a86e99e32c7cd2ccc182cdedaf0d1720",
+            "atalanta": "0xe50e515102e40d5e7cc52e42700c9851b35b294b14acd8571b34565d554b6e55"
+        }
+    },
+    {
+        "match_id": "barcelona_newcastle_2026-03-18",
+        "home_team": "barcelona",
+        "away_team": "newcastle",
+        "start_time": "2026-03-18 17:45:00 UTC",
+        "market_name": "Barcelona FC vs Newcastle United",
+        "platform": "SX_Bet",
+        "platform_event_id": "barcelona_newcastle_2026-03-18",
+        "token_mapping": {
+            "barcelona": "0x19664a4665b2cc2f3e3c2e222115f26cefe579b5ee79dfcc68d509944a02b834",
+            "newcastle": "0xc2f83b42acb0f4c532500ec22c6fafe6da9e99209ee37cae3def98032aa92453",
+            "Draw": "0x43603afdbe6df8654f606d4aca9ccfa31136186918a432e9b79cefcebc96800d"
+        }
+    },
+    {
+        "match_id": "liverpool_galatasaray_sk_2026-03-18",
+        "home_team": "liverpool",
+        "away_team": "galatasaray_sk",
+        "start_time": "2026-03-18 20:00:00 UTC",
+        "market_name": "Liverpool vs Galatasaray SK",
+        "platform": "SX_Bet",
+        "platform_event_id": "liverpool_galatasaray_sk_2026-03-18",
+        "token_mapping": {
+            "Draw": "0x4a49545a4d8c97243b3a13ce603a14264284bdea59b83e2ad5bdd8c1271585fd",
+            "galatasaray_sk": "0x9c5dc09a02c7d2280db932cee4e594529923316e6b160233db894295449cde8d",
+            "liverpool": "0xa8cbfeeeaa1ba48443283420deb652c047d7b3c77857355ca31e80890b09fb9a"
+        }
+    },
+    {
+        "match_id": "arsenal_bayer_04_leverkusen_2026-03-17",
+        "home_team": "arsenal",
+        "away_team": "bayer_04_leverkusen",
+        "start_time": "2026-03-17 20:00:00 UTC",
+        "market_name": "Arsenal vs Bayer 04 Leverkusen",
+        "platform": "SX_Bet",
+        "platform_event_id": "arsenal_bayer_04_leverkusen_2026-03-17",
+        "token_mapping": {
+            "arsenal": "0xbfd41e2190fe68e99278f9ba259aa702985bbfb10e4ddfdceac72215991b8a82",
+            "Draw": "0xcff503a6fd4ffb23fe6e36db9f2a2f102be7f22ea49700ca1db6d3feff195a4b",
+            "bayer_04_leverkusen": "0x7d539e205050e746f9edfd9314d5be8b58c65457e4c104d06c5a7a5ac5bebfc6"
+        }
+    },
+    {
+        "match_id": "chelsea_paris_saint_germain_2026-03-17",
+        "home_team": "chelsea",
+        "away_team": "paris_saint_germain",
+        "start_time": "2026-03-17 20:00:00 UTC",
+        "market_name": "Chelsea vs Paris Saint Germain",
+        "platform": "SX_Bet",
+        "platform_event_id": "chelsea_paris_saint_germain_2026-03-17",
+        "token_mapping": {
+            "paris_saint_germain": "0xb179675f2f46d047187e01c3229b2e189316a067aaa3648f2a9e52007ff2131f",
+            "chelsea": "0xf06f07df6fc5c64c5300c991aac6672505f46bece7a70bc714e3e3bc8070ea28",
+            "Draw": "0xf1e3882c795d8318e89ed265c6e74ded07fcf3244e81e788c948737ecf0e05f2"
+        }
+    },
+    {
+        "match_id": "manchester_city_real_madrid_2026-03-17",
+        "home_team": "manchester_city",
+        "away_team": "real_madrid",
+        "start_time": "2026-03-17 20:00:00 UTC",
+        "market_name": "Manchester City vs Real Madrid",
+        "platform": "SX_Bet",
+        "platform_event_id": "manchester_city_real_madrid_2026-03-17",
+        "token_mapping": {
+            "Draw": "0x85bd5e908c1c9293f59d4802cc4bf0532907b19dc208376d76d8a49635d2061d",
+            "real_madrid": "0x6fb283b9021fd2c8a0a3bc63843dcf4b1c8cdca0da40a5f37275f1a2ca35f798",
+            "manchester_city": "0x947ed4a6a06f7008af4c1cea0173a2d4dd25ea71c8d54d0b11d47546258245bc"
+        }
+    },
+    {
+        "match_id": "sporting_clube_de_portugal_cp_bodo/glimt_2026-03-17",
+        "home_team": "sporting_clube_de_portugal_cp",
+        "away_team": "bodo/glimt",
+        "start_time": "2026-03-17 17:45:00 UTC",
+        "market_name": "Sporting Clube De Portugal CP vs Bodo/Glimt",
+        "platform": "SX_Bet",
+        "platform_event_id": "sporting_clube_de_portugal_cp_bodo/glimt_2026-03-17",
+        "token_mapping": {
+            "Draw": "0x6e7664cddaf7730d2fa057816fac42d2f86a638407bedb29ad50eee103863873",
+            "sporting_clube_de_portugal_cp": "0x4ef9d8a1321e9f15969529828b50a7ea030b0169e18cd08bc5dd0a687e9813e7",
+            "bodo/glimt": "0x5c60b97772b008b785ee48927b89bf9391072f17b0c93ad7d96994edd9f90218"
+        }
+    },
+    {
+        "match_id": "rayo_vallecano_levante_2026-03-16",
+        "home_team": "rayo_vallecano",
+        "away_team": "levante",
+        "start_time": "2026-03-16 20:00:00 UTC",
+        "market_name": "Rayo Vallecano vs Levante",
+        "platform": "SX_Bet",
+        "platform_event_id": "rayo_vallecano_levante_2026-03-16",
+        "token_mapping": {
+            "rayo_vallecano": "0x24f7b901475a83b42004ea3dc9abf896f8445ec0e8477e4fffe78562c4e4da67",
+            "levante": "0x7e5e339fdfc1694beba8a9a82d84f5b6a8a899042c5bb2acb7438de9b3f43962",
+            "Draw": "0xbbb750f91d27355576236855af900052c263a978447f63ac51e5310cc3e09369"
+        }
+    },
+    {
+        "match_id": "chapecoense_gremio_2026-03-16",
+        "home_team": "chapecoense",
+        "away_team": "gremio",
+        "start_time": "2026-03-16 23:00:00 UTC",
+        "market_name": "Chapecoense vs Gremio",
+        "platform": "SX_Bet",
+        "platform_event_id": "chapecoense_gremio_2026-03-16",
+        "token_mapping": {
+            "gremio": "0x5e84c3aa94943fe84415c77cc7ee61721b96230cb2845928cb8d0c0c442ea16d",
+            "chapecoense": "0xef713d1be38242c825a8c2a298df65918a9e7db4bbb1783ccd4a0eb02a4455de",
+            "Draw": "0x0c5b3cc071055b22054ea2c22800b8ea5f26a5a64772e127b81d818424891408"
+        }
+    },
+    {
+        "match_id": "unione_sportiva_cremonese_fiorentina_2026-03-16",
+        "home_team": "unione_sportiva_cremonese",
+        "away_team": "fiorentina",
+        "start_time": "2026-03-16 19:45:00 UTC",
+        "market_name": "Unione Sportiva Cremonese vs Fiorentina",
+        "platform": "SX_Bet",
+        "platform_event_id": "unione_sportiva_cremonese_fiorentina_2026-03-16",
+        "token_mapping": {
+            "Draw": "0x47293ff8d29a8116a01ae33a53f5e9e0040cfee01ac93ed0577b853ada4e1a0c",
+            "unione_sportiva_cremonese": "0x21d1992c3bce4ebdabc12e30543e3f4c0ba48b84709c3dbfd7122003621f7600",
+            "fiorentina": "0xc28649a9daebf33cfb275a3c20bbfa3d2556a0d7508be2b98af76e9e84c5c60c"
+        }
+    },
+    {
+        "match_id": "portsmouth_derby_county_2026-03-16",
+        "home_team": "portsmouth",
+        "away_team": "derby_county",
+        "start_time": "2026-03-16 20:00:00 UTC",
+        "market_name": "Portsmouth vs Derby County",
+        "platform": "SX_Bet",
+        "platform_event_id": "portsmouth_derby_county_2026-03-16",
+        "token_mapping": {
+            "Draw": "0xc8bc7bb79fdf307a0e77a6f3374dddfa19783d9a1b6312c4a3b6a04ccf51134b",
+            "portsmouth": "0xdcfe5f320177ccfa46610dcd7b2a4a5595d410a7defd835e702191f5a203ef25",
+            "derby_county": "0xeda3168f1b20142c92c07f519b3c76b94ab0cbf28e8c9b27238542771ab8ffd2"
+        }
+    },
+    {
+        "match_id": "bournemouth_manchester_2026-03-20",
+        "home_team": "bournemouth",
+        "away_team": "manchester",
+        "start_time": "2026-03-20 20:00:00 UTC",
+        "market_name": "AFC Bournemouth vs Manchester United",
+        "platform": "SX_Bet",
+        "platform_event_id": "bournemouth_manchester_2026-03-20",
+        "token_mapping": {
+            "Draw": "0xeb220bc3ff0afba696df656a91d37df8efe0fa888166cf7ccfb0b65bcf8eaa16",
+            "manchester": "0x20c81d4b1e28634a4ffe5079e900605b2a09598381a8d9166a85fd641f0a0c55",
+            "bournemouth": "0x9540ddc3fe66357263b6eed95f69f2313757077f787cfdbd4aa973d1529f9a8c"
+        }
+    },
+    {
+        "match_id": "watford_wrexham_2026-03-17",
+        "home_team": "watford",
+        "away_team": "wrexham",
+        "start_time": "2026-03-17 19:45:00 UTC",
+        "market_name": "Watford vs Wrexham",
+        "platform": "SX_Bet",
+        "platform_event_id": "watford_wrexham_2026-03-17",
+        "token_mapping": {
+            "wrexham": "0x7f1ac01479e519d3d29a617cc28a3db50c52e4156fa8bbc3562208cab76ea2b3",
+            "Draw": "0x51f47c8eea8fade3018d9289d921437e6cd7fc164cdb6482b36f494474ece9f2",
+            "watford": "0x6b4c167717861963898f44adc1da5d802bdf1af2b5ec8b47e291e0ea89b04237"
+        }
+    },
+    {
+        "match_id": "estrela_amadora_casa_pia_2026-03-20",
+        "home_team": "estrela_amadora",
+        "away_team": "casa_pia",
+        "start_time": "2026-03-20 20:15:00 UTC",
+        "market_name": "Estrela Amadora vs Casa Pia",
+        "platform": "SX_Bet",
+        "platform_event_id": "estrela_amadora_casa_pia_2026-03-20",
+        "token_mapping": {
+            "casa_pia": "0x0935dc71eb77beae19dee2f078f2637c415e7c6076f3688bd350182f3a28f3fe",
+            "Draw": "0x2d91da908b6fb09c3db25fb43264d6f185071542545938fcaaa5ee4747282b94",
+            "estrela_amadora": "0xa13c219223c3bb93a17f688f885aaf7f547512a25f378beac2443544cf752c45"
+        }
+    },
+    {
+        "match_id": "sl_benfica_vitoria_guimaraes_2026-03-21",
+        "home_team": "sl_benfica",
+        "away_team": "vitoria_guimaraes",
+        "start_time": "2026-03-21 18:00:00 UTC",
+        "market_name": "SL Benfica FC vs Vitoria Guimaraes",
+        "platform": "SX_Bet",
+        "platform_event_id": "sl_benfica_vitoria_guimaraes_2026-03-21",
+        "token_mapping": {
+            "vitoria_guimaraes": "0xff82eaac36934a5a6595173666e6df0cac3d533172cdbe639f4b825052a5f499",
+            "sl_benfica": "0x8050fbce3392f5fa34c82ee56a61d6b76b68d4597cffb8ee93ce2c8d86b023c5",
+            "Draw": "0x85582af115de07006186e3aa31b171ade8de8609907ffea972f3e62d53161731"
+        }
+    },
+    {
+        "match_id": "fulham_burnley_2026-03-21",
+        "home_team": "fulham",
+        "away_team": "burnley",
+        "start_time": "2026-03-21 15:00:00 UTC",
+        "market_name": "Fulham vs Burnley",
+        "platform": "SX_Bet",
+        "platform_event_id": "fulham_burnley_2026-03-21",
+        "token_mapping": {
+            "fulham": "0x7236fcc14af29b3455e1823a587663a20bd0bbf8620c5de1dba9fb260d5b85fc",
+            "Draw": "0x8416f1dd0667e7f3dfef5ce7a9f8425d790ed25574016a0812472dd830f522f6",
+            "burnley": "0x1afb339623dd97600d01d6b87aaf19e82ebf231a337dfbafdf0625c44ff16333"
+        }
+    },
+    {
+        "match_id": "everton_chelsea_2026-03-21",
+        "home_team": "everton",
+        "away_team": "chelsea",
+        "start_time": "2026-03-21 17:30:00 UTC",
+        "market_name": "Everton vs Chelsea",
+        "platform": "SX_Bet",
+        "platform_event_id": "everton_chelsea_2026-03-21",
+        "token_mapping": {
+            "everton": "0xd461af5a3cfe39abf2888776aab848a3662e8b5861e52e2d069f4ba4a494d7b4",
+            "chelsea": "0x840c03e61f6b76217e431236dc792b3057f367e8f965c66523cdc9edb1b0380c",
+            "Draw": "0xc93d2cb59fe7c6ec34b8e5990574127b9dbfc6144ac4f10cbd50da3651a6afdc"
+        }
+    },
+    {
+        "match_id": "brighton_and_hove_albion_liverpool_2026-03-21",
+        "home_team": "brighton_and_hove_albion",
+        "away_team": "liverpool",
+        "start_time": "2026-03-21 12:30:00 UTC",
+        "market_name": "Brighton and Hove Albion vs Liverpool",
+        "platform": "SX_Bet",
+        "platform_event_id": "brighton_and_hove_albion_liverpool_2026-03-21",
+        "token_mapping": {
+            "Draw": "0x3aa649c240a5b21662053ae29d10070f07e4d090cac197a51cd134a2604a7eb1",
+            "liverpool": "0x67a5bc5a406b0262aacd67a30797c89fad3853176028fcd1d38f9202bfe86313",
+            "brighton_and_hove_albion": "0x732e325514dcaf75bfe567f93eaf9f89975f71dad56351e0c8d9a318162d1887"
+        }
+    },
+    {
+        "match_id": "leeds_brentford_2026-03-21",
+        "home_team": "leeds",
+        "away_team": "brentford",
+        "start_time": "2026-03-21 20:00:00 UTC",
+        "market_name": "Leeds United vs Brentford",
+        "platform": "SX_Bet",
+        "platform_event_id": "leeds_brentford_2026-03-21",
+        "token_mapping": {
+            "leeds": "0x36a4a839dd5383f49d4b964419843bdbdf31d03de6c6e881f2b7835050ee70b0",
+            "brentford": "0x1ef1f742dc631fd831a1594446f0c797a13ae0a8869cbb8f7eb7d9341ab8558e",
+            "Draw": "0x458d82ca506006d64b6cd8bec8ea592d4ff3b13ebacb4bea5693bae67f91a016"
+        }
+    },
+    {
+        "match_id": "inter_miami_nashville_sc_2026-03-18",
+        "home_team": "inter_miami",
+        "away_team": "nashville_sc",
+        "start_time": "2026-03-18 23:00:00 UTC",
+        "market_name": "Inter Miami CF vs Nashville SC",
+        "platform": "SX_Bet",
+        "platform_event_id": "inter_miami_nashville_sc_2026-03-18",
+        "token_mapping": {
+            "nashville_sc": "0xf154242c161f89965f1a2aa514a1b811796c0c5b6464c40d9c1056ac3609e09c",
+            "inter_miami": "0xc9fd92ed6d2dae26ed43d85d08426d4e8b119108666ab66ec13c670ef2a4d869",
+            "Draw": "0xf10e28047f19508ab2b2dc23f1d675e18b00f2ff628ff630e2e989c9e7a2c816"
+        }
+    },
+    {
+        "match_id": "cruz_azul_monterrey_2026-03-18",
+        "home_team": "cruz_azul",
+        "away_team": "monterrey",
+        "start_time": "2026-03-18 03:00:00 UTC",
+        "market_name": "Cruz Azul vs Monterrey",
+        "platform": "SX_Bet",
+        "platform_event_id": "cruz_azul_monterrey_2026-03-18",
+        "token_mapping": {
+            "monterrey": "0x4116d86a7f4519d8e9498a45c3cc766bd02e98c088ebdbb2dbfeb6bed4aa80d1",
+            "cruz_azul": "0xc0d2de1a3aab4e07a54f7ba7832a11669fc5b2f4a60472009f80fbf09e326d8f",
+            "Draw": "0x1572fb0fb72099517333b99e3f774e2396a3d32bece75032fb229535846b2fdd"
+        }
+    },
+    {
+        "match_id": "athletico_paranaense_cruzeiro_esporte_clube_2026-03-18",
+        "home_team": "athletico_paranaense",
+        "away_team": "cruzeiro_esporte_clube",
+        "start_time": "2026-03-18 22:30:00 UTC",
+        "market_name": "Athletico Paranaense vs Cruzeiro Esporte Clube",
+        "platform": "SX_Bet",
+        "platform_event_id": "athletico_paranaense_cruzeiro_esporte_clube_2026-03-18",
+        "token_mapping": {
+            "cruzeiro_esporte_clube": "0x566fd73132a6245bdf66131fabcf3344f44f04a58e4f54b3a6720c3064161ae7",
+            "athletico_paranaense": "0x3d8557134498e8cccc13846fe6006ca8ff172a70ae1fa27cfb835a2e714a243d",
+            "Draw": "0xde17f935a9bef76d5c4f13645b56faaf1f5205bce6a21bf7cf92e2e9c6656f21"
+        }
+    },
+    {
+        "match_id": "atletico_mineiro_sao_paulo_2026-03-18",
+        "home_team": "atletico_mineiro",
+        "away_team": "sao_paulo",
+        "start_time": "2026-03-18 23:00:00 UTC",
+        "market_name": "Atletico Mineiro vs Sao Paulo FC",
+        "platform": "SX_Bet",
+        "platform_event_id": "atletico_mineiro_sao_paulo_2026-03-18",
+        "token_mapping": {
+            "sao_paulo": "0xccd5b960934b85a3df625c231fbecbdba7a8d06152fe3f4530fdd4acc8892e94",
+            "atletico_mineiro": "0x4458ee80eb5d9d4038e1da3f4f8c25504f4aa8feaeba617334a65e1fb4e6e719",
+            "Draw": "0xe9d1c5a5ee01a499ec4eff2bfedf68b8938ef6806767425dc8ec98bcc629e4e1"
+        }
+    },
+    {
+        "match_id": "palmeiras_sp_botafogo_rj_2026-03-18",
+        "home_team": "palmeiras_sp",
+        "away_team": "botafogo_rj",
+        "start_time": "2026-03-18 22:00:00 UTC",
+        "market_name": "Palmeiras SP vs Botafogo RJ",
+        "platform": "SX_Bet",
+        "platform_event_id": "palmeiras_sp_botafogo_rj_2026-03-18",
+        "token_mapping": {
+            "Draw": "0xf6bb30e415183ca6e383e9fd05ac0aa312cefc3c43e570a9446d3a856b55adae",
+            "botafogo_rj": "0x15771d845c4698a834b391d1a6f9d85037160b6c7a3d8aa96e111973bf82c7c1",
+            "palmeiras_sp": "0xce700fe84df45af689d7119ca108e0658eff8fd53e01033e14fcbb1a1597c1e7"
+        }
+    },
+    {
+        "match_id": "mirassol_coritiba_2026-03-18",
+        "home_team": "mirassol",
+        "away_team": "coritiba",
+        "start_time": "2026-03-18 23:00:00 UTC",
+        "market_name": "Mirassol vs Coritiba",
+        "platform": "SX_Bet",
+        "platform_event_id": "mirassol_coritiba_2026-03-18",
+        "token_mapping": {
+            "coritiba": "0x403fe4d870f276fc095b0d6f808a173391c31c3f0c7d246a992dd61a2139eb4d",
+            "Draw": "0x7e1240a7f34029e1a3f0ddc1b86a87afb4377e8ab9560647b6bb6f09fdc9c9e3",
+            "mirassol": "0xddad6e6927f7fb0d6dff9b96b5869743b9ad7d1feecdb283c9c90d5e6f1d5dd2"
+        }
+    },
+    {
+        "match_id": "ec_bahia_red_bull_bragantino_2026-03-18",
+        "home_team": "ec_bahia",
+        "away_team": "red_bull_bragantino",
+        "start_time": "2026-03-18 22:00:00 UTC",
+        "market_name": "EC Bahia vs Red Bull Bragantino",
+        "platform": "SX_Bet",
+        "platform_event_id": "ec_bahia_red_bull_bragantino_2026-03-18",
+        "token_mapping": {
+            "ec_bahia": "0x2586d9d5e86c510465ef7a94c736bd7b297b580a59368ce2858a17d396bbd2dc",
+            "red_bull_bragantino": "0xb96739b2ceedc242c89f4dd559aa82ea5b867aabbb8e103da4cf5a6a8bd936b9",
+            "Draw": "0x90931791324f7fd6b4eaed16b9b269ae4cd993ed3134e7a4fd253750feed3cff"
+        }
+    },
+    {
+        "match_id": "sporting_braga_ferencvaros_2026-03-18",
+        "home_team": "sporting_braga",
+        "away_team": "ferencvaros",
+        "start_time": "2026-03-18 15:30:00 UTC",
+        "market_name": "Sporting Braga vs Ferencvaros",
+        "platform": "SX_Bet",
+        "platform_event_id": "sporting_braga_ferencvaros_2026-03-18",
+        "token_mapping": {
+            "ferencvaros": "0xb920b8f373172612ff4c4201a60813106f836fd426496b83e99f0a1c7e9af240",
+            "sporting_braga": "0x8bfbcff42636b4623860608ac25e131b875d75042617b2fc9779a4a444041476",
+            "Draw": "0xd723cbdcb6fbd6990ab7aad3d0dd2ff7ecf9f8fef922a68fb35557eaf0bfdce6"
+        }
+    },
+    {
+        "match_id": "southampton_norwich_city_2026-03-18",
+        "home_team": "southampton",
+        "away_team": "norwich_city",
+        "start_time": "2026-03-18 19:45:00 UTC",
+        "market_name": "Southampton vs Norwich City",
+        "platform": "SX_Bet",
+        "platform_event_id": "southampton_norwich_city_2026-03-18",
+        "token_mapping": {
+            "norwich_city": "0x3afd77701e2728a2664cf8ac700a813584609bf83464ba84e48c02c3745b50f1",
+            "Draw": "0x206d04d2f15d7586d5589734cf32474ff6ee5e3af9b6d995241c4eb2b8ac34d5",
+            "southampton": "0x2e6a515689a5fbbb78f96ce33173046653339d14f65c4a5648b01ba263aed539"
+        }
+    },
+    {
+        "match_id": "tondela_avs_futebol_sad_2026-03-21",
+        "home_team": "tondela",
+        "away_team": "avs_futebol_sad",
+        "start_time": "2026-03-21 20:30:00 UTC",
+        "market_name": "Tondela vs AVS Futebol SAD",
+        "platform": "SX_Bet",
+        "platform_event_id": "tondela_avs_futebol_sad_2026-03-21",
+        "token_mapping": {
+            "Draw": "0x5b44f194a24acc1c8296ec7e20c273129a1143d75f226162394003aea5d35e72",
+            "avs_futebol_sad": "0x3789f667ae2cd48be65effcfc4906edec6a31287e8906d7d481f5c94049a53e2",
+            "tondela": "0x8f5c259b035ef176ebb1d7d6cda9f3f153ba71fd06cb6cbffe7339aefd58574f"
+        }
+    },
+    {
+        "match_id": "moreirense_arouca_2026-03-21",
+        "home_team": "moreirense",
+        "away_team": "arouca",
+        "start_time": "2026-03-21 15:30:00 UTC",
+        "market_name": "Moreirense vs Arouca",
+        "platform": "SX_Bet",
+        "platform_event_id": "moreirense_arouca_2026-03-21",
+        "token_mapping": {
+            "arouca": "0x761313d0ec7d2087db6943bdfadceeddbac28409cfeb3988f3eb75ac7a13421d",
+            "moreirense": "0x0cc6d00078413bf3519f93bcf6d40ccb36dc251d89f0d8d7110780c69f2e22ef",
+            "Draw": "0x64934688927abd9c000d8b258ca583e0256d1dd82750f77e672f6b27f30e579c"
+        }
+    },
+    {
+        "match_id": "famalicão_nacional_madeira_2026-03-21",
+        "home_team": "famalicão",
+        "away_team": "nacional_madeira",
+        "start_time": "2026-03-21 15:30:00 UTC",
+        "market_name": "Famalicão vs Nacional Madeira",
+        "platform": "SX_Bet",
+        "platform_event_id": "famalicão_nacional_madeira_2026-03-21",
+        "token_mapping": {
+            "nacional_madeira": "0xf1a57c42c78a2b40afe89c0ca440540d83aaae5107046bb55b073ac1ee7880bf",
+            "famalicão": "0x3068aee679f15910c9e1be3bc68d40eb99124cf8d5a06faca9a26c0854cd2908",
+            "Draw": "0x8c88f82f9c374e9534966740eca299d11f1acdb37f3cd2e9d541528671aa7742"
+        }
+    },
+    {
+        "match_id": "santa_clara_gil_vicente_2026-03-21",
+        "home_team": "santa_clara",
+        "away_team": "gil_vicente",
+        "start_time": "2026-03-21 18:00:00 UTC",
+        "market_name": "Santa Clara vs Gil Vicente",
+        "platform": "SX_Bet",
+        "platform_event_id": "santa_clara_gil_vicente_2026-03-21",
+        "token_mapping": {
+            "santa_clara": "0xc470b4fcd6cecb6af02561dc799603b2f4acad90c0ebff8d8d8e647117ed3904",
+            "Draw": "0xbc9cf8712d826a9584233ec5c91e635bacdd3f8573b32bc12ff0381934f38c80",
+            "gil_vicente": "0x1d4cae2ae5a4b1114f754499008a459aa0c9467724349fea2855d31330210565"
+        }
+    },
+    {
+        "match_id": "sporting_braga_porto_2026-03-22",
+        "home_team": "sporting_braga",
+        "away_team": "porto",
+        "start_time": "2026-03-22 20:30:00 UTC",
+        "market_name": "Sporting Braga vs FC Porto",
+        "platform": "SX_Bet",
+        "platform_event_id": "sporting_braga_porto_2026-03-22",
+        "token_mapping": {
+            "porto": "0x217c9748613d07b76bffa00357f2d79acab3a02e45f0b8ed0df5adc47e053d5c",
+            "Draw": "0x8da296d6088b7605a3d82aecb0b08e1780ff9d5ce6759fb7045468cbef594b0e",
+            "sporting_braga": "0x8e3b291536064678a0d1b49124b53135fc54b0f1fb4f60603bb3ab8ac2dd4a7f"
+        }
+    },
+    {
+        "match_id": "estoril_rio_ave_2026-03-22",
+        "home_team": "estoril",
+        "away_team": "rio_ave",
+        "start_time": "2026-03-22 15:30:00 UTC",
+        "market_name": "Estoril vs Rio Ave",
+        "platform": "SX_Bet",
+        "platform_event_id": "estoril_rio_ave_2026-03-22",
+        "token_mapping": {
+            "rio_ave": "0x1046c91a9e9d6ea56811d5122ad47108736637555d842cc126c2ec844e438f6e",
+            "estoril": "0x4b62583399621ac3d4d71879bd5a71dbc85e0a3d3a962e8972ea489764e32743",
+            "Draw": "0xcf3bf6d2386cbf5ead3d90af2e9d99feb300572326675d19c7d784cba132fc84"
+        }
+    },
+    {
+        "match_id": "alverca_sporting_clube_de_portugal_cp_2026-03-22",
+        "home_team": "alverca",
+        "away_team": "sporting_clube_de_portugal_cp",
+        "start_time": "2026-03-22 18:00:00 UTC",
+        "market_name": "Alverca vs Sporting Clube De Portugal CP",
+        "platform": "SX_Bet",
+        "platform_event_id": "alverca_sporting_clube_de_portugal_cp_2026-03-22",
+        "token_mapping": {
+            "Draw": "0xbf92fa0bee91849004d36be0a3a4db8bd6a7a57a9442ce81ff8d033461f217fe",
+            "sporting_clube_de_portugal_cp": "0xff762443aedf7569a8be9db2b77eccb90813e1be128beda29a380190cd3411ea",
+            "alverca": "0xdc0ed0b66635576e826e51f6569cfa034cb32e549c0ecdb6ddca94cf072cf38a"
+        }
+    },
+    {
+        "match_id": "shakhtar_donetsk_lech_poznan_2026-03-19",
+        "home_team": "shakhtar_donetsk",
+        "away_team": "lech_poznan",
+        "start_time": "2026-03-19 20:00:00 UTC",
+        "market_name": "FC Shakhtar Donetsk vs Lech Poznan",
+        "platform": "SX_Bet",
+        "platform_event_id": "shakhtar_donetsk_lech_poznan_2026-03-19",
+        "token_mapping": {
+            "Draw": "0x727a33d4ba44b7c74a76a990bae1eb5b638f2d3a8da54382c974402d3befc310",
+            "lech_poznan": "0x52acb1d72ac9ce0a367d69069e0179505a6f2beab233ec367480675684caa1e6",
+            "shakhtar_donetsk": "0xf4f52c4daffe3091e7002dd124c3d4d264addb0763306d90c7bf6f0f0a362783"
+        }
+    },
+    {
+        "match_id": "rakow_czestochowa_fiorentina_2026-03-19",
+        "home_team": "rakow_czestochowa",
+        "away_team": "fiorentina",
+        "start_time": "2026-03-19 17:45:00 UTC",
+        "market_name": "Rakow Czestochowa vs Fiorentina",
+        "platform": "SX_Bet",
+        "platform_event_id": "rakow_czestochowa_fiorentina_2026-03-19",
+        "token_mapping": {
+            "rakow_czestochowa": "0xd3a9fe81f0af4f40e34dd171d4c70ab091feaadcea51bc4bef9c7f896f277735",
+            "fiorentina": "0xa423277203630ee3b88399992a303c5f5d39fa72298d67ca063afab389c14ffc",
+            "Draw": "0x7bd2f45734e055e03ff0f26aae2eaa247e049c0b3f413707df44d0e7aebb99bf"
+        }
+    },
+    {
+        "match_id": "ac_sparta_praha_az_alkmaar_2026-03-19",
+        "home_team": "ac_sparta_praha",
+        "away_team": "az_alkmaar",
+        "start_time": "2026-03-19 20:00:00 UTC",
+        "market_name": "AC Sparta Praha vs AZ Alkmaar",
+        "platform": "SX_Bet",
+        "platform_event_id": "ac_sparta_praha_az_alkmaar_2026-03-19",
+        "token_mapping": {
+            "az_alkmaar": "0xeb5e08a2505a89fbb9e983bd5f3d6d38475138f3c067db27790020a65fd23b64",
+            "Draw": "0xca769c20097631e418af177dffefbba667fd885c82cee85b3c235f656e89ea9f",
+            "ac_sparta_praha": "0x0f340173d7c62793f857d2b03dcd6acc2bbb72080cdc8e43a4dfca1e5f7fc746"
+        }
+    },
+    {
+        "match_id": "fsv_mainz_sk_sigma_olomouc_2026-03-19",
+        "home_team": "fsv_mainz",
+        "away_team": "sk_sigma_olomouc",
+        "start_time": "2026-03-19 17:45:00 UTC",
+        "market_name": "FSV Mainz vs SK Sigma Olomouc",
+        "platform": "SX_Bet",
+        "platform_event_id": "fsv_mainz_sk_sigma_olomouc_2026-03-19",
+        "token_mapping": {
+            "sk_sigma_olomouc": "0xec17a5bd895727b1d6c56768074d3d57eee9a55caa98c3aa92ca17a57646bb62",
+            "fsv_mainz": "0xfb904aef63aa1bc3e2ec6993974c133ea6b256fe9e6fbac331f52554ea6b15e1",
+            "Draw": "0x83da3a98077bec10c2bf3a3d205a71cf3b9a47b47ac07495ee4e38f8481de8d6"
+        }
+    },
+    {
+        "match_id": "rayo_vallecano_samsunspor_2026-03-19",
+        "home_team": "rayo_vallecano",
+        "away_team": "samsunspor",
+        "start_time": "2026-03-19 20:00:00 UTC",
+        "market_name": "Rayo Vallecano vs Samsunspor",
+        "platform": "SX_Bet",
+        "platform_event_id": "rayo_vallecano_samsunspor_2026-03-19",
+        "token_mapping": {
+            "rayo_vallecano": "0x4074a5fc18c10a2facf6205a8552a3245755d23256b829d4560bc73117cb298b",
+            "samsunspor": "0x04ed27be886ed7d9f0ff7346145599e6fd91b1ab348f036e0366a5b098a480cc",
+            "Draw": "0x6caa695398c080ff055fa2270372c58c2b5b001dfe62e42759af340cf9a3c7a2"
+        }
+    },
+    {
+        "match_id": "aek_larnaka_crystal_palace_2026-03-19",
+        "home_team": "aek_larnaka",
+        "away_team": "crystal_palace",
+        "start_time": "2026-03-19 17:45:00 UTC",
+        "market_name": "AEK Larnaka vs Crystal Palace",
+        "platform": "SX_Bet",
+        "platform_event_id": "aek_larnaka_crystal_palace_2026-03-19",
+        "token_mapping": {
+            "aek_larnaka": "0xf446992d31b768035d7c1bf989ca0650d1db6e2ea33fcd0ba76dd9c3f89d12b2",
+            "Draw": "0xaa77c67548fc9e28b62abe43fb222637d5871442dc8d0472beaa3d664c44f5d9",
+            "crystal_palace": "0x4f8e4bd3f9c8b431fc86bcbc6b19399faf96ddca49c01d5e773533dce0d05b94"
+        }
+    },
+    {
+        "match_id": "deportivo_toluca_san_diego_2026-03-19",
+        "home_team": "deportivo_toluca",
+        "away_team": "san_diego",
+        "start_time": "2026-03-19 03:00:00 UTC",
+        "market_name": "Deportivo Toluca vs San Diego FC",
+        "platform": "SX_Bet",
+        "platform_event_id": "deportivo_toluca_san_diego_2026-03-19",
+        "token_mapping": {
+            "Draw": "0xdd693bd7a999836d026af43d1608df634aca3dcfe5daae40faae0bc63672290d",
+            "deportivo_toluca": "0x0e85a5c98a79f456b977cec0f10229098dd9a712432570cc5d06c0fafdd02909",
+            "san_diego": "0xfe317d7242d6d21f30ef5d7156492ef7ce6726a6fe601affc478da0eee049b03"
+        }
+    },
+    {
+        "match_id": "aek_athens_nk_cm_celje_2026-03-19",
+        "home_team": "aek_athens",
+        "away_team": "nk_cm_celje",
+        "start_time": "2026-03-19 17:45:00 UTC",
+        "market_name": "AEK Athens vs NK CM Celje",
+        "platform": "SX_Bet",
+        "platform_event_id": "aek_athens_nk_cm_celje_2026-03-19",
+        "token_mapping": {
+            "aek_athens": "0x34dc0ec88c4e0f1b1a2a1516c4b0cadd618259fb03b923753c47688ffe1e80c9",
+            "nk_cm_celje": "0x027f56bbb138cedd7c13352800fe834618e25fa271da12dc61720e3b6ce6c34a",
+            "Draw": "0x8ff3f9880cd41880e3b9f600e28d03ae056440acffb2aaae8d946cedc5bf662a"
+        }
+    },
+    {
+        "match_id": "strasbourg_hnk_rijeka_2026-03-19",
+        "home_team": "strasbourg",
+        "away_team": "hnk_rijeka",
+        "start_time": "2026-03-19 20:00:00 UTC",
+        "market_name": "Strasbourg vs HNK Rijeka",
+        "platform": "SX_Bet",
+        "platform_event_id": "strasbourg_hnk_rijeka_2026-03-19",
+        "token_mapping": {
+            "strasbourg": "0x6ad44d66592f7c0ac4c3633c127fbc157720e75704f6f9c6816c15e736f25b87",
+            "hnk_rijeka": "0x51391f0d9c4b093d10f03e940ff72fa148c9aebea2f8430c3c34e44269b12fdc",
+            "Draw": "0xa81c085618930544493552d4d73aa174d16020812b11ba00e5c2963569da2e4d"
+        }
+    },
+    {
+        "match_id": "club_america_philadelphia_union_2026-03-19",
+        "home_team": "club_america",
+        "away_team": "philadelphia_union",
+        "start_time": "2026-03-19 01:00:00 UTC",
+        "market_name": "Club America vs Philadelphia Union FC",
+        "platform": "SX_Bet",
+        "platform_event_id": "club_america_philadelphia_union_2026-03-19",
+        "token_mapping": {
+            "club_america": "0x390a34dfe87d6dfa9c29d45309931f9a35714a167cbaea47eb59797d145d649a",
+            "philadelphia_union": "0x18c392e4d8a445e7813db111cde06619eafad52b639cbf3f13ac881a27989464",
+            "Draw": "0xa045b2e5059a5195ae28b0e03c29b8e4097e2f2c7e533d99f47a0104026e540f"
+        }
+    },
+    {
+        "match_id": "seattle_sounders_vancouver_whitecaps_2026-03-19",
+        "home_team": "seattle_sounders",
+        "away_team": "vancouver_whitecaps",
+        "start_time": "2026-03-19 03:00:00 UTC",
+        "market_name": "Seattle Sounders vs Vancouver Whitecaps",
+        "platform": "SX_Bet",
+        "platform_event_id": "seattle_sounders_vancouver_whitecaps_2026-03-19",
+        "token_mapping": {
+            "seattle_sounders": "0x65e96c20144f0033ab141e08c4d4d89b8c2d8bb1d8c48164974d69bcd4490297",
+            "vancouver_whitecaps": "0xb28dbeb3140a7e58304185560b923ae0d876e1dbcb2a51861b80182d2c95715c",
+            "Draw": "0xfef2e4c902347ebc31f4cb6128e1390bf4e7827557e0912d9908ca9e72718b63"
+        }
+    },
+    {
+        "match_id": "cr_vasco_da_gama_fluminense_2026-03-19",
+        "home_team": "cr_vasco_da_gama",
+        "away_team": "fluminense",
+        "start_time": "2026-03-19 00:30:00 UTC",
+        "market_name": "CR Vasco da Gama vs Fluminense FC",
+        "platform": "SX_Bet",
+        "platform_event_id": "cr_vasco_da_gama_fluminense_2026-03-19",
+        "token_mapping": {
+            "fluminense": "0x0a956ab88716e023fabac01e51f92515ada909ea62a114f4033d753165a5a967",
+            "cr_vasco_da_gama": "0x63bbb2c14c8f523bfc446cdfac6495c0b4834d458e14134b8879076e9e3a3581",
+            "Draw": "0x248014d604bce6618e62505b9bdd70394aad7c13ae1feab6ef11325df72d2033"
+        }
+    },
+    {
+        "match_id": "santos_sp_sc_internacional_2026-03-19",
+        "home_team": "santos_sp",
+        "away_team": "sc_internacional",
+        "start_time": "2026-03-19 00:30:00 UTC",
+        "market_name": "Santos FC SP vs SC Internacional",
+        "platform": "SX_Bet",
+        "platform_event_id": "santos_sp_sc_internacional_2026-03-19",
+        "token_mapping": {
+            "Draw": "0x53d39bd1f20ddf73222fb3432255f862813ea0b779c160f45a97abbd520ff95d",
+            "sc_internacional": "0x5ccd636f8bdab8456a57bccfe7634611e1a05c076746c49062f31bad137b50f9",
+            "santos_sp": "0x6aa526bf03a1b54e97c2c7223d40d6cbb27940aa69db16876502e7152985740a"
+        }
+    },
+    {
+        "match_id": "newcastle_sunderland_2026-03-22",
+        "home_team": "newcastle",
+        "away_team": "sunderland",
+        "start_time": "2026-03-22 12:00:00 UTC",
+        "market_name": "Newcastle United vs Sunderland",
+        "platform": "SX_Bet",
+        "platform_event_id": "newcastle_sunderland_2026-03-22",
+        "token_mapping": {
+            "newcastle": "0x396f61569756f2f64442225870bdb468743ec5181c8e5e45c23aceb146d6956b",
+            "sunderland": "0xcc6f8c638bb06076a35c6c0037f40e402f74758c9c9bad2482db6b292adcddeb",
+            "Draw": "0x4b2dddc962cb71e2cc75077b04587d771489df3163709479356d4c1b7c9c09c7"
+        }
+    },
+    {
+        "match_id": "gremio_esporte_clube_vitoria_2026-03-19",
+        "home_team": "gremio",
+        "away_team": "esporte_clube_vitoria",
+        "start_time": "2026-03-19 22:00:00 UTC",
+        "market_name": "Gremio vs Esporte Clube Vitoria",
+        "platform": "SX_Bet",
+        "platform_event_id": "gremio_esporte_clube_vitoria_2026-03-19",
+        "token_mapping": {
+            "Draw": "0x83eaea513931af65e5d287487b7001f0b5ce55a1c5d8d6e84a10458c2ddc9217",
+            "esporte_clube_vitoria": "0x2c1118cb69c77e1d8ba8f62ea391462370854fecea8fdaa161daeb058babba8b",
+            "gremio": "0x4a3f3deb647ae5cf8e4389ffe97c8bb3a96986ba107dd5fe54b34349f918bf2f"
+        }
+    },
+    {
+        "match_id": "tottenham_hotspur_nottingham_forest_2026-03-22",
+        "home_team": "tottenham_hotspur",
+        "away_team": "nottingham_forest",
+        "start_time": "2026-03-22 14:15:00 UTC",
+        "market_name": "Tottenham Hotspur vs Nottingham Forest",
+        "platform": "SX_Bet",
+        "platform_event_id": "tottenham_hotspur_nottingham_forest_2026-03-22",
+        "token_mapping": {
+            "Draw": "0xd3350c269595a5ead7f2c9e907a4078fb74f997b6e458326fef94b1285f292d3",
+            "tottenham_hotspur": "0x473c6bd3048bd728748761e156295541a2f3a147bba048ca22d07eabb387b7d7",
+            "nottingham_forest": "0x0bef2af52541314cd17b328ab1166425fa94c1d851f15592050c262ef85af827"
+        }
+    },
+    {
+        "match_id": "aston_villa_west_ham_2026-03-22",
+        "home_team": "aston_villa",
+        "away_team": "west_ham",
+        "start_time": "2026-03-22 14:15:00 UTC",
+        "market_name": "Aston Villa vs West Ham United",
+        "platform": "SX_Bet",
+        "platform_event_id": "aston_villa_west_ham_2026-03-22",
+        "token_mapping": {
+            "aston_villa": "0x1d58d5049f4a94f2528304466908ca23474af4eb520a0daeb1e604ce91dbdb68",
+            "west_ham": "0x5fd530360a813c744956220567aebbf1e0e36257c57800a2cafd56cb5ddc4e32",
+            "Draw": "0xb9699f5acf291bbf240db3dd16dc68faa0ea289236a21af5e4bf23562a0f8595"
+        }
+    },
+    {
+        "match_id": "cr_flamengo_club_do_remo_2026-03-19",
+        "home_team": "cr_flamengo",
+        "away_team": "club_do_remo",
+        "start_time": "2026-03-19 23:00:00 UTC",
+        "market_name": "CR Flamengo vs Club Do Remo",
+        "platform": "SX_Bet",
+        "platform_event_id": "cr_flamengo_club_do_remo_2026-03-19",
+        "token_mapping": {
+            "Draw": "0xb67d4138f033a5a7fd6fb19673fc973775b37fc8045261a93c4b521d24683dd5",
+            "club_do_remo": "0x3f949358d4d5ef48c2c6a65c484b835d48d5e2ff4a3f69f37341293ea235addd",
+            "cr_flamengo": "0xfa5ca9c8f3e4e414de26cbbff088b915b15adc0b015e0d81b9802f98750306da"
+        }
+    },
+    {
+        "match_id": "sport_club_freiburg_krc_genk_2026-03-19",
+        "home_team": "sport_club_freiburg",
+        "away_team": "krc_genk",
+        "start_time": "2026-03-19 17:45:00 UTC",
+        "market_name": "Sport-Club Freiburg vs KRC Genk",
+        "platform": "SX_Bet",
+        "platform_event_id": "sport_club_freiburg_krc_genk_2026-03-19",
+        "token_mapping": {
+            "Draw": "0x55605555b955b9578301efb74a91b4d0b8242ad50b1982a7d2c988320302b703",
+            "sport_club_freiburg": "0xe74c6fe3afd1610e4df454bfb3527d20968c52e2c4e8ad571bd812db518ad67f",
+            "krc_genk": "0xeec00c0acb45654c96657d4439f52afb1df8ed754ce7256845cf0db1f7ef34d9"
+        }
+    },
+    {
+        "match_id": "as_roma_bologna_2026-03-19",
+        "home_team": "as_roma",
+        "away_team": "bologna",
+        "start_time": "2026-03-19 20:00:00 UTC",
+        "market_name": "AS Roma vs Bologna",
+        "platform": "SX_Bet",
+        "platform_event_id": "as_roma_bologna_2026-03-19",
+        "token_mapping": {
+            "as_roma": "0x910f2c1ce7fef68c406b2cc4524259e269df2fe05166697a5328c372e7aa6159",
+            "Draw": "0x6d51b9f2a0611343ca1c1455c33bf854b52be1e73fdc3a1d50cce9b515596638",
+            "bologna": "0x4dd0807e68be64dbf74b784e9392af985193708333e1eda58587990e0308efa3"
+        }
+    },
+    {
+        "match_id": "aston_villa_lille_2026-03-19",
+        "home_team": "aston_villa",
+        "away_team": "lille",
+        "start_time": "2026-03-19 20:00:00 UTC",
+        "market_name": "Aston Villa vs Lille",
+        "platform": "SX_Bet",
+        "platform_event_id": "aston_villa_lille_2026-03-19",
+        "token_mapping": {
+            "aston_villa": "0x5e0d4359ffece3bba094c05694f97af3d7f5c2631cdd606d07598fbe9c6763e1",
+            "lille": "0xf25ca6525430a209e4e8abbd57f57c3417b9787dfc3697da5c02b686e9dfb87b",
+            "Draw": "0xd9654591cd6c431f91d2e9291dedda42eab476df32199e8f19d121ce3fe8a230"
+        }
+    },
+    {
+        "match_id": "lyon_celta_de_vigo_2026-03-19",
+        "home_team": "lyon",
+        "away_team": "celta_de_vigo",
+        "start_time": "2026-03-19 17:45:00 UTC",
+        "market_name": "Lyon vs Celta de Vigo",
+        "platform": "SX_Bet",
+        "platform_event_id": "lyon_celta_de_vigo_2026-03-19",
+        "token_mapping": {
+            "lyon": "0x6cf44ee07ec8315aaab25db5885520f3ef4280783e6b6dab371ba2150194883a",
+            "Draw": "0xe2cb4392db305f0fa647b1ec9f75b3af48a5e9e483003a0359a3388ddf348a10",
+            "celta_de_vigo": "0x56fa2220da9afd8219e0dfe724dd437042f94221ad7a28eab5600c6d80178194"
+        }
+    },
+    {
+        "match_id": "midtjylland_nottingham_forest_2026-03-19",
+        "home_team": "midtjylland",
+        "away_team": "nottingham_forest",
+        "start_time": "2026-03-19 17:45:00 UTC",
+        "market_name": "FC Midtjylland vs Nottingham Forest",
+        "platform": "SX_Bet",
+        "platform_event_id": "midtjylland_nottingham_forest_2026-03-19",
+        "token_mapping": {
+            "nottingham_forest": "0xb3a369610386ffd44a168b9e90d336b68cbba1c70fac7c40a8c8607182a0bebf",
+            "midtjylland": "0x1d2944bd6d6b219820178a77dc3abccf15234e0f9c95cf5f50ed37d97b95d156",
+            "Draw": "0x780a02e14273c4a1954031bc029239b174a23fe7e7b75a0dd1adee755dcc30f6"
+        }
+    },
+    {
+        "match_id": "porto_vfb_stuttgart_2026-03-19",
+        "home_team": "porto",
+        "away_team": "vfb_stuttgart",
+        "start_time": "2026-03-19 20:00:00 UTC",
+        "market_name": "FC Porto vs VfB Stuttgart",
+        "platform": "SX_Bet",
+        "platform_event_id": "porto_vfb_stuttgart_2026-03-19",
+        "token_mapping": {
+            "porto": "0x06a24c9efef61e75264a08964f791a1ef034d33b4b21fa4b2cbaf39e6500a4e9",
+            "Draw": "0x434e3291886dbf055d826638367152f033fd636466242930e7dc1c546dab6b67",
+            "vfb_stuttgart": "0xbab7559ce3bba647aa42c7a762972f0858292cfc2ef7f43ad2d9eab2db48e126"
+        }
+    },
+    {
+        "match_id": "real_betis_panathinaikos_2026-03-19",
+        "home_team": "real_betis",
+        "away_team": "panathinaikos",
+        "start_time": "2026-03-19 20:00:00 UTC",
+        "market_name": "Real Betis vs Panathinaikos",
+        "platform": "SX_Bet",
+        "platform_event_id": "real_betis_panathinaikos_2026-03-19",
+        "token_mapping": {
+            "Draw": "0xf732b51c873b200cac23a9f3f5822cbdf8dc80e77c728c36d778b62e4add8508",
+            "real_betis": "0x3357247635e1749d17ed4d1f3347cdc555160e30c6ba3936a310a25e4ec79c1f",
+            "panathinaikos": "0xb45995a0997a0c13c55e4509397792a7cd7e79c0a171ef567c83341b27a5c7a6"
+        }
+    },
+    {
+        "match_id": "alajuelense_los_angeles_2026-03-18",
+        "home_team": "alajuelense",
+        "away_team": "los_angeles",
+        "start_time": "2026-03-18 01:00:00 UTC",
+        "market_name": "Alajuelense vs Los Angeles FC",
+        "platform": "SX_Bet",
+        "platform_event_id": "alajuelense_los_angeles_2026-03-18",
+        "token_mapping": {
+            "alajuelense": "0xf4fdbcedf7781533f0273bce83efb71b1211f608f42165f918c5a8d283d97663",
+            "los_angeles": "0xae54b640c3f0f81a9f38dc4d505b1f93c089347acd950a8a9b2ff1f9420ac0f9",
+            "Draw": "0x11f0b30efed5d51b860f293bdbf94686d5241a3b168d45f87d5b0af8c071de24"
+        }
+    }
+]

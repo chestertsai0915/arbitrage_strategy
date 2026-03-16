@@ -18,8 +18,8 @@ def main():
     
     mapper = TeamNameMapper()
     
-    # 初始化配對引擎：門檻 80 分，至少需要 2 個平台重疊
-    match_engine = MatchEngine(threshold=80.0, min_platforms=2)
+    # 初始化配對引擎：門檻 70 分，至少需要 2 個平台重疊
+    match_engine = MatchEngine(threshold=70.0, min_platforms=2)
     
     # 註冊我們要掃描的平台
     mapper = TeamNameMapper()
@@ -101,7 +101,7 @@ def main():
         # 這裡只是為了看結果暫停一下，正式上線時會移除
         time.sleep(0.1)
 
-    print("\n🎉 第一階段：跨平台賽事捕捉與配對系統，順利執行完畢！")
+    print("\n 第一階段：跨平台賽事捕捉與配對系統，順利執行完畢！")
 
 if __name__ == "__main__":
     main()

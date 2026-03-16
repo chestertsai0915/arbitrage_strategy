@@ -1,0 +1,16 @@
+[
+    {
+        "match_id": "rennes_metz_2026-03-22",
+        "home_team": "rennes",
+        "away_team": "metz",
+        "start_time": "2026-03-22 00:00:00 UTC",
+        "market_name": "⚽ Ligue 1, Rennes vs Metz, Mar 22, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "ligue-1-rennes-vs-metz-mar-22-2026-1772960413169",
+        "token_mapping": {
+            "rennes": "rennes-1772960413173",
+            "metz": "metz-1772960413179",
+            "Draw": "draw-1772960413184"
+        }
+    }
+]

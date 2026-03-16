@@ -1,0 +1,1262 @@
+[
+    {
+        "match_id": "watford_wrexham_2026-03-17",
+        "home_team": "watford",
+        "away_team": "wrexham",
+        "start_time": "2026-03-17 00:00:00 UTC",
+        "market_name": "⚽ EFL Champ, Watford vs Wrexham, Mar 17, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "efl-champ-watford-vs-wrexham-mar-7-2026-1771953662920",
+        "token_mapping": {
+            "watford": "watford-1771953662931",
+            "wrexham": "wrexham-1771953662948",
+            "Draw": "draw-1771953662953"
+        }
+    },
+    {
+        "match_id": "midtjylland_nottingham_forest_2026-03-19",
+        "home_team": "midtjylland",
+        "away_team": "nottingham_forest",
+        "start_time": "2026-03-19 00:00:00 UTC",
+        "market_name": "⚽ UEL, FC Midtjylland vs Nottingham Forest, Mar 19, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "uel-fc-midtjylland-vs-nottingham-forest-mar-19-2026-1772701205918",
+        "token_mapping": {
+            "midtjylland": "fc-midtjylland-1772701205926",
+            "nottingham_forest": "nottingham-forest-1772701205932",
+            "Draw": "draw-1772701205940"
+        }
+    },
+    {
+        "match_id": "lyon_celta_vigo_2026-03-19",
+        "home_team": "lyon",
+        "away_team": "celta_vigo",
+        "start_time": "2026-03-19 00:00:00 UTC",
+        "market_name": "⚽ UEL, Lyon vs Celta Vigo, Mar 19, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "uel-lyon-vs-celta-vigo-mar-19-2026-1772701205779",
+        "token_mapping": {
+            "lyon": "lyon-1772701205816",
+            "celta_vigo": "celta-vigo-1772701205840",
+            "Draw": "draw-1772701205849"
+        }
+    },
+    {
+        "match_id": "sparta_praha_az_alkmaar_2026-03-19",
+        "home_team": "sparta_praha",
+        "away_team": "az_alkmaar",
+        "start_time": "2026-03-19 00:00:00 UTC",
+        "market_name": "⚽ UECL, Sparta Praha vs AZ Alkmaar, Mar 19, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "uecl-sparta-praha-vs-az-alkmaar-mar-19-2026-1772701201535",
+        "token_mapping": {
+            "sparta_praha": "sparta-praha-1772701201542",
+            "az_alkmaar": "az-alkmaar-1772701201567",
+            "Draw": "draw-1772701201579"
+        }
+    },
+    {
+        "match_id": "shakhtar_donetsk_lech_poznan_2026-03-19",
+        "home_team": "shakhtar_donetsk",
+        "away_team": "lech_poznan",
+        "start_time": "2026-03-19 00:00:00 UTC",
+        "market_name": "⚽ UECL, Shakhtar Donetsk vs Lech Poznan, Mar 19, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "uecl-shakhtar-donetsk-vs-lech-poznan-mar-19-2026-1772701201463",
+        "token_mapping": {
+            "shakhtar_donetsk": "shakhtar-donetsk-1772701201473",
+            "lech_poznan": "lech-poznan-1772701201491",
+            "Draw": "draw-1772701201505"
+        }
+    },
+    {
+        "match_id": "strasbourg_hnk_rijeka_2026-03-19",
+        "home_team": "strasbourg",
+        "away_team": "hnk_rijeka",
+        "start_time": "2026-03-19 00:00:00 UTC",
+        "market_name": "⚽ UECL, Strasbourg vs HNK Rijeka, Mar 19, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "uecl-strasbourg-vs-hnk-rijeka-mar-19-2026-1772701201388",
+        "token_mapping": {
+            "strasbourg": "strasbourg-1772701201400",
+            "hnk_rijeka": "hnk-rijeka-1772701201422",
+            "Draw": "draw-1772701201432"
+        }
+    },
+    {
+        "match_id": "aek_larnaca_crystal_palace_2026-03-19",
+        "home_team": "aek_larnaca",
+        "away_team": "crystal_palace",
+        "start_time": "2026-03-19 00:00:00 UTC",
+        "market_name": "⚽ UECL, AEK Larnaca vs Crystal Palace, Mar 19, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "uecl-aek-larnaca-vs-crystal-palace-mar-19-2026-1772701201122",
+        "token_mapping": {
+            "aek_larnaca": "aek-larnaca-1772701201195",
+            "crystal_palace": "crystal-palace-1772701201218",
+            "Draw": "draw-1772701201256"
+        }
+    },
+    {
+        "match_id": "aek_athens_celje_2026-03-19",
+        "home_team": "aek_athens",
+        "away_team": "celje",
+        "start_time": "2026-03-19 00:00:00 UTC",
+        "market_name": "⚽ UECL, AEK Athens FC vs Celje, Mar 19, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "uecl-aek-athens-fc-vs-celje-mar-19-2026-1772701201020",
+        "token_mapping": {
+            "aek_athens": "aek-athens-fc-1772701201034",
+            "celje": "celje-1772701201064",
+            "Draw": "draw-1772701201077"
+        }
+    },
+    {
+        "match_id": "fsv_mainz_05_sigma_olomouc_2026-03-19",
+        "home_team": "fsv_mainz_05",
+        "away_team": "sigma_olomouc",
+        "start_time": "2026-03-19 00:00:00 UTC",
+        "market_name": "⚽ UECL, FSV Mainz 05 vs Sigma Olomouc, Mar 19, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "uecl-fsv-mainz-05-vs-sigma-olomouc-mar-19-2026-1772701200782",
+        "token_mapping": {
+            "fsv_mainz_05": "fsv-mainz-05-1772701200850",
+            "sigma_olomouc": "sigma-olomouc-1772701200934",
+            "Draw": "draw-1772701200988"
+        }
+    },
+    {
+        "match_id": "sc_freiburg_genk_2026-03-19",
+        "home_team": "sc_freiburg",
+        "away_team": "genk",
+        "start_time": "2026-03-19 00:00:00 UTC",
+        "market_name": "⚽ UEL, SC Freiburg vs Genk, Mar 19, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "uel-sc-freiburg-vs-genk-mar-19-2026-1772701205876",
+        "token_mapping": {
+            "sc_freiburg": "sc-freiburg-1772701205882",
+            "genk": "genk-1772701205894",
+            "Draw": "draw-1772701205908"
+        }
+    },
+    {
+        "match_id": "raków_częstochowa_fiorentina_2026-03-19",
+        "home_team": "raków_częstochowa",
+        "away_team": "fiorentina",
+        "start_time": "2026-03-19 00:00:00 UTC",
+        "market_name": "⚽ UECL, Raków Częstochowa vs Fiorentina, Mar 19, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "uecl-rakow-czestochowa-vs-fiorentina-mar-19-2026-1772701201291",
+        "token_mapping": {
+            "raków_częstochowa": "rakow-czestochowa-1772701201299",
+            "fiorentina": "fiorentina-1772701201329",
+            "Draw": "draw-1772701201352"
+        }
+    },
+    {
+        "match_id": "sc_braga_ferencvarosi_tc_2026-03-18",
+        "home_team": "sc_braga",
+        "away_team": "ferencvarosi_tc",
+        "start_time": "2026-03-18 00:00:00 UTC",
+        "market_name": "⚽ UEL, SC Braga vs Ferencvarosi TC, Mar 18, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "uel-sc-braga-vs-ferencvarosi-tc-mar-18-2026-1772614805755",
+        "token_mapping": {
+            "sc_braga": "sc-braga-1772614805766",
+            "ferencvarosi_tc": "ferencvarosi-tc-1772614805775",
+            "Draw": "draw-1772614805784"
+        }
+    },
+    {
+        "match_id": "liverpool_galatasaray_2026-03-18",
+        "home_team": "liverpool",
+        "away_team": "galatasaray",
+        "start_time": "2026-03-18 00:00:00 UTC",
+        "market_name": "⚽ UCL, Liverpool vs Galatasaray, Mar 18, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "ucl-liverpool-vs-galatasaray-mar-18-2026-1772614803837",
+        "token_mapping": {
+            "liverpool": "liverpool-1772614803843",
+            "galatasaray": "galatasaray-1772614803849",
+            "Draw": "draw-1772614803858"
+        }
+    },
+    {
+        "match_id": "barcelona_newcastle_2026-03-18",
+        "home_team": "barcelona",
+        "away_team": "newcastle",
+        "start_time": "2026-03-18 00:00:00 UTC",
+        "market_name": "⚽ UCL, Barcelona vs Newcastle, Mar 18, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "ucl-barcelona-vs-newcastle-mar-18-2026-1772614803777",
+        "token_mapping": {
+            "barcelona": "barcelona-1772614803792",
+            "newcastle": "newcastle-1772614803809",
+            "Draw": "draw-1772614803820"
+        }
+    },
+    {
+        "match_id": "tottenham_atletico_madrid_2026-03-18",
+        "home_team": "tottenham",
+        "away_team": "atletico_madrid",
+        "start_time": "2026-03-18 00:00:00 UTC",
+        "market_name": "⚽ UCL, Tottenham vs Atletico Madrid, Mar 18, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "ucl-tottenham-vs-atletico-madrid-mar-18-2026-1772614803877",
+        "token_mapping": {
+            "tottenham": "tottenham-1772614803883",
+            "atletico_madrid": "atletico-madrid-1772614803897",
+            "Draw": "draw-1772614803906"
+        }
+    },
+    {
+        "match_id": "bayern_münchen_atalanta_2026-03-18",
+        "home_team": "bayern_münchen",
+        "away_team": "atalanta",
+        "start_time": "2026-03-18 00:00:00 UTC",
+        "market_name": "⚽ UCL, Bayern München vs Atalanta, Mar 18, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "ucl-bayern-munchen-vs-atalanta-mar-18-2026-1772614803921",
+        "token_mapping": {
+            "bayern_münchen": "bayern-munchen-1772614803927",
+            "atalanta": "atalanta-1772614803938",
+            "Draw": "draw-1772614803945"
+        }
+    },
+    {
+        "match_id": "southampton_norwich_2026-03-18",
+        "home_team": "southampton",
+        "away_team": "norwich",
+        "start_time": "2026-03-18 00:00:00 UTC",
+        "market_name": "⚽ EFL Champ, Southampton vs Norwich, Mar 18, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "efl-champ-southampton-vs-norwich-mar-18-2026-1772614801980",
+        "token_mapping": {
+            "southampton": "southampton-1772614802003",
+            "norwich": "norwich-1772614802029",
+            "Draw": "draw-1772614802036"
+        }
+    },
+    {
+        "match_id": "arsenal_bayer_leverkusen_2026-03-17",
+        "home_team": "arsenal",
+        "away_team": "bayer_leverkusen",
+        "start_time": "2026-03-17 00:00:00 UTC",
+        "market_name": "⚽ UCL, Arsenal vs Bayer Leverkusen, Mar 17, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "ucl-arsenal-vs-bayer-leverkusen-mar-17-2026-1772528403321",
+        "token_mapping": {
+            "arsenal": "arsenal-1772528403324",
+            "bayer_leverkusen": "bayer-leverkusen-1772528403329",
+            "Draw": "draw-1772528403334"
+        }
+    },
+    {
+        "match_id": "sporting_cp_bodo/glimt_2026-03-17",
+        "home_team": "sporting_cp",
+        "away_team": "bodo/glimt",
+        "start_time": "2026-03-17 00:00:00 UTC",
+        "market_name": "⚽ UCL, Sporting CP vs Bodo/Glimt, Mar 17, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "ucl-sporting-cp-vs-bodoglimt-mar-17-2026-1772528403289",
+        "token_mapping": {
+            "sporting_cp": "sporting-cp-1772528403296",
+            "bodo/glimt": "bodoglimt-1772528403306",
+            "Draw": "draw-1772528403312"
+        }
+    },
+    {
+        "match_id": "manchester_city_real_madrid_2026-03-17",
+        "home_team": "manchester_city",
+        "away_team": "real_madrid",
+        "start_time": "2026-03-17 00:00:00 UTC",
+        "market_name": "⚽ UCL, Manchester City vs Real Madrid, Mar 17, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "ucl-manchester-city-vs-real-madrid-mar-17-2026-1772528403362",
+        "token_mapping": {
+            "manchester_city": "manchester-city-1772528403370",
+            "real_madrid": "real-madrid-1772528403375",
+            "Draw": "draw-1772528403380"
+        }
+    },
+    {
+        "match_id": "chelsea_paris_saint_germain_2026-03-17",
+        "home_team": "chelsea",
+        "away_team": "paris_saint_germain",
+        "start_time": "2026-03-17 00:00:00 UTC",
+        "market_name": "⚽ UCL, Chelsea vs Paris Saint Germain, Mar 17, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "ucl-chelsea-vs-paris-saint-germain-mar-17-2026-1772528403341",
+        "token_mapping": {
+            "chelsea": "chelsea-1772528403345",
+            "paris_saint_germain": "paris-saint-germain-1772528403350",
+            "Draw": "draw-1772528403355"
+        }
+    },
+    {
+        "match_id": "cremonese_fiorentina_2026-03-16",
+        "home_team": "cremonese",
+        "away_team": "fiorentina",
+        "start_time": "2026-03-16 00:00:00 UTC",
+        "market_name": "⚽ Serie A, Cremonese vs Fiorentina, Mar 16, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "serie-a-cremonese-vs-fiorentina-mar-16-2026-1772442000984",
+        "token_mapping": {
+            "cremonese": "cremonese-1772442000992",
+            "fiorentina": "fiorentina-1772442001005",
+            "Draw": "draw-1772442001011"
+        }
+    },
+    {
+        "match_id": "brentford_wolves_2026-03-16",
+        "home_team": "brentford",
+        "away_team": "wolves",
+        "start_time": "2026-03-16 00:00:00 UTC",
+        "market_name": "⚽ EPL, Brentford vs Wolves, Mar 16, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "epl-brentford-vs-wolves-mar-16-2026-1772443350925",
+        "token_mapping": {
+            "brentford": "brentford-1772443350939",
+            "wolves": "wolves-1772443350958",
+            "Draw": "draw-1772443350965"
+        }
+    },
+    {
+        "match_id": "portsmouth_derby_2026-03-16",
+        "home_team": "portsmouth",
+        "away_team": "derby",
+        "start_time": "2026-03-16 00:00:00 UTC",
+        "market_name": "⚽ EFL Champ, Portsmouth vs Derby, Mar 16, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "efl-champ-portsmouth-vs-derby-mar-16-2026-1772442000811",
+        "token_mapping": {
+            "portsmouth": "portsmouth-1772442000837",
+            "derby": "derby-1772442000868",
+            "Draw": "draw-1772442000877"
+        }
+    },
+    {
+        "match_id": "rayo_vallecano_levante_2026-03-16",
+        "home_team": "rayo_vallecano",
+        "away_team": "levante",
+        "start_time": "2026-03-16 00:00:00 UTC",
+        "market_name": "⚽ LaLiga, Rayo Vallecano vs Levante, Mar 16, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "laliga-rayo-vallecano-vs-levante-mar-16-2026-1772443351080",
+        "token_mapping": {
+            "rayo_vallecano": "rayo-vallecano-1772443351083",
+            "levante": "levante-1772443351088",
+            "Draw": "draw-1772443351093"
+        }
+    },
+    {
+        "match_id": "lens_angers_2026-03-20",
+        "home_team": "lens",
+        "away_team": "angers",
+        "start_time": "2026-03-20 00:00:00 UTC",
+        "market_name": "⚽ Ligue 1, Lens vs Angers, Mar 20, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "ligue-1-lens-vs-angers-mar-20-2026-1772787612256",
+        "token_mapping": {
+            "lens": "lens-1772787612268",
+            "angers": "angers-1772787612280",
+            "Draw": "draw-1772787612291"
+        }
+    },
+    {
+        "match_id": "rb_leipzig_1899_hoffenheim_2026-03-20",
+        "home_team": "rb_leipzig",
+        "away_team": "1899_hoffenheim",
+        "start_time": "2026-03-20 00:00:00 UTC",
+        "market_name": "⚽ BUNDL, RB Leipzig vs 1899 Hoffenheim, Mar 20, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "bundl-rb-leipzig-vs-1899-hoffenheim-mar-20-2026-1772787609129",
+        "token_mapping": {
+            "rb_leipzig": "rb-leipzig-1772787609134",
+            "1899_hoffenheim": "1899-hoffenheim-1772787609142",
+            "Draw": "draw-1772787609149"
+        }
+    },
+    {
+        "match_id": "villarreal_real_sociedad_2026-03-20",
+        "home_team": "villarreal",
+        "away_team": "real_sociedad",
+        "start_time": "2026-03-20 00:00:00 UTC",
+        "market_name": "⚽ LaLiga, Villarreal vs Real Sociedad, Mar 20, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "laliga-villarreal-vs-real-sociedad-mar-20-2026-1772787608478",
+        "token_mapping": {
+            "villarreal": "villarreal-1772787608486",
+            "real_sociedad": "real-sociedad-1772787608498",
+            "Draw": "draw-1772787608510"
+        }
+    },
+    {
+        "match_id": "cagliari_napoli_2026-03-20",
+        "home_team": "cagliari",
+        "away_team": "napoli",
+        "start_time": "2026-03-20 00:00:00 UTC",
+        "market_name": "⚽ Serie A, Cagliari vs Napoli, Mar 20, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "serie-a-cagliari-vs-napoli-mar-20-2026-1772787605298",
+        "token_mapping": {
+            "cagliari": "cagliari-1772787605319",
+            "napoli": "napoli-1772787605709",
+            "Draw": "draw-1772787605741"
+        }
+    },
+    {
+        "match_id": "preston_stoke_city_2026-03-20",
+        "home_team": "preston",
+        "away_team": "stoke_city",
+        "start_time": "2026-03-20 00:00:00 UTC",
+        "market_name": "⚽ EFL Champ, Preston vs Stoke City, Mar 20, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "efl-champ-preston-vs-stoke-city-mar-20-2026-1772787601858",
+        "token_mapping": {
+            "preston": "preston-1772787601902",
+            "stoke_city": "stoke-city-1772787601942",
+            "Draw": "draw-1772787601957"
+        }
+    },
+    {
+        "match_id": "genoa_udinese_2026-03-20",
+        "home_team": "genoa",
+        "away_team": "udinese",
+        "start_time": "2026-03-20 00:00:00 UTC",
+        "market_name": "⚽ Serie A, Genoa vs Udinese, Mar 20, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "serie-a-genoa-vs-udinese-mar-20-2026-1772787605849",
+        "token_mapping": {
+            "genoa": "genoa-1772787605889",
+            "udinese": "udinese-1772787606277",
+            "Draw": "draw-1772787606396"
+        }
+    },
+    {
+        "match_id": "bournemouth_manchester_2026-03-20",
+        "home_team": "bournemouth",
+        "away_team": "manchester",
+        "start_time": "2026-03-20 00:00:00 UTC",
+        "market_name": "⚽ EPL, Bournemouth vs Manchester United, Mar 20, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "epl-bournemouth-vs-manchester-united-mar-20-2026-1772787602674",
+        "token_mapping": {
+            "bournemouth": "bournemouth-1772787602691",
+            "manchester": "manchester-united-1772787602942",
+            "Draw": "draw-1772787602984"
+        }
+    },
+    {
+        "match_id": "as_roma_bologna_2026-03-19",
+        "home_team": "as_roma",
+        "away_team": "bologna",
+        "start_time": "2026-03-19 00:00:00 UTC",
+        "market_name": "⚽ UEL, AS Roma vs Bologna, Mar 19, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "uel-as-roma-vs-bologna-mar-19-2026-1772701206015",
+        "token_mapping": {
+            "as_roma": "as-roma-1772701206023",
+            "bologna": "bologna-1772701206030",
+            "Draw": "draw-1772701206038"
+        }
+    },
+    {
+        "match_id": "porto_vfb_stuttgart_2026-03-19",
+        "home_team": "porto",
+        "away_team": "vfb_stuttgart",
+        "start_time": "2026-03-19 00:00:00 UTC",
+        "market_name": "⚽ UEL, FC Porto vs VfB Stuttgart, Mar 19, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "uel-fc-porto-vs-vfb-stuttgart-mar-19-2026-1772701205983",
+        "token_mapping": {
+            "porto": "fc-porto-1772701205986",
+            "vfb_stuttgart": "vfb-stuttgart-1772701205992",
+            "Draw": "draw-1772701205999"
+        }
+    },
+    {
+        "match_id": "real_betis_panathinaikos_2026-03-19",
+        "home_team": "real_betis",
+        "away_team": "panathinaikos",
+        "start_time": "2026-03-19 00:00:00 UTC",
+        "market_name": "⚽ UEL, Real Betis vs Panathinaikos, Mar 19, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "uel-real-betis-vs-panathinaikos-mar-19-2026-1772701206053",
+        "token_mapping": {
+            "real_betis": "real-betis-1772701206062",
+            "panathinaikos": "panathinaikos-1772701206077",
+            "Draw": "draw-1772701206089"
+        }
+    },
+    {
+        "match_id": "aston_villa_lille_2026-03-19",
+        "home_team": "aston_villa",
+        "away_team": "lille",
+        "start_time": "2026-03-19 00:00:00 UTC",
+        "market_name": "⚽ UEL, Aston Villa vs Lille, Mar 19, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "uel-aston-villa-vs-lille-mar-19-2026-1772701205951",
+        "token_mapping": {
+            "aston_villa": "aston-villa-1772701205956",
+            "lille": "lille-1772701205962",
+            "Draw": "draw-1772701205973"
+        }
+    },
+    {
+        "match_id": "rayo_vallecano_samsunspor_2026-03-19",
+        "home_team": "rayo_vallecano",
+        "away_team": "samsunspor",
+        "start_time": "2026-03-19 00:00:00 UTC",
+        "market_name": "⚽ UECL, Rayo Vallecano vs Samsunspor, Mar 19, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "uecl-rayo-vallecano-vs-samsunspor-mar-19-2026-1772701201599",
+        "token_mapping": {
+            "rayo_vallecano": "rayo-vallecano-1772701201609",
+            "samsunspor": "samsunspor-1772701201623",
+            "Draw": "draw-1772701201633"
+        }
+    },
+    {
+        "match_id": "elche_mallorca_2026-03-21",
+        "home_team": "elche",
+        "away_team": "mallorca",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ LaLiga, Elche vs Mallorca, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "laliga-elche-vs-mallorca-mar-21-2026-1772898322048",
+        "token_mapping": {
+            "elche": "elche-1772874008357",
+            "mallorca": "mallorca-1772874008368",
+            "Draw": "draw-1772874008374"
+        }
+    },
+    {
+        "match_id": "1._heidenheim_bayer_leverkusen_2026-03-21",
+        "home_team": "1._heidenheim",
+        "away_team": "bayer_leverkusen",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ BUNDL, 1. FC Heidenheim vs Bayer Leverkusen, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "bundl-1-fc-heidenheim-vs-bayer-leverkusen-mar-21-2026-1772898152183",
+        "token_mapping": {
+            "1._heidenheim": "1-fc-heidenheim-1772874009114",
+            "bayer_leverkusen": "bayer-leverkusen-1772874009118",
+            "Draw": "draw-1772874009123"
+        }
+    },
+    {
+        "match_id": "bayern_münchen_union_berlin_2026-03-21",
+        "home_team": "bayern_münchen",
+        "away_team": "union_berlin",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ BUNDL, Bayern München vs Union Berlin, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "bundl-bayern-munchen-vs-union-berlin-mar-21-2026-1772898167420",
+        "token_mapping": {
+            "bayern_münchen": "bayern-munchen-1772874009059",
+            "union_berlin": "union-berlin-1772874009065",
+            "Draw": "draw-1772874009069"
+        }
+    },
+    {
+        "match_id": "vfl_wolfsburg_werder_bremen_2026-03-21",
+        "home_team": "vfl_wolfsburg",
+        "away_team": "werder_bremen",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ BUNDL, VfL Wolfsburg vs Werder Bremen, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "bundl-vfl-wolfsburg-vs-werder-bremen-mar-21-2026-1772898160611",
+        "token_mapping": {
+            "vfl_wolfsburg": "vfl-wolfsburg-1772874009083",
+            "werder_bremen": "werder-bremen-1772874009092",
+            "Draw": "draw-1772874009098"
+        }
+    },
+    {
+        "match_id": "1._köln_borussia_mönchengladbach_2026-03-21",
+        "home_team": "1._köln",
+        "away_team": "borussia_mönchengladbach",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ BUNDL, 1. FC Köln vs Borussia Mönchengladbach, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "bundl-1-fc-koln-vs-borussia-monchengladbach-mar-21-2026-1772898142781",
+        "token_mapping": {
+            "1._köln": "1-fc-koln-1772874009135",
+            "borussia_mönchengladbach": "borussia-monchengladbach-1772874009140",
+            "Draw": "draw-1772874009145"
+        }
+    },
+    {
+        "match_id": "brighton_liverpool_2026-03-21",
+        "home_team": "brighton",
+        "away_team": "liverpool",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ EPL, Brighton vs Liverpool, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "epl-brighton-vs-liverpool-mar-21-2026-1772874004606",
+        "token_mapping": {
+            "brighton": "brighton-1772874004615",
+            "liverpool": "liverpool-1772874004622",
+            "Draw": "draw-1772874004630"
+        }
+    },
+    {
+        "match_id": "parma_cremonese_2026-03-21",
+        "home_team": "parma",
+        "away_team": "cremonese",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ Serie A, Parma vs Cremonese, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "serie-a-parma-vs-cremonese-mar-21-2026-1772874003721",
+        "token_mapping": {
+            "parma": "parma-1772874003736",
+            "cremonese": "cremonese-1772874003753",
+            "Draw": "draw-1772874003773"
+        }
+    },
+    {
+        "match_id": "bristol_city_west_brom_2026-03-21",
+        "home_team": "bristol_city",
+        "away_team": "west_brom",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ EFL Champ, Bristol City vs West Brom, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "efl-champ-bristol-city-vs-west-brom-mar-21-2026-1772874002712",
+        "token_mapping": {
+            "bristol_city": "bristol-city-1772874002720",
+            "west_brom": "west-brom-1772874002732",
+            "Draw": "draw-1772874002744"
+        }
+    },
+    {
+        "match_id": "southampton_oxford_2026-03-21",
+        "home_team": "southampton",
+        "away_team": "oxford",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ EFL Champ, Southampton vs Oxford United, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "efl-champ-southampton-vs-oxford-united-mar-21-2026-1772874002650",
+        "token_mapping": {
+            "southampton": "southampton-1772874002666",
+            "oxford": "oxford-united-1772874002682",
+            "Draw": "draw-1772874002700"
+        }
+    },
+    {
+        "match_id": "watford_leicester_2026-03-21",
+        "home_team": "watford",
+        "away_team": "leicester",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ EFL Champ, Watford vs Leicester, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "efl-champ-watford-vs-leicester-mar-21-2026-1772874002602",
+        "token_mapping": {
+            "watford": "watford-1772874002606",
+            "leicester": "leicester-1772874002616",
+            "Draw": "draw-1772874002631"
+        }
+    },
+    {
+        "match_id": "derby_birmingham_2026-03-21",
+        "home_team": "derby",
+        "away_team": "birmingham",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ EFL Champ, Derby vs Birmingham, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "efl-champ-derby-vs-birmingham-mar-21-2026-1772874002546",
+        "token_mapping": {
+            "derby": "derby-1772874002554",
+            "birmingham": "birmingham-1772874002569",
+            "Draw": "draw-1772874002578"
+        }
+    },
+    {
+        "match_id": "blackburn_middlesbrough_2026-03-21",
+        "home_team": "blackburn",
+        "away_team": "middlesbrough",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ EFL Champ, Blackburn vs Middlesbrough, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "efl-champ-blackburn-vs-middlesbrough-mar-21-2026-1772874002482",
+        "token_mapping": {
+            "blackburn": "blackburn-1772874002491",
+            "middlesbrough": "middlesbrough-1772874002499",
+            "Draw": "draw-1772874002506"
+        }
+    },
+    {
+        "match_id": "ipswich_millwall_2026-03-21",
+        "home_team": "ipswich",
+        "away_team": "millwall",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ EFL Champ, Ipswich vs Millwall, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "efl-champ-ipswich-vs-millwall-mar-21-2026-1772874002356",
+        "token_mapping": {
+            "ipswich": "ipswich-1772874002394",
+            "millwall": "millwall-1772874002444",
+            "Draw": "draw-1772874002456"
+        }
+    },
+    {
+        "match_id": "barcelona_rayo_vallecano_2026-03-22",
+        "home_team": "barcelona",
+        "away_team": "rayo_vallecano",
+        "start_time": "2026-03-22 00:00:00 UTC",
+        "market_name": "⚽ LaLiga, Barcelona vs Rayo Vallecano, Mar 22, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "laliga-barcelona-vs-rayo-vallecano-mar-22-2026-1772960406079",
+        "token_mapping": {
+            "barcelona": "barcelona-1772960406087",
+            "rayo_vallecano": "rayo-vallecano-1772960406094",
+            "Draw": "draw-1772960406100"
+        }
+    },
+    {
+        "match_id": "lyon_monaco_2026-03-22",
+        "home_team": "lyon",
+        "away_team": "monaco",
+        "start_time": "2026-03-22 00:00:00 UTC",
+        "market_name": "⚽ Ligue 1, Lyon vs Monaco, Mar 22, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "ligue-1-lyon-vs-monaco-mar-22-2026-1772960413119",
+        "token_mapping": {
+            "lyon": "lyon-1772960413126",
+            "monaco": "monaco-1772960413132",
+            "Draw": "draw-1772960413138"
+        }
+    },
+    {
+        "match_id": "newcastle_sunderland_2026-03-22",
+        "home_team": "newcastle",
+        "away_team": "sunderland",
+        "start_time": "2026-03-22 00:00:00 UTC",
+        "market_name": "⚽ EPL, Newcastle vs Sunderland, Mar 22, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "epl-newcastle-vs-sunderland-mar-22-2026-1772960404221",
+        "token_mapping": {
+            "newcastle": "newcastle-1772960404231",
+            "sunderland": "sunderland-1772960404245",
+            "Draw": "draw-1772960404254"
+        }
+    },
+    {
+        "match_id": "bologna_lazio_2026-03-22",
+        "home_team": "bologna",
+        "away_team": "lazio",
+        "start_time": "2026-03-22 00:00:00 UTC",
+        "market_name": "⚽ Serie A, Bologna vs Lazio, Mar 22, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "serie-a-bologna-vs-lazio-mar-22-2026-1772960402786",
+        "token_mapping": {
+            "bologna": "bologna-1772960402802",
+            "lazio": "lazio-1772960402818",
+            "Draw": "draw-1772960402832"
+        }
+    },
+    {
+        "match_id": "atalanta_hellas_verona_2026-03-22",
+        "home_team": "atalanta",
+        "away_team": "hellas_verona",
+        "start_time": "2026-03-22 00:00:00 UTC",
+        "market_name": "⚽ Serie A, Atalanta vs Hellas Verona, Mar 22, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "serie-a-atalanta-vs-hellas-verona-mar-22-2026-1772960402720",
+        "token_mapping": {
+            "atalanta": "atalanta-1772960402730",
+            "hellas_verona": "hellas-verona-1772960402748",
+            "Draw": "draw-1772960402763"
+        }
+    },
+    {
+        "match_id": "como_pisa_2026-03-22",
+        "home_team": "como",
+        "away_team": "pisa",
+        "start_time": "2026-03-22 00:00:00 UTC",
+        "market_name": "⚽ Serie A, Como vs Pisa, Mar 22, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "serie-a-como-vs-pisa-mar-22-2026-1772960402617",
+        "token_mapping": {
+            "como": "como-1772960402649",
+            "pisa": "pisa-1772960402680",
+            "Draw": "draw-1772960402697"
+        }
+    },
+    {
+        "match_id": "espanyol_getafe_2026-03-21",
+        "home_team": "espanyol",
+        "away_team": "getafe",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ LaLiga, Espanyol vs Getafe, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "laliga-espanyol-vs-getafe-mar-21-2026-1772898295388",
+        "token_mapping": {
+            "espanyol": "espanyol-1772874008385",
+            "getafe": "getafe-1772874008390",
+            "Draw": "draw-1772874008395"
+        }
+    },
+    {
+        "match_id": "levante_oviedo_2026-03-21",
+        "home_team": "levante",
+        "away_team": "oviedo",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ LaLiga, Levante vs Oviedo, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "laliga-levante-vs-oviedo-mar-21-2026-1772898288009",
+        "token_mapping": {
+            "levante": "levante-1772874008409",
+            "oviedo": "oviedo-1772874008416",
+            "Draw": "draw-1772874008426"
+        }
+    },
+    {
+        "match_id": "osasuna_girona_2026-03-21",
+        "home_team": "osasuna",
+        "away_team": "girona",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ LaLiga, Osasuna vs Girona, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "laliga-osasuna-vs-girona-mar-21-2026-1772898280138",
+        "token_mapping": {
+            "osasuna": "osasuna-1772874008438",
+            "girona": "girona-1772874008442",
+            "Draw": "draw-1772874008446"
+        }
+    },
+    {
+        "match_id": "sevilla_valencia_2026-03-21",
+        "home_team": "sevilla",
+        "away_team": "valencia",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ LaLiga, Sevilla vs Valencia, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "laliga-sevilla-vs-valencia-mar-21-2026-1772898196930",
+        "token_mapping": {
+            "sevilla": "sevilla-1772874008458",
+            "valencia": "valencia-1772874008465",
+            "Draw": "draw-1772874008472"
+        }
+    },
+    {
+        "match_id": "nice_paris_saint_germain_2026-03-21",
+        "home_team": "nice",
+        "away_team": "paris_saint_germain",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ Ligue 1, Nice vs Paris Saint Germain, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "ligue-1-nice-vs-paris-saint-germain-mar-21-2026-1772874015500",
+        "token_mapping": {
+            "nice": "nice-1772874015506",
+            "paris_saint_germain": "paris-saint-germain-1772874015513",
+            "Draw": "draw-1772874015518"
+        }
+    },
+    {
+        "match_id": "auxerre_stade_brestois_29_2026-03-21",
+        "home_team": "auxerre",
+        "away_team": "stade_brestois_29",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ Ligue 1, Auxerre vs Stade Brestois 29, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "ligue-1-auxerre-vs-stade-brestois-29-mar-21-2026-1772874015459",
+        "token_mapping": {
+            "auxerre": "auxerre-1772874015463",
+            "stade_brestois_29": "stade-brestois-29-1772874015469",
+            "Draw": "draw-1772874015475"
+        }
+    },
+    {
+        "match_id": "toulouse_lorient_2026-03-21",
+        "home_team": "toulouse",
+        "away_team": "lorient",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ Ligue 1, Toulouse vs Lorient, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "ligue-1-toulouse-vs-lorient-mar-21-2026-1772874015427",
+        "token_mapping": {
+            "toulouse": "toulouse-1772874015437",
+            "lorient": "lorient-1772874015445",
+            "Draw": "draw-1772874015449"
+        }
+    },
+    {
+        "match_id": "borussia_dortmund_hamburger_sv_2026-03-21",
+        "home_team": "borussia_dortmund",
+        "away_team": "hamburger_sv",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ BUNDL, Borussia Dortmund vs Hamburger SV, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "bundl-borussia-dortmund-vs-hamburger-sv-mar-21-2026-1772898105617",
+        "token_mapping": {
+            "borussia_dortmund": "borussia-dortmund-1772874009164",
+            "hamburger_sv": "hamburger-sv-1772874009170",
+            "Draw": "draw-1772874009175"
+        }
+    },
+    {
+        "match_id": "leeds_brentford_2026-03-21",
+        "home_team": "leeds",
+        "away_team": "brentford",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ EPL, Leeds vs Brentford, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "epl-leeds-vs-brentford-mar-21-2026-1772874004738",
+        "token_mapping": {
+            "leeds": "leeds-1772874004747",
+            "brentford": "brentford-1772874004757",
+            "Draw": "draw-1772874004761"
+        }
+    },
+    {
+        "match_id": "everton_chelsea_2026-03-21",
+        "home_team": "everton",
+        "away_team": "chelsea",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ EPL, Everton vs Chelsea, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "epl-everton-vs-chelsea-mar-21-2026-1772874004692",
+        "token_mapping": {
+            "everton": "everton-1772874004699",
+            "chelsea": "chelsea-1772874004710",
+            "Draw": "draw-1772874004716"
+        }
+    },
+    {
+        "match_id": "fulham_burnley_2026-03-21",
+        "home_team": "fulham",
+        "away_team": "burnley",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ EPL, Fulham vs Burnley, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "epl-fulham-vs-burnley-mar-21-2026-1772874004644",
+        "token_mapping": {
+            "fulham": "fulham-1772874004655",
+            "burnley": "burnley-1772874004671",
+            "Draw": "draw-1772874004678"
+        }
+    },
+    {
+        "match_id": "manchester_city_crystal_palace_2026-03-21",
+        "home_team": "manchester_city",
+        "away_team": "crystal_palace",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ EPL, Manchester City vs Crystal Palace, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "epl-manchester-city-vs-crystal-palace-mar-21-2026-1772874004556",
+        "token_mapping": {
+            "manchester_city": "manchester-city-1772874004567",
+            "crystal_palace": "crystal-palace-1772874004580",
+            "Draw": "draw-1772874004589"
+        }
+    },
+    {
+        "match_id": "juventus_sassuolo_2026-03-21",
+        "home_team": "juventus",
+        "away_team": "sassuolo",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ Serie A, Juventus vs Sassuolo, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "serie-a-juventus-vs-sassuolo-mar-21-2026-1772874003888",
+        "token_mapping": {
+            "juventus": "juventus-1772874003899",
+            "sassuolo": "sassuolo-1772874003915",
+            "Draw": "draw-1772874003928"
+        }
+    },
+    {
+        "match_id": "ac_milan_torino_2026-03-21",
+        "home_team": "ac_milan",
+        "away_team": "torino",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ Serie A, AC Milan vs Torino, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "serie-a-ac-milan-vs-torino-mar-21-2026-1772874003794",
+        "token_mapping": {
+            "ac_milan": "ac-milan-1772874003810",
+            "torino": "torino-1772874003819",
+            "Draw": "draw-1772874003826"
+        }
+    },
+    {
+        "match_id": "swansea_coventry_2026-03-21",
+        "home_team": "swansea",
+        "away_team": "coventry",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ EFL Champ, Swansea vs Coventry, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "efl-champ-swansea-vs-coventry-mar-21-2026-1772874002929",
+        "token_mapping": {
+            "swansea": "swansea-1772874002934",
+            "coventry": "coventry-1772874002942",
+            "Draw": "draw-1772874002953"
+        }
+    },
+    {
+        "match_id": "charlton_norwich_2026-03-21",
+        "home_team": "charlton",
+        "away_team": "norwich",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ EFL Champ, Charlton vs Norwich, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "efl-champ-charlton-vs-norwich-mar-21-2026-1772874002878",
+        "token_mapping": {
+            "charlton": "charlton-1772874002881",
+            "norwich": "norwich-1772874002887",
+            "Draw": "draw-1772874002902"
+        }
+    },
+    {
+        "match_id": "qpr_portsmouth_2026-03-21",
+        "home_team": "qpr",
+        "away_team": "portsmouth",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ EFL Champ, QPR vs Portsmouth, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "efl-champ-qpr-vs-portsmouth-mar-21-2026-1772874002843",
+        "token_mapping": {
+            "qpr": "qpr-1772874002847",
+            "portsmouth": "portsmouth-1772874002854",
+            "Draw": "draw-1772874002861"
+        }
+    },
+    {
+        "match_id": "hull_city_sheffield_wednesday_2026-03-21",
+        "home_team": "hull_city",
+        "away_team": "sheffield_wednesday",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ EFL Champ, Hull City vs Sheffield Wednesday, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "efl-champ-hull-city-vs-sheffield-wednesday-mar-21-2026-1772874002810",
+        "token_mapping": {
+            "hull_city": "hull-city-1772874002816",
+            "sheffield_wednesday": "sheffield-wednesday-1772874002822",
+            "Draw": "draw-1772874002832"
+        }
+    },
+    {
+        "match_id": "sheffield_utd_wrexham_2026-03-21",
+        "home_team": "sheffield_utd",
+        "away_team": "wrexham",
+        "start_time": "2026-03-21 00:00:00 UTC",
+        "market_name": "⚽ EFL Champ, Sheffield Utd vs Wrexham, Mar 21, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "efl-champ-sheffield-utd-vs-wrexham-mar-21-2026-1772874002763",
+        "token_mapping": {
+            "sheffield_utd": "sheffield-utd-1772874002776",
+            "wrexham": "wrexham-1772874002785",
+            "Draw": "draw-1772874002793"
+        }
+    },
+    {
+        "match_id": "celta_vigo_alaves_2026-03-22",
+        "home_team": "celta_vigo",
+        "away_team": "alaves",
+        "start_time": "2026-03-22 00:00:00 UTC",
+        "market_name": "⚽ LaLiga, Celta Vigo vs Alaves, Mar 22, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "laliga-celta-vigo-vs-alaves-mar-22-2026-1772960406110",
+        "token_mapping": {
+            "celta_vigo": "celta-vigo-1772960406115",
+            "alaves": "alaves-1772960406122",
+            "Draw": "draw-1772960406129"
+        }
+    },
+    {
+        "match_id": "athletic_club_real_betis_2026-03-22",
+        "home_team": "athletic_club",
+        "away_team": "real_betis",
+        "start_time": "2026-03-22 00:00:00 UTC",
+        "market_name": "⚽ LaLiga, Athletic Club vs Real Betis, Mar 22, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "laliga-athletic-club-vs-real-betis-mar-22-2026-1772960406138",
+        "token_mapping": {
+            "athletic_club": "athletic-club-1772960406142",
+            "real_betis": "real-betis-1772960406147",
+            "Draw": "draw-1772960406152"
+        }
+    },
+    {
+        "match_id": "rennes_metz_2026-03-22",
+        "home_team": "rennes",
+        "away_team": "metz",
+        "start_time": "2026-03-22 00:00:00 UTC",
+        "market_name": "⚽ Ligue 1, Rennes vs Metz, Mar 22, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "ligue-1-rennes-vs-metz-mar-22-2026-1772960413169",
+        "token_mapping": {
+            "rennes": "rennes-1772960413173",
+            "metz": "metz-1772960413179",
+            "Draw": "draw-1772960413184"
+        }
+    },
+    {
+        "match_id": "marseille_lille_2026-03-22",
+        "home_team": "marseille",
+        "away_team": "lille",
+        "start_time": "2026-03-22 00:00:00 UTC",
+        "market_name": "⚽ Ligue 1, Marseille vs Lille, Mar 22, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "ligue-1-marseille-vs-lille-mar-22-2026-1772960413147",
+        "token_mapping": {
+            "marseille": "marseille-1772960413150",
+            "lille": "lille-1772960413155",
+            "Draw": "draw-1772960413160"
+        }
+    },
+    {
+        "match_id": "aston_villa_west_ham_2026-03-22",
+        "home_team": "aston_villa",
+        "away_team": "west_ham",
+        "start_time": "2026-03-22 00:00:00 UTC",
+        "market_name": "⚽ EPL, Aston Villa vs West Ham, Mar 22, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "epl-aston-villa-vs-west-ham-mar-22-2026-1772960404341",
+        "token_mapping": {
+            "aston_villa": "aston-villa-1772960404355",
+            "west_ham": "west-ham-1772960404365",
+            "Draw": "draw-1772960404379"
+        }
+    },
+    {
+        "match_id": "tottenham_nottingham_forest_2026-03-22",
+        "home_team": "tottenham",
+        "away_team": "nottingham_forest",
+        "start_time": "2026-03-22 00:00:00 UTC",
+        "market_name": "⚽ EPL, Tottenham vs Nottingham Forest, Mar 22, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "epl-tottenham-vs-nottingham-forest-mar-22-2026-1772960404269",
+        "token_mapping": {
+            "tottenham": "tottenham-1772960404291",
+            "nottingham_forest": "nottingham-forest-1772960404302",
+            "Draw": "draw-1772960404322"
+        }
+    },
+    {
+        "match_id": "fiorentina_inter_2026-03-22",
+        "home_team": "fiorentina",
+        "away_team": "inter",
+        "start_time": "2026-03-22 00:00:00 UTC",
+        "market_name": "⚽ Serie A, Fiorentina vs Inter, Mar 22, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "serie-a-fiorentina-vs-inter-mar-22-2026-1772960402894",
+        "token_mapping": {
+            "fiorentina": "fiorentina-1772960402900",
+            "inter": "inter-1772960402914",
+            "Draw": "draw-1772960402927"
+        }
+    },
+    {
+        "match_id": "as_roma_lecce_2026-03-22",
+        "home_team": "as_roma",
+        "away_team": "lecce",
+        "start_time": "2026-03-22 00:00:00 UTC",
+        "market_name": "⚽ Serie A, AS Roma vs Lecce, Mar 22, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "serie-a-as-roma-vs-lecce-mar-22-2026-1772960402846",
+        "token_mapping": {
+            "as_roma": "as-roma-1772960402852",
+            "lecce": "lecce-1772960402868",
+            "Draw": "draw-1772960402877"
+        }
+    },
+    {
+        "match_id": "nantes_strasbourg_2026-03-22",
+        "home_team": "nantes",
+        "away_team": "strasbourg",
+        "start_time": "2026-03-22 00:00:00 UTC",
+        "market_name": "⚽ Ligue 1, Nantes vs Strasbourg, Mar 22, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "ligue-1-nantes-vs-strasbourg-mar-22-2026-1772960413227",
+        "token_mapping": {
+            "nantes": "nantes-1772960413232",
+            "strasbourg": "strasbourg-1772960413240",
+            "Draw": "draw-1772960413246"
+        }
+    },
+    {
+        "match_id": "paris_le_havre_2026-03-22",
+        "home_team": "paris",
+        "away_team": "le_havre",
+        "start_time": "2026-03-22 00:00:00 UTC",
+        "market_name": "⚽ Ligue 1, Paris FC vs Le Havre, Mar 22, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "ligue-1-paris-fc-vs-le-havre-mar-22-2026-1772960413192",
+        "token_mapping": {
+            "paris": "paris-fc-1772960413199",
+            "le_havre": "le-havre-1772960413205",
+            "Draw": "draw-1772960413212"
+        }
+    },
+    {
+        "match_id": "augsburg_vfb_stuttgart_2026-03-22",
+        "home_team": "augsburg",
+        "away_team": "vfb_stuttgart",
+        "start_time": "2026-03-22 00:00:00 UTC",
+        "market_name": "⚽ BUNDL, FC Augsburg vs VfB Stuttgart, Mar 22, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "bundl-fc-augsburg-vs-vfb-stuttgart-mar-22-2026-1772960407984",
+        "token_mapping": {
+            "augsburg": "fc-augsburg-1772960407991",
+            "vfb_stuttgart": "vfb-stuttgart-1772960407996",
+            "Draw": "draw-1772960408003"
+        }
+    },
+    {
+        "match_id": "st._pauli_sc_freiburg_2026-03-22",
+        "home_team": "st._pauli",
+        "away_team": "sc_freiburg",
+        "start_time": "2026-03-22 00:00:00 UTC",
+        "market_name": "⚽ BUNDL, FC St. Pauli vs SC Freiburg, Mar 22, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "bundl-fc-st-pauli-vs-sc-freiburg-mar-22-2026-1772960407943",
+        "token_mapping": {
+            "st._pauli": "fc-st-pauli-1772960407950",
+            "sc_freiburg": "sc-freiburg-1772960407957",
+            "Draw": "draw-1772960407965"
+        }
+    },
+    {
+        "match_id": "fsv_mainz_05_eintracht_frankfurt_2026-03-22",
+        "home_team": "fsv_mainz_05",
+        "away_team": "eintracht_frankfurt",
+        "start_time": "2026-03-22 00:00:00 UTC",
+        "market_name": "⚽ BUNDL, FSV Mainz 05 vs Eintracht Frankfurt, Mar 22, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "bundl-fsv-mainz-05-vs-eintracht-frankfurt-mar-22-2026-1772960407902",
+        "token_mapping": {
+            "fsv_mainz_05": "fsv-mainz-05-1772960407912",
+            "eintracht_frankfurt": "eintracht-frankfurt-1772960407926",
+            "Draw": "draw-1772960407932"
+        }
+    },
+    {
+        "match_id": "real_madrid_atletico_madrid_2026-03-22",
+        "home_team": "real_madrid",
+        "away_team": "atletico_madrid",
+        "start_time": "2026-03-22 00:00:00 UTC",
+        "market_name": "⚽ LaLiga, Real Madrid vs Atletico Madrid, Mar 22, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "laliga-real-madrid-vs-atletico-madrid-mar-22-2026-1772960406162",
+        "token_mapping": {
+            "real_madrid": "real-madrid-1772960406166",
+            "atletico_madrid": "atletico-madrid-1772960406170",
+            "Draw": "draw-1772960406175"
+        }
+    },
+    {
+        "match_id": "arsenal_manchester_city_2026-03-22",
+        "home_team": "arsenal",
+        "away_team": "manchester_city",
+        "start_time": "2026-03-22 00:00:00 UTC",
+        "market_name": "⚽ EFL CUP, Arsenal vs Manchester City, Mar 22, 2026",
+        "platform": "Limitless",
+        "platform_event_id": "efl-cup-arsenal-vs-manchester-city-mar-22-2026-1772450423048",
+        "token_mapping": {
+            "arsenal": "arsenal-1772450423064",
+            "manchester_city": "manchester-city-1772450423081",
+            "Draw": "draw-1772450423089"
+        }
+    }
+]

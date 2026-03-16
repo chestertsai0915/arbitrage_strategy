@@ -24,7 +24,7 @@ def calculate_custom_similarity(id1: str, id2: str) -> float:
 
 
 class MatchEngine:
-    def __init__(self, threshold: float = 80.0, min_platforms: int = 2):
+    def __init__(self, threshold: float = 70.0, min_platforms: int = 2):
         self.threshold = threshold
         self.min_platforms = min_platforms
 
@@ -41,30 +41,50 @@ class MatchEngine:
 
 
      
-        # 第二階段：模糊合併 (Fuzzy Merge)
-    
+        # 第二階段：模糊合併 (Fuzzy Merge) 優化版
         final_db: Dict[str, List[StandardEvent]] = {}
 
-        # 我們直接拿第一階段分好的「代表 ID」來互相比較，不用一筆一筆比了！
+        # 優化 1：先按「日期」進行分群 (分桶)
+        # 這樣就不用拿不同日期的比賽互相比對，大幅降低 O(N^2) 的迴圈次數
+        date_partitions = defaultdict(dict)
         for exact_id, grouped_events in exact_db.items():
-            placed = False
-            
-            for final_id in final_db.keys():
-                score = calculate_custom_similarity(exact_id, final_id)
-                
-                if score >= self.threshold:
-                    # 相似度夠高，把整包比賽倒進現有的抽屜裡
-                    final_db[final_id].extend(grouped_events)
-                    placed = True
-                    break 
-            
-            if not placed:
-                # 找不到相似的，自己開一個新抽屜
-                final_db[exact_id] = grouped_events
+            # 取出最後 10 個字元作為日期 (例如 '2024-03-15')
+            date_str = exact_id[-10:] 
+            date_partitions[date_str][exact_id] = grouped_events
 
-        # ==========================================
-        # 第三階段：過濾與輸出
-        # ==========================================
+        # 優化 2：只在「同一天」的比賽中互相比對
+        for date_str, exact_group in date_partitions.items():
+            daily_final_db = {} # 用來存這一天已經確認的代表抽屜
+            
+            for exact_id, events in exact_group.items():
+                best_match_id = None
+                best_score = 0.0
+                
+                # 優化 3：尋找「分數最高」的配對，而不是「第一個及格」的就塞進去
+                for final_id in daily_final_db.keys():
+                    score = calculate_custom_similarity(exact_id, final_id)
+                    
+                    if score >= self.threshold and score > best_score:
+                        best_score = score
+                        best_match_id = final_id
+                        
+                        # 小優化：如果遇到 100 分 (完全一模一樣)，那不用找了，直接確定
+                        if score == 100.0:
+                            break 
+                
+                # 判斷歸屬
+                if best_match_id:
+                    # 找到最適合的抽屜，把整包比賽倒進去
+                    daily_final_db[best_match_id].extend(events)
+                else:
+                    # 分數都不及格，自己開一個新抽屜
+                    daily_final_db[exact_id] = events
+            
+            # 將這天的處理結果合併回總表
+            final_db.update(daily_final_db)
+       
+        # 三過濾與輸出
+        
         overlapping_matches = []
         for match_id, events in final_db.items():
             platforms_present = set(e.platform for e in events)

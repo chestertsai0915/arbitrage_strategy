@@ -12,7 +12,7 @@ from utils.team_mapping import TeamNameMapper
 
 def run_test():
     print("=" * 60)
-    print(" 🚀 Limitless API 整合測試 (含 Orderbook 詳情)")
+    print("  Limitless API 整合測試 (含 Orderbook 詳情)")
     print("=" * 60)
     
     mapper = TeamNameMapper()
@@ -22,10 +22,10 @@ def run_test():
     matches = lim_api.get_matches()
     
     if not matches:
-        print("❌ 找不到任何 Limitless 賽事。")
+        print(" 找不到任何 Limitless 賽事。")
         return
         
-    print(f"✅ 成功獲取 {len(matches)} 場標準化賽事！")
+    print(f" 成功獲取 {len(matches)} 場標準化賽事！")
     
     # 2. 過濾並尋找第一場有 token_mapping 的 Moneyline 賽事
     test_match = None
@@ -35,10 +35,10 @@ def run_test():
             break
             
     if not test_match:
-        print("❌ 找不到具有子盤口 (token_mapping) 的賽事。")
+        print(" 找不到具有子盤口 (token_mapping) 的賽事。")
         return
-        
-    print(f"\n⚽ 測試賽事: {test_match.home_team} vs {test_match.away_team}")
+    
+    print(f"\n 測試賽事: {test_match.home_team} vs {test_match.away_team}")
     print(f"   母賽事 Slug: {test_match.platform_event_id}")
     print("=" * 60)
     

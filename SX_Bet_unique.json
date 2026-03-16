@@ -1,0 +1,100 @@
+[
+    {
+        "match_id": "sl_benfica_vitoria_guimaraes_2026-03-21",
+        "home_team": "sl_benfica",
+        "away_team": "vitoria_guimaraes",
+        "start_time": "2026-03-21 18:00:00 UTC",
+        "market_name": "SL Benfica FC vs Vitoria Guimaraes",
+        "platform": "SX_Bet",
+        "platform_event_id": "sl_benfica_vitoria_guimaraes_2026-03-21",
+        "token_mapping": {
+            "vitoria_guimaraes": "0xff82eaac36934a5a6595173666e6df0cac3d533172cdbe639f4b825052a5f499",
+            "sl_benfica": "0x8050fbce3392f5fa34c82ee56a61d6b76b68d4597cffb8ee93ce2c8d86b023c5",
+            "Draw": "0x85582af115de07006186e3aa31b171ade8de8609907ffea972f3e62d53161731"
+        }
+    },
+    {
+        "match_id": "inter_miami_nashville_sc_2026-03-18",
+        "home_team": "inter_miami",
+        "away_team": "nashville_sc",
+        "start_time": "2026-03-18 23:00:00 UTC",
+        "market_name": "Inter Miami CF vs Nashville SC",
+        "platform": "SX_Bet",
+        "platform_event_id": "inter_miami_nashville_sc_2026-03-18",
+        "token_mapping": {
+            "nashville_sc": "0xf154242c161f89965f1a2aa514a1b811796c0c5b6464c40d9c1056ac3609e09c",
+            "inter_miami": "0xc9fd92ed6d2dae26ed43d85d08426d4e8b119108666ab66ec13c670ef2a4d869",
+            "Draw": "0xf10e28047f19508ab2b2dc23f1d675e18b00f2ff628ff630e2e989c9e7a2c816"
+        }
+    },
+    {
+        "match_id": "cruz_azul_monterrey_2026-03-18",
+        "home_team": "cruz_azul",
+        "away_team": "monterrey",
+        "start_time": "2026-03-18 03:00:00 UTC",
+        "market_name": "Cruz Azul vs Monterrey",
+        "platform": "SX_Bet",
+        "platform_event_id": "cruz_azul_monterrey_2026-03-18",
+        "token_mapping": {
+            "monterrey": "0x4116d86a7f4519d8e9498a45c3cc766bd02e98c088ebdbb2dbfeb6bed4aa80d1",
+            "cruz_azul": "0xc0d2de1a3aab4e07a54f7ba7832a11669fc5b2f4a60472009f80fbf09e326d8f",
+            "Draw": "0x1572fb0fb72099517333b99e3f774e2396a3d32bece75032fb229535846b2fdd"
+        }
+    },
+    {
+        "match_id": "deportivo_toluca_san_diego_2026-03-19",
+        "home_team": "deportivo_toluca",
+        "away_team": "san_diego",
+        "start_time": "2026-03-19 03:00:00 UTC",
+        "market_name": "Deportivo Toluca vs San Diego FC",
+        "platform": "SX_Bet",
+        "platform_event_id": "deportivo_toluca_san_diego_2026-03-19",
+        "token_mapping": {
+            "Draw": "0xdd693bd7a999836d026af43d1608df634aca3dcfe5daae40faae0bc63672290d",
+            "deportivo_toluca": "0x0e85a5c98a79f456b977cec0f10229098dd9a712432570cc5d06c0fafdd02909",
+            "san_diego": "0xfe317d7242d6d21f30ef5d7156492ef7ce6726a6fe601affc478da0eee049b03"
+        }
+    },
+    {
+        "match_id": "america_philadelphia_union_2026-03-19",
+        "home_team": "america",
+        "away_team": "philadelphia_union",
+        "start_time": "2026-03-19 01:00:00 UTC",
+        "market_name": "Club America vs Philadelphia Union FC",
+        "platform": "SX_Bet",
+        "platform_event_id": "america_philadelphia_union_2026-03-19",
+        "token_mapping": {
+            "america": "0x390a34dfe87d6dfa9c29d45309931f9a35714a167cbaea47eb59797d145d649a",
+            "philadelphia_union": "0x18c392e4d8a445e7813db111cde06619eafad52b639cbf3f13ac881a27989464",
+            "Draw": "0xa045b2e5059a5195ae28b0e03c29b8e4097e2f2c7e533d99f47a0104026e540f"
+        }
+    },
+    {
+        "match_id": "seattle_sounders_vancouver_whitecaps_2026-03-19",
+        "home_team": "seattle_sounders",
+        "away_team": "vancouver_whitecaps",
+        "start_time": "2026-03-19 03:00:00 UTC",
+        "market_name": "Seattle Sounders vs Vancouver Whitecaps",
+        "platform": "SX_Bet",
+        "platform_event_id": "seattle_sounders_vancouver_whitecaps_2026-03-19",
+        "token_mapping": {
+            "seattle_sounders": "0x65e96c20144f0033ab141e08c4d4d89b8c2d8bb1d8c48164974d69bcd4490297",
+            "vancouver_whitecaps": "0xb28dbeb3140a7e58304185560b923ae0d876e1dbcb2a51861b80182d2c95715c",
+            "Draw": "0xfef2e4c902347ebc31f4cb6128e1390bf4e7827557e0912d9908ca9e72718b63"
+        }
+    },
+    {
+        "match_id": "alajuelense_los_angeles_2026-03-18",
+        "home_team": "alajuelense",
+        "away_team": "los_angeles",
+        "start_time": "2026-03-18 01:00:00 UTC",
+        "market_name": "Alajuelense vs Los Angeles FC",
+        "platform": "SX_Bet",
+        "platform_event_id": "alajuelense_los_angeles_2026-03-18",
+        "token_mapping": {
+            "alajuelense": "0xf4fdbcedf7781533f0273bce83efb71b1211f608f42165f918c5a8d283d97663",
+            "los_angeles": "0xae54b640c3f0f81a9f38dc4d505b1f93c089347acd950a8a9b2ff1f9420ac0f9",
+            "Draw": "0x11f0b30efed5d51b860f293bdbf94686d5241a3b168d45f87d5b0af8c071de24"
+        }
+    }
+]
