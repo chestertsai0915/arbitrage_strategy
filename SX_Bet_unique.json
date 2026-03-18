@@ -96,5 +96,33 @@
             "los_angeles": "0xae54b640c3f0f81a9f38dc4d505b1f93c089347acd950a8a9b2ff1f9420ac0f9",
             "Draw": "0x11f0b30efed5d51b860f293bdbf94686d5241a3b168d45f87d5b0af8c071de24"
         }
+    },
+    {
+        "match_id": "tigres_uanl_cincinnati_2026-03-20",
+        "home_team": "tigres_uanl",
+        "away_team": "cincinnati",
+        "start_time": "2026-03-20 01:00:00 UTC",
+        "market_name": "Tigres UANL vs FC Cincinnati",
+        "platform": "SX_Bet",
+        "platform_event_id": "tigres_uanl_cincinnati_2026-03-20",
+        "token_mapping": {
+            "Draw": "0x15ba7c6891e408dde6868b42b842219ad0fbac01ef389b4846c47a7511da9372",
+            "cincinnati": "0xafeb6ec4670891a39a0d78ab64be72fe58180b8bd92eb7c6018a5d689769a465",
+            "tigres_uanl": "0x728aad2dc73939785cee073a7ed092e4d77937f889e203c4ca90e9016bbbd1da"
+        }
+    },
+    {
+        "match_id": "st._gallen_lugano_2026-03-17",
+        "home_team": "st._gallen",
+        "away_team": "lugano",
+        "start_time": "2026-03-17 18:00:00 UTC",
+        "market_name": "FC St. Gallen vs FC Lugano",
+        "platform": "SX_Bet",
+        "platform_event_id": "st._gallen_lugano_2026-03-17",
+        "token_mapping": {
+            "st._gallen": "0x4cb7aea7b910acd1b9f51dbf88c7011d0d6c510076e9aac22b01ce09308bce16",
+            "Draw": "0xa0fe5a391a5a3132b0355bf5167b9768039187f32d7ecb45cdadf376b0740862",
+            "lugano": "0xd036c3e27721106c83e03890ff3853bf72e671d8010c937bafe870b5786d45d0"
+        }
     }
 ]

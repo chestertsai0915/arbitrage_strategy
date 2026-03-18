@@ -92,7 +92,7 @@ def main():
     if overlapping_export_data:
         with open("overlapping_matches.json", "w", encoding="utf-8") as f:
             json.dump(overlapping_export_data, f, ensure_ascii=False, indent=4)
-        print(f"\n✅ 成功儲存 {len(overlapping_export_data)} 組交集比賽至 overlapping_matches.json")
+        print(f"\n 成功儲存 {len(overlapping_export_data)} 組交集比賽至 overlapping_matches.json")
 
 
     # ==========================================

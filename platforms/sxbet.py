@@ -135,6 +135,7 @@ class SXBetAPI:
         selection: 傳入 "Outcome 1" 或 "Outcome 2"
         """
         try:
+            time.sleep(0.5)
             params = {"marketHashes": market_id}
             response = self.session.get(f"{self.base_url}/orders", params=params, timeout=10)
             response.raise_for_status()

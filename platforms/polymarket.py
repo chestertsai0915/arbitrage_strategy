@@ -67,10 +67,17 @@ class PolymarketAPI:
                         continue
 
                     # 2. 名稱與時間解析
-                    title = raw_event.get("title", "").replace(" vs. ", " vs ").replace(" - More Markets", "")
-                    if " vs " not in title:
+                    raw_title = raw_event.get("title", "")
+                    
+                    # 只要標題帶有 " - " (代表衍生盤口，如 Player Props, More Markets)，全部踢掉
+                    if " - " in raw_title:
                         continue
                         
+                    # 剩下的就是乾淨的主盤口了
+                    title = raw_title.replace(" vs. ", " vs ")
+                    if " vs " not in title:
+                        continue
+
                     parts = title.split(" vs ")
                     std_home = self.mapper.get_standard_name(parts[0])
                     std_away = self.mapper.get_standard_name(parts[1])

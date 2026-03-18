@@ -13,9 +13,9 @@ class ArbitrageEngine:
         遍歷交集賽事，抓取 Orderbook 分析 3-way (主勝/客勝/平手) 的套利空間。
         回傳依 ROI (投資報酬率) 由高到低排序的套利機會列表。
         """
-        print("\n" + "="*60)
+       
         print(" 找最佳賠率組合")
-        print("="*60)
+        
         
         opportunities = []
 
@@ -49,10 +49,10 @@ class ArbitrageEngine:
                     try:
                         # [相容性處理] SX Bet 的 API 需要傳入 Outcome 1 / 2 
                         selection_arg = outcome
+                        
                         if platform == "SX_Bet":
-                            if outcome == home_team: selection_arg = "Outcome 1"
-                            elif outcome == away_team: selection_arg = "Outcome 2"
-                            else: selection_arg = "Draw"
+                            # 因為我們存下來的 Hash，其 Outcome 1 永遠都是我們想買的那個選項
+                            selection_arg = "Outcome 1"
                             
                         # 呼叫平台的 Orderbook API
                         ob = api.get_orderbook(token_id, selection_arg)
