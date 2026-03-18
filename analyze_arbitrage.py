@@ -37,7 +37,7 @@ def main():
     arbs = arb_engine.find_opportunities(overlapping_matches, api_clients)
     
     # 5. 印出最終報表
-    print("\n" + "="*60)
+    
     print(f"  掃描完畢！共發現 {len(arbs)} 個無風險套利機會。")
     print("="*60)
     
