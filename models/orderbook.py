@@ -6,17 +6,8 @@ import time
 @dataclass
 class OrderLevel:
     """單一價格層級 (Price Level)"""
-    # 為了跨平台統一，建議這裡的 price 一律轉換為「十進位賠率 (Decimal Odds)」或「隱含機率 (0~1)」
-    # 假設我們這裡統一定義為：十進位賠率 (Decimal Odds)
-    price: float  
-    
-    # 該價格對應的可交易流動性 (統一換算為 USD/USDC 價值)
-    size: float   
-
-@dataclass
-class OrderLevel:
-    price: float  # 統一使用「隱含機率 (0~1)」，例如 0.29
-    size: float   # 數量
+    price: float  # 統一使用「隱含機率 (0~1)」，例如 0.29。代表買 1 塊錢的合約成本是 0.29 塊。
+    size: float   # 數量 (統一為合約股數/預期獲利總額，1 單位 = 1 USD)
 
 @dataclass
 class Orderbook:
@@ -29,14 +20,14 @@ class Orderbook:
     local_timestamp: float = field(default_factory=lambda: time.time())
 
     def __post_init__(self):
-        """不管各家 API 回傳什麼鬼順序，進來模型後統一強制重新排序"""
+        """不管各家 API 回傳什麼順序，進來模型後統一強制重新排序"""
         
         # Bids: 別人想買的價格。我們想賣給出價「最高」的人，所以由大排到小 (reverse=True)
-        # 排序後，bids[0] 就是 Best Bid (例如 0.28)
+        # 排序後，bids[0] 就是 Best Bid
         self.bids.sort(key=lambda x: x.price, reverse=True)
         
         # Asks: 別人想賣的價格。我們想跟開價「最低」的人買，所以由小排到大
-        # 排序後，asks[0] 就是 Best Ask (例如 0.29)
+        # 排序後，asks[0] 就是 Best Ask (我們的最低買入成本)
         self.asks.sort(key=lambda x: x.price)
 
     @property
@@ -77,5 +68,3 @@ class Orderbook:
             return None 
             
         return total_cost / target_size
-    
-    

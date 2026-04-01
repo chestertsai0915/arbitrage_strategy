@@ -10,7 +10,7 @@ from models.orderbook import Orderbook, OrderLevel
 from utils.team_mapping import TeamNameMapper
 
 class PolymarketAPI:
-    """Polymarket 平台標準化介面 (結合 Gamma 賽事抓取與 CLOB 訂單簿)"""
+    """Polymarket 平台標準化介面 (結合 Gamma 賽事抓取與 CLOB 訂單簿，支援 Not 二元對沖)"""
     
     def __init__(self, name_mapper: TeamNameMapper):
         self.name = "Polymarket"
@@ -79,8 +79,8 @@ class PolymarketAPI:
                         continue
 
                     parts = title.split(" vs ")
-                    std_home = self.mapper.get_standard_name(parts[0])
-                    std_away = self.mapper.get_standard_name(parts[1])
+                    std_home = self.mapper.get_standard_name(parts[0].strip())
+                    std_away = self.mapper.get_standard_name(parts[1].strip())
                     
                     time_str = raw_event.get("endDate")
                     if not time_str: continue
@@ -112,13 +112,14 @@ class PolymarketAPI:
                         if isinstance(clob_token_ids, list) and len(clob_token_ids) > 0:
                             yes_token = clob_token_ids[0]
                             
-                            # 如果是 Draw，我們稍微清理一下名稱，讓它乾淨一點
+                            #  [修改] 自動產生 Not 反向鑰匙
                             if "Draw" in selection_name:
                                 token_mapping["Draw"] = yes_token
+                                token_mapping["Not Draw"] = yes_token # 新增 Not 鑰匙
                             else:
-                                # 把標準化後的隊名當作 Key (推薦做法，方便後續比對)
                                 std_selection_name = self.mapper.get_standard_name(selection_name)
                                 token_mapping[std_selection_name] = yes_token
+                                token_mapping[f"Not {std_selection_name}"] = yes_token # 新增 Not 鑰匙
 
                     # 4. 建立標準化事件
                     event = StandardEvent(
@@ -131,7 +132,7 @@ class PolymarketAPI:
                         market_name=raw_event.get("title"), 
                         raw_data={
                             "original": raw_event,
-                            "token_mapping": token_mapping # 把三個 Token 鑰匙都存起來
+                            "token_mapping": token_mapping # 把正反鑰匙都存起來
                         } 
                     )
                     standard_events.append(event)
@@ -155,7 +156,7 @@ class PolymarketAPI:
     # 2. 獲取訂單簿
     
     def get_orderbook(self, token_id: str, selection: str) -> Orderbook:
-        """傳入 Token ID，取得即時訂單簿，並轉換為統一格式 (Decimal Odds)"""
+        """傳入 Token ID，取得即時訂單簿，支援 Not 盤口的機率自動反轉"""
         try:
             response = self.session.get(self.clob_api_url, params={"token_id": token_id}, timeout=10)
             response.raise_for_status()
@@ -164,12 +165,31 @@ class PolymarketAPI:
             bids = []
             asks = []
             
-            # 直接塞進去，反正 __post_init__ 會幫我們排好
+            #  判斷這是不是一個「反向 (Not)」請求
+            is_not_market = selection.startswith("Not ")
+            
             for b in book_data.get("bids", []):
-                bids.append(OrderLevel(price=float(b["price"]), size=float(b["size"])))
+                price_prob = float(b["price"])
+                size = float(b["size"])
+                # 確保機率合理，避免 0 或 1 造成計算錯誤
+                if 0 < price_prob < 1.0:
+                    if is_not_market:
+                        # 對手想買 Yes (Bid)，如果我們跟他成交，等於我們在賣 Yes (買 No)
+                        # 所以它會變成我們買 No 的成本 (Ask)
+                        asks.append(OrderLevel(price=(1.0 - price_prob), size=size))
+                    else:
+                        bids.append(OrderLevel(price=price_prob, size=size))
                     
             for a in book_data.get("asks", []):
-                asks.append(OrderLevel(price=float(a["price"]), size=float(a["size"])))
+                price_prob = float(a["price"])
+                size = float(a["size"])
+                if 0 < price_prob < 1.0:
+                    if is_not_market:
+                        # 對手想賣 Yes (Ask)，如果我們跟他成交，等於我們在買 Yes (賣 No)
+                        # 所以它會變成我們賣 No 的最高買價 (Bid)
+                        bids.append(OrderLevel(price=(1.0 - price_prob), size=size))
+                    else:
+                        asks.append(OrderLevel(price=price_prob, size=size))
                     
             return Orderbook(
                 platform=self.name,
@@ -182,5 +202,3 @@ class PolymarketAPI:
         except Exception as e:
             print(f"[{self.name}] 獲取 Orderbook 失敗 (Token: {token_id}): {e}")
             return Orderbook(platform=self.name, match_id="error", market_id=token_id, selection=selection)
-
-

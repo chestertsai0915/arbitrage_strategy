@@ -97,10 +97,13 @@ class SXBetAPI:
                         if "Not " in out2 or "not " in out2.lower():
                             if std_out1 == std_home:
                                 matches_db[match_id].raw_data["token_mapping"][std_home] = m_hash
+                                matches_db[match_id].raw_data["token_mapping"][f"Not {std_home}"] = m_hash
                             elif std_out1 == std_away:
                                 matches_db[match_id].raw_data["token_mapping"][std_away] = m_hash
+                                matches_db[match_id].raw_data["token_mapping"][f"Not {std_away}"] = m_hash
                             elif "tie" in out1.lower() or "draw" in out1.lower():
                                 matches_db[match_id].raw_data["token_mapping"]["Draw"] = m_hash
+                                matches_db[match_id].raw_data["token_mapping"]["Not Draw"] = m_hash
                                 
                     except Exception as e:
                         continue
@@ -132,7 +135,7 @@ class SXBetAPI:
     def get_orderbook(self, market_id: str, selection: str) -> Orderbook:
         """
         market_id: SX Bet 的 marketHash
-        selection: 傳入 "Outcome 1" 或 "Outcome 2"
+        selection: 來自引擎的查詢字串，例如 "Arsenal" 或 "Not Arsenal"
         """
         try:
             time.sleep(0.5)
@@ -143,8 +146,10 @@ class SXBetAPI:
             
             asks = []
             
+            #  透過 selection 判斷是否為 Not 盤口
+            is_not_market = selection.startswith("Not ")
+            
             for order in orders:
-                # --- 你原本完美的區塊鏈數學計算 ---
                 total_bet_size = float(order.get("totalBetSize", 0))
                 fill_amount = float(order.get("fillAmount", 0))
                 remaining_raw = total_bet_size - fill_amount
@@ -163,14 +168,15 @@ class SXBetAPI:
                 taker_size = remaining_maker_usdc * (taker_implied_prob / maker_implied_prob)
                 is_maker_outcome_one = order.get("isMakerBettingOutcomeOne", False)
                 
-                # --- 🎯 分配邏輯：將合適的單放入 Asks (賣單：我們可以吃下的流動性) ---
-                # 如果主程式想買 Outcome 1，我們就要找那些「押注 Outcome 2」的 Maker
-                if selection == "Outcome 1" and not is_maker_outcome_one:
-                    asks.append(OrderLevel(price=taker_implied_prob, size=taker_size))
-                    
-                # 如果主程式想買 Outcome 2，我們就要找那些「押注 Outcome 1」的 Maker
-                elif selection == "Outcome 2" and is_maker_outcome_one:
-                    asks.append(OrderLevel(price=taker_implied_prob, size=taker_size))
+                # --- 🎯 動態分配邏輯 ---
+                if not is_not_market:
+                    # 一般情況 (想買隊伍本身 = Outcome 1)，我們要找押注 Outcome 2 的 Maker 對賭
+                    if not is_maker_outcome_one:
+                        asks.append(OrderLevel(price=taker_implied_prob, size=taker_size))
+                else:
+                    # Not 情況 (想買 Not 隊伍 = Outcome 2)，我們要找押注 Outcome 1 的 Maker 對賭
+                    if is_maker_outcome_one:
+                        asks.append(OrderLevel(price=taker_implied_prob, size=taker_size))
 
             # 建立模型 (模型內的 __post_init__ 會自動幫你把 Asks 依照價格由低到高排好！)
             return Orderbook(

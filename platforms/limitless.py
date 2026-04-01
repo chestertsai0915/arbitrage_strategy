@@ -9,7 +9,7 @@ from models.orderbook import Orderbook, OrderLevel
 from utils.team_mapping import TeamNameMapper
 
 class LimitlessAPI:
-    """Limitless 平台標準化介面"""
+    """Limitless 平台標準化介面 (支援 Not 反向盤口自動生成與套利)"""
     
     def __init__(self, name_mapper: TeamNameMapper):
         self.name = "Limitless"
@@ -61,8 +61,8 @@ class LimitlessAPI:
                         teams = match_segment.replace(" vs. ", " vs ").split(" vs ")
                         if len(teams) != 2: continue
                             
-                        std_home = self.mapper.get_standard_name(teams[0])
-                        std_away = self.mapper.get_standard_name(teams[1])
+                        std_home = self.mapper.get_standard_name(teams[0].strip())
+                        std_away = self.mapper.get_standard_name(teams[1].strip())
                         
                         # 2. 解析時間 (使用你原本嚴謹的雙重保險機制)
                         start_time = None
@@ -98,11 +98,14 @@ class LimitlessAPI:
                             child_slug = market.get("slug", "")
                             
                             if child_title and child_slug:
+                                #  [修改] 自動產生 Not 反向鑰匙
                                 if "Draw" in child_title or "Tie" in child_title:
                                     token_mapping["Draw"] = child_slug
+                                    token_mapping["Not Draw"] = child_slug
                                 else:
                                     std_child_name = self.mapper.get_standard_name(child_title)
                                     token_mapping[std_child_name] = child_slug
+                                    token_mapping[f"Not {std_child_name}"] = child_slug
 
                         # 4. 建立標準化物件
                         event = StandardEvent(
@@ -115,7 +118,7 @@ class LimitlessAPI:
                             market_name=title, 
                             raw_data={
                                 "original": raw_event,
-                                "token_mapping": token_mapping # 把子盤口的 Slug 當鑰匙藏好！
+                                "token_mapping": token_mapping # 把正反子盤口的 Slug 當鑰匙藏好！
                             } 
                         )
                         standard_events.append(event)
@@ -137,11 +140,29 @@ class LimitlessAPI:
 
 
     # 2. 獲取訂單簿 
-
+    
+        
     def get_orderbook(self, market_id: str, selection: str) -> Orderbook:
         """
         market_id: 這裡傳入的是子盤口的 Slug (來自 token_mapping)
+        支援 Not 盤口的機率自動反轉
         """
+        def get_buy_fee(p: float) -> float:
+            """Taker Buy Fee: 0~0.5 為 3%，0.5~1.0 線性下降至 0.03% (0.0003)"""
+            if p <= 0.5:
+                return 0.03
+            else:
+                progress = (p - 0.5) / 0.5
+                return 0.03 - (0.0297 * progress)
+
+        def get_sell_fee(p: float) -> float:
+            """Taker Sell Fee: 0~0.5 從 0% 升至 1.5%，0.5~1.0 降回 0%"""
+            if p <= 0.5:
+                return 0.015 * (p / 0.5)
+            else:
+                progress = (p - 0.5) / 0.5
+                return 0.015 - (0.015 * progress)
+            
         try:
             # 直接打子盤口的 Orderbook API，不用再查母盤口了！
             ob_url = f"{self.base_url}/markets/{market_id}/orderbook"
@@ -152,22 +173,44 @@ class LimitlessAPI:
             bids = []
             asks = []
             
-          
+            #  判斷這是不是一個「反向 (Not)」請求
+            is_not_market = selection.startswith("Not ")
             
             # Limitless 的 USDC 精度是 6 位，所以 size 要除以 1,000,000
             for b in ob_data.get("bids", []):
-                # price 是隱含機率不變，size 除以 10**6 轉回美金
-                bids.append(OrderLevel(
-                    price=float(b["price"]), 
-                    size=float(b["size"]) / 1000000
-                ))
+                price_prob = float(b["price"])
+                size = float(b["size"]) / 1000000.0
+                FEE_RATE = get_sell_fee(price_prob)
+                if 0 < price_prob < 1.0:
+                    if is_not_market:
+                        # 對手想買 Yes (Bid)，我們賣 Yes 給他 = 我們「買」No (Ask)
+                        # 既然是我們「買」，成本就要加上手續費 (變貴)
+                        raw_price = 1.0 - price_prob
+                        adjusted_price = raw_price * (1 + FEE_RATE)
+                        asks.append(OrderLevel(price=adjusted_price, size=size))
+                    else:
+                        # 正常 Bid，對手想買 Yes，我們「賣」Yes 給他
+                        # 既然是我們「賣」，實拿獲利要扣掉手續費 (變少)
+                        adjusted_price = price_prob * (1 - FEE_RATE)
+                        bids.append(OrderLevel(price=adjusted_price, size=size))
                 
             for a in ob_data.get("asks", []):
-                # price 是隱含機率不變，size 除以 10**6 轉回美金
-                asks.append(OrderLevel(
-                    price=float(a["price"]), 
-                    size=float(a["size"]) / 1000000
-                ))
+                price_prob = float(a["price"])
+                size = float(a["size"]) / 1000000.0
+                FEE_RATE = get_buy_fee(price_prob)
+                if 0 < price_prob < 1.0:
+                    if is_not_market:
+                        # 對手想賣 Yes (Ask)，我們買 Yes = 我們「賣」No (Bid)
+                        # 既然是我們「賣」，實拿獲利要扣掉手續費 (變少)
+                        raw_price = 1.0 - price_prob
+                        adjusted_price = raw_price * (1 - FEE_RATE)
+                        bids.append(OrderLevel(price=adjusted_price, size=size))
+                    else:
+                        # 正常 Ask，對手想賣 Yes，我們「買」Yes
+                        # 既然是我們「買」，成本就要加上手續費 (變貴)
+                        adjusted_price = price_prob * (1 + FEE_RATE)
+                        asks.append(OrderLevel(price=adjusted_price, size=size))
+                        
             return Orderbook(
                 platform=self.name,
                 match_id="tbd", 

@@ -7,12 +7,11 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.append(parent_dir)
 
 from platforms.limitless import LimitlessAPI
-
 from utils.team_mapping import TeamNameMapper
 
 def run_test():
     print("=" * 60)
-    print("  Limitless API 整合測試 (含 Orderbook 詳情)")
+    print("  Limitless API 整合測試 (含 Orderbook 正反向對沖詳情)")
     print("=" * 60)
     
     mapper = TeamNameMapper()
@@ -44,27 +43,38 @@ def run_test():
     
     token_map = test_match.raw_data.get("token_mapping", {})
     
-    # 3. 遍歷選項並取得 Orderbook
-    for team_name, child_slug in token_map.items():
-        print(f"   選項 [{team_name}] (子盤口 Slug: {child_slug[:20]}...)")
+    # 3. 測試：配對印出 一般選項 與 Not 選項
+    # 把這場比賽的三個基礎選項抓出來
+    outcomes_to_test = [test_match.home_team, test_match.away_team, "Draw"]
+    
+    for base_outcome in outcomes_to_test:
+        print(f"\n 測試組合: [{base_outcome}] 及其反向盤口 [Not {base_outcome}]")
         
-        ob = lim_api.get_orderbook(market_id=child_slug, selection=team_name)
-        
-        if ob.best_bid:
-            bid_decimal = 1.0 / ob.best_bid.price if ob.best_bid.price > 0 else 0
-            print(f"      最高買價 (Bid): 隱含機率 {ob.best_bid.price:.4f} (賠率 {bid_decimal:.2f}) | 可用數量: ${ob.best_bid.size:,.2f}")
-        else:
-            print(f"      最高買價 (Bid): 目前沒有買單")
+        # 連續抓取正向跟反向的 Orderbook
+        for selection in [base_outcome, f"Not {base_outcome}"]:
+            child_slug = token_map.get(selection)
+            if not child_slug:
+                print(f"    找不到 {selection} 的子盤口")
+                continue
+                
+            print(f"    選項 [{selection}] (Slug: {child_slug[:15]}...)")
+            ob = lim_api.get_orderbook(market_id=child_slug, selection=selection)
             
-        if ob.best_ask:
-            ask_decimal = 1.0 / ob.best_ask.price if ob.best_ask.price > 0 else 0
-            print(f"      最低賣價 (Ask): 隱含機率 {ob.best_ask.price:.4f} (賠率 {ask_decimal:.2f}) | 可用數量: ${ob.best_ask.size:,.2f} <-- 成本")
-        else:
-            print(f"      最低賣價 (Ask): 目前沒有賣單")
-            
-        print("-" * 40)
+            if ob.best_bid:
+                bid_decimal = 1.0 / ob.best_bid.price if ob.best_bid.price > 0 else 0
+                print(f"      最高買價 (Bid): 隱含機率 {ob.best_bid.price:.4f} (賠率 {bid_decimal:.2f}) | 可用數量: ${ob.best_bid.size:,.2f} <-- 脫手價")
+            else:
+                print(f"      最高買價 (Bid): 目前沒有買單")
+                
+            if ob.best_ask:
+                ask_decimal = 1.0 / ob.best_ask.price if ob.best_ask.price > 0 else 0
+                print(f"      最低賣價 (Ask): 隱含機率 {ob.best_ask.price:.4f} (賠率 {ask_decimal:.2f}) | 可用數量: ${ob.best_ask.size:,.2f} <-- 買入成本")
+            else:
+                print(f"      最低賣價 (Ask): 目前沒有賣單")
+                
+        print("-" * 50)
         
-    print("\n🎉 Limitless 管線測試全數通過！")
+    print("\n Limitless 二元對沖 (Not) 盤口解析測試全數通過！")
 
 if __name__ == "__main__":
     run_test()
