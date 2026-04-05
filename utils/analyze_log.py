@@ -52,5 +52,5 @@ def analyze_arbitrage_log(file_path):
 
 if __name__ == "__main__":
     # 假設你的資料存成 data.jsonl
-    analyze_arbitrage_log(r"D:\investment\博弈套利\market_data\PURE_ORDERBOOK_midtjylland_vs_nottingham_forest_20260320_020921.jsonl") 
+    analyze_arbitrage_log(r"D:\investment\博弈套利\market_data\PURE_ORDERBOOK_manchester_liverpool_2026-04-04_20260404_195412.jsonl") 
    

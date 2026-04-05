@@ -98,14 +98,18 @@ class LimitlessAPI:
                             child_slug = market.get("slug", "")
                             
                             if child_title and child_slug:
-                                #  [修改] 自動產生 Not 反向鑰匙
-                                if "Draw" in child_title or "Tie" in child_title:
+                                std_child_name = self.mapper.get_standard_name(child_title)
+                                
+                                # 🌟 [核心修改] 統一使用 Home, Away, Draw 標籤防呆判斷
+                                if "Draw" in child_title or "Tie" in child_title or "draw" in std_child_name.lower():
                                     token_mapping["Draw"] = child_slug
                                     token_mapping["Not Draw"] = child_slug
-                                else:
-                                    std_child_name = self.mapper.get_standard_name(child_title)
-                                    token_mapping[std_child_name] = child_slug
-                                    token_mapping[f"Not {std_child_name}"] = child_slug
+                                elif std_child_name == std_home or std_child_name in std_home or std_home in std_child_name:
+                                    token_mapping["Home"] = child_slug
+                                    token_mapping["Not Home"] = child_slug
+                                elif std_child_name == std_away or std_child_name in std_away or std_away in std_child_name:
+                                    token_mapping["Away"] = child_slug
+                                    token_mapping["Not Away"] = child_slug
 
                         # 4. 建立標準化物件
                         event = StandardEvent(
@@ -117,8 +121,7 @@ class LimitlessAPI:
                             market_type="moneyline",        
                             market_name=title, 
                             raw_data={
-                                "original": raw_event,
-                                "token_mapping": token_mapping # 把正反子盤口的 Slug 當鑰匙藏好！
+                                "token_mapping": token_mapping # 把 Home/Away 正反子盤口的 Slug 當鑰匙藏好！
                             } 
                         )
                         standard_events.append(event)
@@ -141,7 +144,6 @@ class LimitlessAPI:
 
     # 2. 獲取訂單簿 
     
-        
     def get_orderbook(self, market_id: str, selection: str) -> Orderbook:
         """
         market_id: 這裡傳入的是子盤口的 Slug (來自 token_mapping)

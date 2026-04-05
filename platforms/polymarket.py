@@ -112,14 +112,19 @@ class PolymarketAPI:
                         if isinstance(clob_token_ids, list) and len(clob_token_ids) > 0:
                             yes_token = clob_token_ids[0]
                             
-                            #  [修改] 自動產生 Not 反向鑰匙
-                            if "Draw" in selection_name:
+                            # 🌟 [核心修改] 判斷是 Home, Away 還是 Draw
+                            std_selection_name = self.mapper.get_standard_name(selection_name)
+                            
+                            if "Draw" in selection_name or "draw" in std_selection_name.lower():
                                 token_mapping["Draw"] = yes_token
-                                token_mapping["Not Draw"] = yes_token # 新增 Not 鑰匙
-                            else:
-                                std_selection_name = self.mapper.get_standard_name(selection_name)
-                                token_mapping[std_selection_name] = yes_token
-                                token_mapping[f"Not {std_selection_name}"] = yes_token # 新增 Not 鑰匙
+                                token_mapping["Not Draw"] = yes_token
+                            elif std_selection_name == std_home or std_selection_name in std_home or std_home in std_selection_name:
+                                # 這裡加上了 in 判斷作為防呆，防止隊名轉換後有細微差異 (例如 Real Betis vs Real Betis Balompie)
+                                token_mapping["Home"] = yes_token
+                                token_mapping["Not Home"] = yes_token
+                            elif std_selection_name == std_away or std_selection_name in std_away or std_away in std_selection_name:
+                                token_mapping["Away"] = yes_token
+                                token_mapping["Not Away"] = yes_token
 
                     # 4. 建立標準化事件
                     event = StandardEvent(
@@ -131,8 +136,7 @@ class PolymarketAPI:
                         market_type="moneyline",        
                         market_name=raw_event.get("title"), 
                         raw_data={
-                            "original": raw_event,
-                            "token_mapping": token_mapping # 把正反鑰匙都存起來
+                            "token_mapping": token_mapping # 把 Home, Away, Draw 正反鑰匙存起來
                         } 
                     )
                     standard_events.append(event)
@@ -153,7 +157,7 @@ class PolymarketAPI:
             return standard_events
 
    
-    # 2. 獲取訂單簿
+    # 2. 獲取訂單簿 (邏輯不需更改，它能完美處理 Not Home 等字眼)
     
     def get_orderbook(self, token_id: str, selection: str) -> Orderbook:
         """傳入 Token ID，取得即時訂單簿，支援 Not 盤口的機率自動反轉"""
@@ -165,7 +169,7 @@ class PolymarketAPI:
             bids = []
             asks = []
             
-            #  判斷這是不是一個「反向 (Not)」請求
+            # 判斷這是不是一個「反向 (Not)」請求 (例如 "Not Home")
             is_not_market = selection.startswith("Not ")
             
             for b in book_data.get("bids", []):

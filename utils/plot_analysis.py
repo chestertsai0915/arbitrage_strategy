@@ -86,8 +86,8 @@ if __name__ == "__main__":
     # 🌟 在這裡換成你剛剛存下來的 jsonl 檔案路徑！
     # 如果放在 market_data 資料夾內，請改成相對路徑，例如：
     # FILE_TO_READ = "market_data/PURE_ORDERBOOK_midtjylland_vs_nottingham_forest_20260320_025000.jsonl"
-    FILE_TO_READ = r"D:\investment\博弈套利\market_data\PURE_ORDERBOOK_midtjylland_vs_nottingham_forest_20260320_020921.jsonl"  
+    FILE_TO_READ = r"D:\investment\博弈套利\market_data\PURE_ORDERBOOK_manchester_liverpool_2026-04-04_20260404_195412.jsonl"  
     
-    TARGET_TEAM = "midtjylland"
+    TARGET_TEAM = "manchester"
     
     plot_historical_data(FILE_TO_READ, TARGET_TEAM)

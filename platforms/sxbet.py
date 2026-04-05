@@ -26,7 +26,7 @@ class SXBetAPI:
     def get_matches(self) -> List[StandardEvent]:
         print(f"\n[{self.name}] 開始獲取足球賽事資料 (支援自動分頁並聚合盤口)...")
         
-        # [關鍵新增] 用字典來將同一場比賽的不同盤口「合併」起來
+        # 用字典來將同一場比賽的不同盤口「合併」起來
         matches_db = {} 
         
         next_key = None
@@ -69,7 +69,7 @@ class SXBetAPI:
                         start_time = datetime.fromtimestamp(int(time_str), tz=timezone.utc)
                         if start_time < current_time: continue 
                             
-                        #  2. 建立比賽專屬 ID (用來把同場比賽的盤口裝進同一個抽屜)
+                        # 2. 建立比賽專屬 ID (用來把同場比賽的盤口裝進同一個抽屜)
                         match_id = f"{std_home}_{std_away}_{start_time.strftime('%Y-%m-%d')}"
                         
                         # 如果這場比賽還沒建立過，先幫它開一個乾淨的 StandardEvent
@@ -83,7 +83,7 @@ class SXBetAPI:
                                 market_type="moneyline",   
                                 market_name=f"{raw_home} vs {raw_away}", 
                                 raw_data={
-                                    "token_mapping": {} # 準備拿來裝那 3 個 Market Hash
+                                    "token_mapping": {} # 準備拿來裝 Home, Away, Draw Hash
                                 } 
                             )
                             
@@ -93,14 +93,15 @@ class SXBetAPI:
                         m_hash = raw_event.get("marketHash")
                         std_out1 = self.mapper.get_standard_name(out1)
                         
+                        # 🌟 [核心修改] 統一使用 Home, Away, Draw 標籤
                         # SX Bet 獨贏盤(Moneyline)最大的特徵：選項二一定是 "Not xxx"
                         if "Not " in out2 or "not " in out2.lower():
-                            if std_out1 == std_home:
-                                matches_db[match_id].raw_data["token_mapping"][std_home] = m_hash
-                                matches_db[match_id].raw_data["token_mapping"][f"Not {std_home}"] = m_hash
-                            elif std_out1 == std_away:
-                                matches_db[match_id].raw_data["token_mapping"][std_away] = m_hash
-                                matches_db[match_id].raw_data["token_mapping"][f"Not {std_away}"] = m_hash
+                            if std_out1 == std_home or std_out1 in std_home or std_home in std_out1:
+                                matches_db[match_id].raw_data["token_mapping"]["Home"] = m_hash
+                                matches_db[match_id].raw_data["token_mapping"]["Not Home"] = m_hash
+                            elif std_out1 == std_away or std_out1 in std_away or std_away in std_out1:
+                                matches_db[match_id].raw_data["token_mapping"]["Away"] = m_hash
+                                matches_db[match_id].raw_data["token_mapping"]["Not Away"] = m_hash
                             elif "tie" in out1.lower() or "draw" in out1.lower():
                                 matches_db[match_id].raw_data["token_mapping"]["Draw"] = m_hash
                                 matches_db[match_id].raw_data["token_mapping"]["Not Draw"] = m_hash
@@ -135,7 +136,7 @@ class SXBetAPI:
     def get_orderbook(self, market_id: str, selection: str) -> Orderbook:
         """
         market_id: SX Bet 的 marketHash
-        selection: 來自引擎的查詢字串，例如 "Arsenal" 或 "Not Arsenal"
+        selection: 來自引擎的查詢字串，例如 "Home" 或 "Not Home"
         """
         try:
             time.sleep(0.5)
@@ -146,7 +147,7 @@ class SXBetAPI:
             
             asks = []
             
-            #  透過 selection 判斷是否為 Not 盤口
+            # 透過 selection 判斷是否為 Not 盤口
             is_not_market = selection.startswith("Not ")
             
             for order in orders:
