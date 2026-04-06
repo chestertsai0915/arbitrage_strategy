@@ -1,24 +1,15 @@
 import asyncio
+import random
 import socketio
 
 class LimitlessConnector:
-    def __init__(self, market_slug, on_update_callback):
-        """
-        :param market_slug: Limitless 子盤口的 Slug (例如 ucl-rma1-bay1-2026-04-07-rma1)
-        :param on_update_callback: 價格更新時要呼叫的主程式函數
-        """
-        self.market_slug = str(market_slug)
+    def __init__(self, market_slugs, on_update_callback):
+        self.market_slugs = list(market_slugs)
         self.on_update_callback = on_update_callback
         
-        # 🌟 升級：維護本地端訂單簿 (Price -> Size)
-        self.bids = {}
-        self.asks = {}
-        
-        # 記憶體：存放最新的 BBO (Best Bid & Offer) 狀態
-        self.current_state = {
-            "ask_price": None, "ask_size": 0,
-            "bid_price": None, "bid_size": 0
-        }
+        self.bids = {slug: {} for slug in self.market_slugs}
+        self.asks = {slug: {} for slug in self.market_slugs}
+        self.current_state = {slug: {"ask_price": None, "ask_size": 0, "bid_price": None, "bid_size": 0} for slug in self.market_slugs}
 
     def _get_buy_fee_rate(self, p: float) -> float:
         """
@@ -32,13 +23,11 @@ class LimitlessConnector:
             progress = (p - 0.5) / 0.5
             return 0.03 - (0.0297 * progress)
 
-    def _trigger_callback(self):
-        """將最新價格加上手續費後，標準化傳遞給核心引擎"""
-        if not self.on_update_callback: 
-            return
+    def _trigger_callback(self, slug):
+        if not self.on_update_callback: return
 
-        ask_p = self.current_state["ask_price"]
-        bid_p = self.current_state["bid_price"]
+        ask_p = self.current_state[slug]["ask_price"]
+        bid_p = self.current_state[slug]["bid_price"]
 
         buy_yes_cost = None
         if ask_p and 0 < ask_p < 1:
@@ -51,80 +40,70 @@ class LimitlessConnector:
             fee_rate = self._get_buy_fee_rate(raw_no_price)
             buy_no_cost = raw_no_price * (1 + fee_rate)
 
-        # 打包成標準格式丟給 main.py
         bbo_data = {
             "platform": "LIMITLESS",
-            "market_hash": self.market_slug, 
-            "buy_outcome_1_cost": buy_yes_cost,   # 買 Yes 的真實成本
-            "buy_outcome_1_size": self.current_state["ask_size"],
-            "buy_outcome_2_cost": buy_no_cost,    # 買 No 的真實成本
-            "buy_outcome_2_size": self.current_state["bid_size"],
-            "total_active_orders": len(self.asks) + len(self.bids)
+            "market_hash": slug, 
+            "buy_outcome_1_cost": buy_yes_cost, 
+            "buy_outcome_1_size": self.current_state[slug]["ask_size"],
+            "buy_outcome_2_cost": buy_no_cost,
+            "buy_outcome_2_size": self.current_state[slug]["bid_size"],
+            "total_active_orders": len(self.asks[slug]) + len(self.bids[slug])
         }
         self.on_update_callback(bbo_data)
 
     async def start(self):
-        """啟動 Socket.IO 連線並在背景持續運行"""
         sio = socketio.AsyncClient(logger=False, engineio_logger=False)
 
         @sio.event(namespace='/markets')
         async def connect():
-            print(f"🌐 [LIMITLESS] WebSocket 連線成功！(Slug: {self.market_slug[:15]}...)")
-            subscribe_payload = {"marketSlugs": [self.market_slug]}
-            await sio.emit('subscribe_market_prices', subscribe_payload, namespace='/markets')
+            print(f" [LIMITLESS] WebSocket 主連線成功！監聽 {len(self.market_slugs)} 個盤口")
+            #  把清單整包丟出去
+            await sio.emit('subscribe_market_prices', {"marketSlugs": self.market_slugs}, namespace='/markets')
 
         @sio.event(namespace='/markets')
         async def disconnect():
-            print(f"❌ [LIMITLESS] 連線斷開，等待重連... (Slug: {self.market_slug[:15]}...)")
+            print(f" [LIMITLESS] 連線斷開，等待重連... (Slug: {self.market_slug[:15]}...)")
 
         @sio.on('orderbookUpdate', namespace='/markets')
         async def on_orderbook_update(data):
-            incoming_slug = data.get("marketSlug")
-            if incoming_slug != self.market_slug:
+            slug = data.get("marketSlug")
+            if slug not in self.market_slugs:
                 return
 
             ob = data.get("orderbook", {})
             bids = ob.get("bids", [])
             asks = ob.get("asks", [])
             
-            # 🌟 將收到的資料更新進本地字典
             if asks:
                 for ask in asks:
                     p = float(ask["price"])
                     s = float(ask["size"]) / 1000000.0
-                    if s <= 0:
-                        self.asks.pop(p, None)
-                    else:
-                        self.asks[p] = s
+                    if s <= 0: self.asks[slug].pop(p, None)
+                    else: self.asks[slug][p] = s
 
             if bids:
                 for bid in bids:
                     p = float(bid["price"])
                     s = float(bid["size"]) / 1000000.0
-                    if s <= 0:
-                        self.bids.pop(p, None)
-                    else:
-                        self.bids[p] = s
+                    if s <= 0: self.bids[slug].pop(p, None)
+                    else: self.bids[slug][p] = s
 
-            # 🌟 從字典中抓出真正的 BBO
-            best_ask_price = min(self.asks.keys()) if self.asks else None
-            best_ask_size = self.asks[best_ask_price] if best_ask_price else 0
+            best_ask_price = min(self.asks[slug].keys()) if self.asks[slug] else None
+            best_ask_size = self.asks[slug][best_ask_price] if best_ask_price else 0
 
-            best_bid_price = max(self.bids.keys()) if self.bids else None
-            best_bid_size = self.bids[best_bid_price] if best_bid_price else 0
+            best_bid_price = max(self.bids[slug].keys()) if self.bids[slug] else None
+            best_bid_size = self.bids[slug][best_bid_price] if best_bid_price else 0
 
-            # 如果 BBO 有任何變動，才通知大腦
-            if (self.current_state["ask_price"] != best_ask_price or 
-                self.current_state["ask_size"] != best_ask_size or
-                self.current_state["bid_price"] != best_bid_price or
-                self.current_state["bid_size"] != best_bid_size):
+            state = self.current_state[slug]
+            if (state["ask_price"] != best_ask_price or state["ask_size"] != best_ask_size or
+                state["bid_price"] != best_bid_price or state["bid_size"] != best_bid_size):
                 
-                self.current_state["ask_price"] = best_ask_price
-                self.current_state["ask_size"] = best_ask_size
-                self.current_state["bid_price"] = best_bid_price
-                self.current_state["bid_size"] = best_bid_size
+                state["ask_price"] = best_ask_price
+                state["ask_size"] = best_ask_size
+                state["bid_price"] = best_bid_price
+                state["bid_size"] = best_bid_size
                 
-                self._trigger_callback()
+                self._trigger_callback(slug)
 
         # 連線守護迴圈 (自動重連機制)
         while True:
@@ -134,7 +113,7 @@ class LimitlessConnector:
             except asyncio.CancelledError:
                 break
             except Exception as e:
-                print(f"⚠️ [LIMITLESS] 連線發生錯誤: {e}，5秒後重試...")
+                print(f" [LIMITLESS] 連線發生錯誤: {e}，5秒後重試...")
                 await asyncio.sleep(5)
 
 # === 單獨測試用 ===
@@ -145,11 +124,11 @@ if __name__ == "__main__":
         buy_2_cost = data['buy_outcome_2_cost']
         buy_2_size = data['buy_outcome_2_size']
         
-        print(f"📢 [回報] Limitless 最新報價:")
+        print(f" [回報] Limitless 最新報價:")
         if buy_1_cost:
-            print(f"   🟢 買 Yes 成本: {buy_1_cost:.4f} | 深度: {buy_1_size:.2f} USDC")
+            print(f"    買 Yes 成本: {buy_1_cost:.4f} | 深度: {buy_1_size:.2f} USDC")
         if buy_2_cost:
-            print(f"   🔴 買 No  成本: {buy_2_cost:.4f} | 深度: {buy_2_size:.2f} USDC")
+            print(f"    買 No  成本: {buy_2_cost:.4f} | 深度: {buy_2_size:.2f} USDC")
         print("-" * 40)
 
     async def test():

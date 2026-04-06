@@ -2,7 +2,7 @@ from .sxbet import SXBetAPI
 from .polymarket import PolymarketAPI
 from .limitless import LimitlessAPI
 
-# 2. 🌟 建立平台註冊表 (Registry)
+# 2.  建立平台註冊表 (Registry)
 # 未來如果有新平台 (例如 BinanceAPI)，只要 import 進來並把它塞進這個 List 即可
 AVAILABLE_PLATFORMS = [
     SXBetAPI,

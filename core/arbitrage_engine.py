@@ -1,135 +1,97 @@
-from typing import List, Tuple, Dict
-from models.match import StandardEvent
+import itertools
 
-class ArbitrageEngine:
-    """套利引擎：負責計算跨平台的最佳賠率組合，尋找無風險套利機會"""
+def check_all_arbitrage(match_id, match_mapping, price_memory):
+    """
+    核心套利引擎邏輯 (支援動態多平台、多賽果)
+    :param match_id: 觸發更新的賽事 ID
+    :param match_mapping: 賽事與 Hash/Slug 的對應表
+    :param price_memory: 當前所有平台的最新報價與深度
+    """
+    match_data = match_mapping[match_id]
+    outcomes = match_data["outcomes"]
+    num_outcomes = len(outcomes) # 動態判斷這場比賽有幾個結果 (通常是 2 或 3)
     
-    def __init__(self):
-        # 設定最小利潤門檻 (0.0 代表大於 0% 就算套利)
-        self.min_roi_threshold = 0.0 
+    best_hedge_cost = float('inf')
+    best_multi_cost = float('inf')
+    
+    # ==========================================
+    #  策略一：跨平台對沖 (Yes vs No)
+    # 邏輯：在 A 平台買「會發生」，在 B 平台買「不會發生」
+    # ==========================================
+    for outcome in outcomes:
+        # 動態抓取目前這場比賽、這個選項，有哪幾家平台已經送報價來了
+        platforms_available = list(price_memory[match_id][outcome].keys())
         
-    def find_opportunities(self, overlapping_matches: List[Tuple[str, List[StandardEvent]]], api_clients: dict) -> List[dict]:
-        """
-        遍歷交集賽事，抓取 Orderbook 分析 3-way (主/客/和) 與 2-way (正/反) 的套利空間。
-        回傳依 ROI (投資報酬率) 由高到低排序的套利機會列表。
-        """
-        print("\n  啟動核心套利引擎：尋找最佳賠率組合...")
-        opportunities = []
-
-        for cluster_id, events in overlapping_matches:
-            if not events:
-                continue
+        # 就算有 3 家、4 家平台，itertools 都會自動幫我們算出所有「兩兩配對」
+        for plat_A, plat_B in itertools.product(platforms_available, repeat=2):
+            if plat_A == plat_B: continue # 避免同平台對沖
+            
+            pA_data = price_memory[match_id][outcome][plat_A]
+            pB_data = price_memory[match_id][outcome][plat_B]
+            
+            yes_price = pA_data.get("yes_price")
+            no_price = pB_data.get("no_price")
+            
+            if yes_price and no_price:
+                cost_hedge = yes_price + no_price
+                if cost_hedge < best_hedge_cost:
+                    best_hedge_cost = cost_hedge
                 
-            home_team = events[0].home_team
-            away_team = events[0].away_team
-            
-           
-            # 策略一：3-Way 傳統套利 (主勝 + 客勝 + 平手)
-           
-            outcomes_3way = [home_team, away_team, "Draw"]
-            best_prices_3way = {o: {"price": float('inf'), "platform": None, "size": 0} for o in outcomes_3way}
-            
-           
-            # 策略二：2-Way 二元對沖套利 (Team + Not Team)
-            
-            outcomes_2way_pairs = [
-                (home_team, f"Not {home_team}"),
-                (away_team, f"Not {away_team}"),
-                ("Draw", "Not Draw")
-            ]
-            # 扁平化所有需要的選項名稱，一次性抓取
-            all_required_outcomes = outcomes_3way + [pair[1] for pair in outcomes_2way_pairs]
-            
-            # 儲存所有抓到的報價 (格式: platform -> outcome -> OrderLevel)
-            fetched_data = {}
-
-            # 1. 抓取資料 (Data Fetching Phase)
-            for event in events:
-                platform = event.platform
-                api = api_clients.get(platform)
-                if not api: continue
+                # 🚨 觸發對沖套利
+                if cost_hedge < 1.0:
+                    roi = ((1.0 / cost_hedge) - 1.0) * 100
+                    max_size = min(pA_data.get("yes_size", 0), pB_data.get("no_size", 0))
+                    profit = max_size * (roi / 100)
                     
-                fetched_data[platform] = {}
-                token_mapping = event.raw_data.get("token_mapping", {})
-                
-                for outcome in all_required_outcomes:
-                    token_id = token_mapping.get(outcome)
-                    if not token_id: continue 
-                        
-                    try:
-                        
-                        ob = api.get_orderbook(token_id, outcome)
-                        
-                     
-                        if ob and ob.best_ask:
-                            fetched_data[platform][outcome] = ob.best_ask
-                            
-                            # 同步更新 3-Way 的全網最低價
-                            if outcome in outcomes_3way:
-                                if ob.best_ask.price < best_prices_3way[outcome]["price"]:
-                                    best_prices_3way[outcome] = {
-                                        "price": ob.best_ask.price,
-                                        "platform": platform,
-                                        "size": ob.best_ask.size
-                                    }
-                    except Exception as e:
-                        pass # 靜默跳過失敗的請求
+                    print(f"\n [跨平台對沖套利出現!] 賽事: {match_data['title']} | 選項: {outcome} ")
+                    print(f" 總成本: {cost_hedge:.4f} | ROI: +{roi:.2f}% | Max Size: {max_size:.2f} U | 淨利: {profit:.2f} U")
+                    print(f"    在 {plat_A:<9} 買入 [Yes] | 成本: {yes_price:.4f}")
+                    print(f"    在 {plat_B:<9} 買入 [No ] | 成本: {no_price:.4f}")
+                    print("-" * 50)
 
-            # 2. 計算 3-Way 套利 (Calculation Phase - 3-Way)
-            if all(best_prices_3way[o]["price"] != float('inf') for o in outcomes_3way):
-                total_prob_3way = sum(best_prices_3way[o]["price"] for o in outcomes_3way)
-                
-                if total_prob_3way < 1.0:
-                    roi = (1.0 / total_prob_3way - 1) * 100
-                    if roi > self.min_roi_threshold:
-                        # 估算最大可吃單量 (取各選項深度的最小值)
-                        max_size = min(best_prices_3way[o]["size"] for o in outcomes_3way)
-                        opportunities.append({
-                            "type": "3-Way",
-                            "cluster_id": cluster_id,
-                            "match": f"{home_team} vs {away_team}",
-                            "roi": roi,
-                            "total_prob": total_prob_3way,
-                            "max_size": max_size,
-                            "legs": best_prices_3way
-                        })
 
-            # 3. 計算 2-Way 套利 (Calculation Phase - 2-Way)
-            # 遍歷每一對 (例如 Arsenal 和 Not Arsenal)
-            for yes_out, not_out in outcomes_2way_pairs:
-                best_yes = {"price": float('inf'), "platform": None, "size": 0}
-                best_not = {"price": float('inf'), "platform": None, "size": 0}
+    # ==========================================
+    # 🕵️ 策略二：跨平台組合套利 (買齊所有結果的 Yes)
+    # 邏輯：湊齊 Home, Away, Draw 的 Yes，保證 100% 中獎
+    # ==========================================
+    prices_by_outcome = [price_memory[match_id][outcome] for outcome in outcomes]
+    
+    # 必須確保每個選項 (主/客/和) 至少有一家平台有報價才計算
+    if all(platform_prices for platform_prices in prices_by_outcome):
+        platforms_available = [list(p.keys()) for p in prices_by_outcome]
+        
+        # 這裡會依據 outcomes 的數量 (2或3) 以及平台的數量，自動展開所有可能的交叉組合矩陣！
+        for combo in itertools.product(*platforms_available):
+            cost_multi = 0.0
+            sizes = []
+            valid = True
+            
+            for i, outcome in enumerate(outcomes):
+                plat = combo[i]
+                yes_price = price_memory[match_id][outcome][plat].get("yes_price")
+                yes_size = price_memory[match_id][outcome][plat].get("yes_size", 0)
                 
-                # 找出全網最便宜的 Yes 和全網最便宜的 Not
-                for platform, outcomes_dict in fetched_data.items():
-                    if yes_out in outcomes_dict and outcomes_dict[yes_out].price < best_yes["price"]:
-                        best_yes = {"price": outcomes_dict[yes_out].price, "platform": platform, "size": outcomes_dict[yes_out].size}
-                        
-                    if not_out in outcomes_dict and outcomes_dict[not_out].price < best_not["price"]:
-                        best_not = {"price": outcomes_dict[not_out].price, "platform": platform, "size": outcomes_dict[not_out].size}
+                if not yes_price:
+                    valid = False
+                    break
+                cost_multi += yes_price
+                sizes.append(yes_size)
                 
-                # 必須兩個都有報價，而且不能在同一個平台上對沖 (同平台對沖無意義且浪費手續費)
-                if best_yes["price"] != float('inf') and best_not["price"] != float('inf'):
-                    if best_yes["platform"] != best_not["platform"]:
-                        total_prob_2way = best_yes["price"] + best_not["price"]
-                        
-                        if total_prob_2way < 1.0:
-                            roi = (1.0 / total_prob_2way - 1) * 100
-                            if roi > self.min_roi_threshold:
-                                max_size = min(best_yes["size"], best_not["size"])
-                                opportunities.append({
-                                    "type": f"2-Way ({yes_out})",
-                                    "cluster_id": cluster_id,
-                                    "match": f"{home_team} vs {away_team}",
-                                    "roi": roi,
-                                    "total_prob": total_prob_2way,
-                                    "max_size": max_size,
-                                    "legs": {
-                                        yes_out: best_yes,
-                                        not_out: best_not
-                                    }
-                                })
-
-        # 最終按照 ROI 由高到低排序所有機會
-        opportunities.sort(key=lambda x: x["roi"], reverse=True)
-        return opportunities
+            if valid:
+                if cost_multi < best_multi_cost:
+                    best_multi_cost = cost_multi
+                    
+                #  觸發組合套利
+                if cost_multi < 1.0:
+                    roi = ((1.0 / cost_multi) - 1.0) * 100
+                    max_size = min(sizes)
+                    profit = max_size * (roi / 100)
+                    
+                    # 標題自動顯示是 2-Way 還是 3-Way
+                    print(f"\n [{num_outcomes}-Way 組合套利出現!] 賽事: {match_data['title']} ")
+                    print(f" 總成本: {cost_multi:.4f} | ROI: +{roi:.2f}% | Max Size: {max_size:.2f} U | 淨利: {profit:.2f} U")
+                    for i, outcome in enumerate(outcomes):
+                        plat = combo[i]
+                        p = price_memory[match_id][outcome][plat].get("yes_price")
+                        print(f"    在 {plat:<9} 買入 [{outcome:<15}] (Yes) | 成本: {p:.4f}")
+                    print("-" * 50)

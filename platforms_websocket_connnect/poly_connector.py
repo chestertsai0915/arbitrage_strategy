@@ -2,31 +2,39 @@ import asyncio
 import websockets
 import json
 import traceback
-
+import random
 class PolyConnector:
-    def __init__(self, asset_id, on_update_callback):
-        """
-        :param asset_id: 單一賽果的 Token ID
-        """
-        self.asset_id = str(asset_id)
+    #  1. 改接收 asset_ids (List)
+    def __init__(self, asset_ids, on_update_callback):
+        self.asset_ids = list(asset_ids) 
         self.on_update_callback = on_update_callback
         
-        #  升級：使用字典來維護完整的本地訂單簿 (Price -> Size)
-        self.bids = {}
-        self.asks = {}
+        #  2. 升級字典結構：針對每個 ID 都有獨立的訂單簿
+        self.bids = {aid: {} for aid in self.asset_ids}
+        self.asks = {aid: {} for aid in self.asset_ids}
 
     async def start(self):
         ws_url = "wss://ws-subscriptions-clob.polymarket.com/ws/market"
+        #  3. 把整個 List 丟給伺服器
         subscribe_msg = {
-            "assets_ids": [self.asset_id],
+            "assets_ids": self.asset_ids,
             "type": "market",
             "custom_feature_enabled": True
         }
 
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
+            "Origin": "https://polymarket.com"
+        }
+
         while True:
             try:
-                async with websockets.connect(ws_url) as websocket:
-                    print(f" [POLY] WebSocket 連線成功！(Token: {self.asset_id[:8]}...)")
+                #  2. 隨機抖動延遲 (錯開連線時間)
+                await asyncio.sleep(random.uniform(0.1, 2.0))
+                
+                #  3. 把 headers 塞進連線請求裡
+                async with websockets.connect(ws_url, additional_headers=headers) as websocket:
+                    print(f"[POLY] WebSocket 連線成功！(監聽 {len(self.asset_ids)} 個盤口)")
                     await websocket.send(json.dumps(subscribe_msg))
 
                     while True:
@@ -37,71 +45,61 @@ class PolyConnector:
 
                         for event in events:
                             incoming_asset_id = str(event.get("asset_id", ""))
-                            if incoming_asset_id != self.asset_id:
+                            if incoming_asset_id not in self.asset_ids:
                                 continue
 
-                            #  處理 Asks (賣方訂單) 更新 
+                            aid = incoming_asset_id # 簡寫
+                            changed = False
+
                             if "asks" in event and event["asks"]:
                                 for ask in event["asks"]:
                                     p = float(ask.get("price", 0)) if isinstance(ask, dict) else float(ask[0])
                                     s = float(ask.get("size", 0)) if isinstance(ask, dict) else float(ask[1])
-                                    
                                     if s <= 0:
-                                        # Size 為 0 代表該價位的訂單被取消或吃光了，從字典中移除
-                                        self.asks.pop(p, None)
+                                        self.asks[aid].pop(p, None)
                                     else:
-                                        # 更新或新增該價位的深度
-                                        self.asks[p] = s
+                                        self.asks[aid][p] = s
                                 changed = True
 
-                            #  處理 Bids (買方訂單) 更新 
                             if "bids" in event and event["bids"]:
                                 for bid in event["bids"]:
                                     p = float(bid.get("price", 0)) if isinstance(bid, dict) else float(bid[0])
                                     s = float(bid.get("size", 0)) if isinstance(bid, dict) else float(bid[1])
-                                    
                                     if s <= 0:
-                                        self.bids.pop(p, None)
+                                        self.bids[aid].pop(p, None)
                                     else:
-                                        self.bids[p] = s
+                                        self.bids[aid][p] = s
                                 changed = True
 
-                        # 只要訂單簿有變動，就觸發計算與回報
-                        if changed:
-                            self._trigger_callback()
+                            if changed:
+                                self._trigger_callback(aid)
 
             except websockets.exceptions.ConnectionClosed:
-                print(f" [POLY] 連線斷開，5秒後重連... (Token: {self.asset_id[:8]}...)")
+                # 使用 \r 避免洗版
+                print(f"\r [POLY] 連線斷開，5秒後重連... (共 {len(self.asset_ids)} 個盤口)       ")
                 await asyncio.sleep(5)
             except Exception as e:
-                print(f" [POLY] 發生錯誤: {e}")
-                traceback.print_exc()
+                # 4. 刪除 traceback.print_exc()，改成乾淨單行錯誤提示！
+                print(f"\r [POLY] 連線受阻 ({type(e).__name__})，5秒後重試... (共 {len(self.asset_ids)} 個盤口)       ")
                 await asyncio.sleep(5)
 
-    def _trigger_callback(self):
+    def _trigger_callback(self, aid):
         if not self.on_update_callback: return
 
-     
-        # 賣方最低價 (Best Ask) -> 我們買 Yes 的成本
-        best_ask_price = min(self.asks.keys()) if self.asks else None
-        best_ask_size = self.asks[best_ask_price] if best_ask_price else 0
+        best_ask_price = min(self.asks[aid].keys()) if self.asks[aid] else None
+        best_ask_size = self.asks[aid][best_ask_price] if best_ask_price else 0
 
-        # 買方最高價 (Best Bid) -> 我們買 No 的對手價
-        best_bid_price = max(self.bids.keys()) if self.bids else None
-        best_bid_size = self.bids[best_bid_price] if best_bid_price else 0
-
-        # === 核心轉換邏輯 ===
-        buy_yes_cost = best_ask_price
-        buy_no_cost = (1.0 - best_bid_price) if best_bid_price else None
+        best_bid_price = max(self.bids[aid].keys()) if self.bids[aid] else None
+        best_bid_size = self.bids[aid][best_bid_price] if best_bid_price else 0
 
         bbo_data = {
             "platform": "POLY",
-            "market_hash": self.asset_id,
-            "buy_outcome_1_cost": buy_yes_cost,
+            "market_hash": aid,
+            "buy_outcome_1_cost": best_ask_price,
             "buy_outcome_1_size": best_ask_size,
-            "buy_outcome_2_cost": buy_no_cost,
+            "buy_outcome_2_cost": (1.0 - best_bid_price) if best_bid_price else None,
             "buy_outcome_2_size": best_bid_size,
-            "total_active_orders": len(self.asks) + len(self.bids)
+            "total_active_orders": len(self.asks[aid]) + len(self.bids[aid])
         }
         self.on_update_callback(bbo_data)
 
@@ -121,7 +119,7 @@ if __name__ == "__main__":
         print("-" * 40)
 
     async def test():
-        connector = PolyConnector("19596230505334905503321726547378309060167788245319748292157531175114826139084", dummy_callback)
+        connector = PolyConnector(["39767095656649264630783425438372390895789661081321391574823969191181185605477"], dummy_callback)
         await connector.start()
 
     asyncio.run(test())
