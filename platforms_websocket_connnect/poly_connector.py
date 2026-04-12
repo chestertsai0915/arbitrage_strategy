@@ -53,8 +53,10 @@ class PolyConnector:
 
                             if "asks" in event and event["asks"]:
                                 for ask in event["asks"]:
-                                    p = float(ask.get("price", 0)) if isinstance(ask, dict) else float(ask[0])
-                                    s = float(ask.get("size", 0)) if isinstance(ask, dict) else float(ask[1])
+                                    p_raw = float(ask.get("price", 0)) if isinstance(ask, dict) else float(ask[0])
+                                    s_raw = float(ask.get("size", 0)) if isinstance(ask, dict) else float(ask[1])
+                                    p = round(float(p_raw), 4)
+                                    s = float(s_raw)
                                     if s <= 0:
                                         self.asks[aid].pop(p, None)
                                     else:
@@ -63,8 +65,12 @@ class PolyConnector:
 
                             if "bids" in event and event["bids"]:
                                 for bid in event["bids"]:
-                                    p = float(bid.get("price", 0)) if isinstance(bid, dict) else float(bid[0])
-                                    s = float(bid.get("size", 0)) if isinstance(bid, dict) else float(bid[1])
+                                    p_raw = bid.get("price", 0) if isinstance(bid, dict) else bid[0]
+                                    s_raw = bid.get("size", 0) if isinstance(bid, dict) else bid[1]
+                                    
+                                    p = round(float(p_raw), 4)
+                                    s = float(s_raw)
+
                                     if s <= 0:
                                         self.bids[aid].pop(p, None)
                                     else:
@@ -85,7 +91,24 @@ class PolyConnector:
 
     def _trigger_callback(self, aid):
         if not self.on_update_callback: return
+        while True:
+            best_ask_price = min(self.asks[aid].keys()) if self.asks[aid] else None
+            best_bid_price = max(self.bids[aid].keys()) if self.bids[aid] else None
 
+            # 如果一邊空了，就不可能倒掛，安全過關
+            if best_ask_price is None or best_bid_price is None:
+                break
+                
+            # 正常情況下，買價 (Bid) 必須小於 賣價 (Ask)
+            if best_bid_price < best_ask_price:
+                break # 狀態健康，跳出檢查
+                
+            #  發生倒掛
+            # 代表這兩個極端價格中必定有漏接刪除封包的幽靈，直接將它們從記憶體抹除！
+            self.asks[aid].pop(best_ask_price, None)
+            self.bids[aid].pop(best_bid_price, None)
+            # 迴圈會繼續檢查下一組最佳價格，直到訂單簿恢復正常！
+        # 
         best_ask_price = min(self.asks[aid].keys()) if self.asks[aid] else None
         best_ask_size = self.asks[aid][best_ask_price] if best_ask_price else 0
 
@@ -106,20 +129,18 @@ class PolyConnector:
 # === 單獨測試用 ===
 if __name__ == "__main__":
     def dummy_callback(data):
-        buy_1_cost = data.get('buy_outcome_1_cost')
-        buy_1_size = data.get('buy_outcome_1_size', 0)
-        buy_2_cost = data.get('buy_outcome_2_cost')
-        buy_2_size = data.get('buy_outcome_2_size', 0)
-        
-        print(f" [回報測試] Poly 最新報價:")
-        if buy_1_cost:
-            print(f"    買 Yes 成本: {buy_1_cost:.4f} | 深度: {buy_1_size:.2f} 份")
-        if buy_2_cost:
-            print(f"   買 No  成本: {buy_2_cost:.4f} | 深度: {buy_2_size:.2f} 份")
-        print("-" * 40)
+        print(f"\n📢 [回報測試] SX Bet 完整原始報價資料:")
+        # 使用 json.dumps 將整個 dict 格式化，indent=4 會讓它自動縮排，方便閱讀
+        try:
+            formatted_data = json.dumps(data, indent=4, ensure_ascii=False)
+            print(formatted_data)
+        except Exception as e:
+            # 如果 data 裡面有無法 JSON 序列化的物件，退回使用普通 print
+            print(data)
+        print("-" * 60)
 
     async def test():
-        connector = PolyConnector(["39767095656649264630783425438372390895789661081321391574823969191181185605477"], dummy_callback)
+        connector = PolyConnector(["96898772129585101925877684695807771447728395559096872684551711473773297707732"], dummy_callback)
         await connector.start()
 
     asyncio.run(test())

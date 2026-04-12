@@ -10,6 +10,7 @@ from centrifuge import (
     SubscriptionEventHandler,
 )
 from dotenv import load_dotenv
+from envs.got.Lib import json
 
 # 自動尋找並載入同目錄下的 .env 檔案
 load_dotenv()
@@ -246,30 +247,30 @@ class SXBetConnector:
 # === 單獨測試用 ===
 if __name__ == "__main__":
     def dummy_callback(data):
-        buy_1_cost = data.get('buy_outcome_1_cost')
-        buy_1_size = data.get('buy_outcome_1_size', 0)
-        buy_2_cost = data.get('buy_outcome_2_cost')
-        buy_2_size = data.get('buy_outcome_2_size', 0)
-        
-        print(f"\n📢 [回報測試] SX Bet 最新報價:")
-        if buy_1_cost:
-            print(f"    🟢 買 Yes 成本: {buy_1_cost:.4f} | 深度: {buy_1_size:.2f} USDC")
-        if buy_2_cost:
-            print(f"    🔴 買 No  成本: {buy_2_cost:.4f} | 深度: {buy_2_size:.2f} USDC")
-        print("-" * 40)
+        print(f"\n📢 [回報測試] SX Bet 完整原始報價資料:")
+        # 使用 json.dumps 將整個 dict 格式化，indent=4 會讓它自動縮排，方便閱讀
+        try:
+            formatted_data = json.dumps(data, indent=4, ensure_ascii=False)
+            print(formatted_data)
+        except Exception as e:
+            # 如果 data 裡面有無法 JSON 序列化的物件，退回使用普通 print
+            print(data)
+        print("-" * 60)
 
     async def test():
         API_KEY  = os.environ.get("SX_bet")
-        TARGET_HASH = "0x0613cea110f26815d01f74e3c1c7333158c86eeb1ce06a897b6f283d4e1a8bd0"
+        TARGET_HASH = "0x77ece77b79e2fca34ba7a51c5e855485661a3f0a36ec12505200586067543d02"
         
         # 🌟 記得這裡要包成陣列傳入
         connector = SXBetConnector(API_KEY, [TARGET_HASH], dummy_callback)
-        print("🚀 啟動 SX Bet 測試連線...")
+        print(" 啟動 SX Bet 測試連線...")
         await connector.start()
         
         await asyncio.Future()
 
     try:
+        # Windows 環境下如果 asyncio 報錯，可以取消註解下面這行
+        # asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
         asyncio.run(test())
     except KeyboardInterrupt:
-        print("\n🛑 已手動停止程式")
+        print("\n 已手動停止程式")

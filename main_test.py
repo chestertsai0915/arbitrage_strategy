@@ -1,101 +1,252 @@
+import json
+import time
 import asyncio
-import itertools
-from core.arbitrage_engine import check_all_arbitrage
-# 把三個 Connector 從你的模組包裡面叫出來
-from platforms_websocket_connnect import SXBetConnector, PolyConnector, LimitlessConnector
 import os
 from dotenv import load_dotenv
 
-# 自動尋找並載入同目錄下的 .env 檔案
+# 匯入各平台 API (REST 靜態爬蟲用)
+import logging
+from envs.got.Lib import json
+from platforms import AVAILABLE_PLATFORMS
+
+# 匯入配對引擎與工具
+from utils.team_mapping import TeamNameMapper
+from core.matcher import MatchEngine 
+
+#  匯入動態 WebSocket 套件與套利大腦
+from platforms_websocket_connnect import CONNECTOR_MAP
+from core.arbitrage_engine import check_all_arbitrage
+
+# 載入環境變數 (API Key)
 load_dotenv()
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    handlers=[
+        logging.FileHandler("arbitrage_bot.log", encoding='utf-8'), # 存檔
+        # 這裡刻意不加 StreamHandler，為了保持你終端機儀表板的乾淨
+    ]
+)
 
-SX_API_KEY = os.environ.get("SX_bet")
-
-#  這裡示範加入了 LIMITLESS 的假資料格式，實戰時會用轉換工具自動生成
-MATCH_MAPPING = {
-    "real_madrid_bayern_munich_2026-04-07": {
-        "title": "Real Madrid vs FC Bayern Munich",
-        "outcomes": ["Away", "Home", "Draw"],
-        "SX_BET": {
-            "Away": "0x0613cea110f26815d01f74e3c1c7333158c86eeb1ce06a897b6f283d4e1a8bd0",           
-            "Home": "0x918f3bbf6879059d12f526da3aa0b11ed219b87026988e636c667ae65f7593fe",   
-            "Draw": "0x4c286058ae42b644e3b34b6548168bbdddede7495cc574663e6b5bbe7045bbc9",
-        },
-        "POLY": {
-            "Home": "19596230505334905503321726547378309060167788245319748292157531175114826139084",
-            "Away": "99949662063403569895321097192043694236016212986254553767097648841549016857591",
-            "Draw": "18822812066819800310928467826996124926526029026598480680953086271904576052367",
-        },
-        "LIMITLESS": {
-            # 這裡放 Limitless 抓下來的 slug，先用假字串佔位示範
-            "Home": "real-madrid-1774342805684",
-            "Away": "bayern-munchen-1774342805691",
-            "Draw": "draw-1774342805696",
-        }
-    }
-}
-
-price_memory = {}
-for match_id, match_data in MATCH_MAPPING.items():
-    price_memory[match_id] = {outcome: {} for outcome in match_data["outcomes"]}
-
-def arbitrage_callback(bbo_data):
-    platform = bbo_data["platform"]
-    incoming_hash = str(bbo_data["market_hash"])
+# 讓底層套件閉嘴，只記錄我們自己發出的重要訊息或嚴重崩潰
+logging.getLogger('asyncio').setLevel(logging.CRITICAL)
+logging.getLogger('websockets').setLevel(logging.CRITICAL)
+logging.getLogger('centrifuge').setLevel(logging.CRITICAL)
+def generate_match_mapping(overlapping_matches):
+    """將配對好的賽事轉換成 WebSocket 引擎專用的字典格式"""
+    match_mapping = {}
     
-    target_match, target_outcome = None, None
-    for match_id, match_data in MATCH_MAPPING.items():
-        if platform == "SX_BET":
-            for outcome, m_hash in match_data.get("SX_BET", {}).items():
-                if m_hash == incoming_hash:
-                    target_match, target_outcome = match_id, outcome
-                    break
-        elif platform == "POLY":
-            for outcome, m_hash in match_data.get("POLY", {}).items():
-                if m_hash == incoming_hash:
-                    target_match, target_outcome = match_id, outcome
-                    break
-        elif platform == "LIMITLESS":
-            for outcome, m_hash in match_data.get("LIMITLESS", {}).items():
-                if m_hash == incoming_hash:
-                    target_match, target_outcome = match_id, outcome
-                    break
-                    
-    if not target_match or not target_outcome:
+    for cluster_id, events in overlapping_matches:
+        # 使用第一筆資料建立標題
+        first_event = events[0]
+        title = f"{first_event.home_team} vs {first_event.away_team}"
+        
+        # 建立這場比賽的專屬設定檔
+        match_mapping[cluster_id] = {
+            "title": title,
+            "outcomes": ["Home", "Away", "Draw"], # 標準化的三大選項
+        }
+        
+        # 掃描這場比賽底下所有平台的資料
+        for event in events:
+            # 轉換平台名稱，對齊 CONNECTOR_MAP 的 Key
+            platform_key = event.platform.upper().replace(" ", "_")
+            if platform_key == "SX_BET":
+                platform_key = "SX_BET"
+            elif platform_key == "POLYMARKET":
+                platform_key = "POLY"
+            elif platform_key == "LIMITLESS":
+                platform_key = "LIMITLESS"
+                
+            # 把爬蟲抓到的鑰匙 (token_mapping) 塞進去
+            match_mapping[cluster_id][platform_key] = event.raw_data.get("token_mapping", {})
+            
+    return match_mapping
+
+
+async def start_trading_engine(match_mapping):
+    """啟動 WebSocket 監聽網與核心套利引擎"""
+    print("\n" + "=" * 60)
+    print(" 啟動多平台即時套利監控網 (WebSocket & Arbitrage Engine)")
+    print("=" * 60)
+    
+    price_memory = {}
+    for match_id, match_data in match_mapping.items():
+        price_memory[match_id] = {outcome: {} for outcome in match_data["outcomes"]}
+
+   
+    # 監控儀表板狀態
+    
+    expected_pipes = {"SX_BET": 0, "POLY": 0, "LIMITLESS": 0}
+    active_pipes = {"SX_BET": set(), "POLY": set(), "LIMITLESS": set()}
+
+    def arbitrage_callback(bbo_data):
+        platform = bbo_data["platform"]
+        incoming_hash = str(bbo_data["market_hash"])
+        
+        #  只要收到報價，就把這個 Hash 標記為「活躍中」
+        if platform in active_pipes:
+            active_pipes[platform].add(incoming_hash)
+        
+        target_match, target_outcome = None, None
+        
+        for match_id, match_data in match_mapping.items():
+            if platform in match_data:
+                for outcome_key, m_hash in match_data[platform].items():
+                    if m_hash == incoming_hash:
+                        target_match = match_id
+                        target_outcome = outcome_key.replace("Not ", "")
+                        break
+            if target_match:
+                break
+                
+        if not target_match or not target_outcome:
+            return
+
+        price_memory[target_match][target_outcome][platform] = {
+            "yes_price": bbo_data.get("buy_outcome_1_cost"), 
+            "yes_size": bbo_data.get("buy_outcome_1_size", 0),
+            "no_price": bbo_data.get("buy_outcome_2_cost"), 
+            "no_size": bbo_data.get("buy_outcome_2_size", 0)
+        }
+        
+        check_all_arbitrage(target_match, match_mapping, price_memory)
+
+    # ==========================================
+    #  新增：獨立的背景儀表板任務 (每 0.5 秒刷新一次畫面)
+    # ==========================================
+    async def dashboard_task():
+        while True:
+            sx = f"{len(active_pipes['SX_BET'])}/{expected_pipes['SX_BET']}"
+            poly = f"{len(active_pipes['POLY'])}/{expected_pipes['POLY']}"
+            lim = f"{len(active_pipes['LIMITLESS'])}/{expected_pipes['LIMITLESS']}"
+            
+            # 使用 \r 讓這行字永遠固定在終端機最下方
+            print(f"\r [管線健康度] SX: {sx} 條 | Poly: {poly} 條 | Limitless: {lim} 條 ", end="", flush=True)
+            await asyncio.sleep(0.5)
+
+    # 平台 ID 集中打包 (Multiplexing)
+    
+    platform_targets = {"SX_BET": set(), "POLY": set(), "LIMITLESS": set()}
+
+    # 1. 蒐集所有需要監聽的 Hash/Slug，集中到 Set 裡面去重複
+    for match_id, match_data in match_mapping.items():
+        for platform_name in ["SX_BET", "POLY", "LIMITLESS"]:
+            if platform_name in match_data:
+                platform_targets[platform_name].update(match_data[platform_name].values())
+
+    tasks = []
+    sx_api_key = os.environ.get("SX_bet")
+    def dummy_callback(data):
+        print(f"\n📢 [回報測試] SX Bet 完整原始報價資料:")
+        # 使用 json.dumps 將整個 dict 格式化，indent=4 會讓它自動縮排，方便閱讀
+        try:
+            formatted_data = json.dumps(data, indent=4, ensure_ascii=False)
+            print(formatted_data)
+        except Exception as e:
+            # 如果 data 裡面有無法 JSON 序列化的物件，退回使用普通 print
+            print(data)
+        print("-" * 60)
+    # 2. 每個平台「只建立 1 個」Connector，把幾百個 ID 一次傳進去！
+    if platform_targets["SX_BET"]:
+        hashes = list(platform_targets["SX_BET"])
+        expected_pipes["SX_BET"] = len(hashes)
+        tasks.append(CONNECTOR_MAP["SX_BET"](sx_api_key, hashes, dummy_callback).start())
+
+    if platform_targets["POLY"]:
+        hashes = list(platform_targets["POLY"])
+        expected_pipes["POLY"] = len(hashes)
+        tasks.append(CONNECTOR_MAP["POLY"](hashes, dummy_callback).start())
+
+    if platform_targets["LIMITLESS"]:
+        hashes = list(platform_targets["LIMITLESS"])
+        expected_pipes["LIMITLESS"] = len(hashes)
+        tasks.append(CONNECTOR_MAP["LIMITLESS"](hashes, dummy_callback).start())
+
+    if not tasks:
+        print(" 沒有找到可監聽的目標。")
         return
 
-    # 寫入記憶體
-    price_memory[target_match][target_outcome][platform] = {
-        "yes_price": bbo_data.get("buy_outcome_1_cost"), 
-        "yes_size": bbo_data.get("buy_outcome_1_size", 0),
-        "no_price": bbo_data.get("buy_outcome_2_cost"), 
-        "no_size": bbo_data.get("buy_outcome_2_size", 0)
-    }
-    
-    #  呼叫外部的套利引擎，並把記憶體跟設定檔傳給它
-    check_all_arbitrage(target_match, MATCH_MAPPING, price_memory)
+    # 把背景儀表板任務也加進去一起跑
+    tasks.append(dashboard_task())
 
-async def main():
-    print(" 啟動三大平台 (SX/POLY/LIMITLESS) 雙核心套利引擎...")
-    tasks = []
-    
-    for match_id, match_data in MATCH_MAPPING.items():
-        if "SX_BET" in match_data:
-            for outcome, m_hash in match_data["SX_BET"].items():
-                tasks.append(SXBetConnector(SX_API_KEY, m_hash, arbitrage_callback).start())
-            
-        if "POLY" in match_data:
-            for outcome, token_id in match_data["POLY"].items():
-                tasks.append(PolyConnector(token_id, arbitrage_callback).start())
-                
-        if "LIMITLESS" in match_data:
-            for outcome, slug in match_data["LIMITLESS"].items():
-                tasks.append(LimitlessConnector(slug, arbitrage_callback).start())
-            
+    #  現在這裡只會有 4 個 Task (3 個平台主連線 + 1 個儀表板)！
     await asyncio.gather(*tasks)
 
-if __name__ == "__main__":
+
+def main():  
+    print(" 啟動 Total Search 賽事掃描引擎")
+    
+    # 步驟 1：初始化系統工具與平台
+    mapper = TeamNameMapper()
+    match_engine = MatchEngine(threshold=70.0, min_platforms=2)
+    platforms = [PlatformClass(mapper) for PlatformClass in AVAILABLE_PLATFORMS]
+
+    # 步驟 2：盤前靜態資料收集
+    all_events = []
+    for api in platforms:
+        try:
+            events = api.get_matches()
+            all_events.extend(events)
+        except Exception as e:
+            print(f" {api.name} 獲取賽事失敗: {e}")
+
+    # 步驟 3：安檢過濾
+    moneyline_events = [
+        e for e in all_events 
+        if e.market_type == "moneyline" and e.raw_data.get("token_mapping")
+    ]
+    
+    print(f"\n 總計獲取 {len(all_events)} 場比賽。")
+    print(f" 過濾後剩下 {len(moneyline_events)} 場高品質 Moneyline (獨贏盤) 賽事準備進行配對。")
+
+    # 步驟 4：啟動 AI 配對引擎，尋找 Overlap
+    overlapping_matches = match_engine.match_events(moneyline_events)
+
+   
+    if not overlapping_matches:
+        print("\n 目前沒有找到任何跨平台交集的比賽。程式結束。")
+        return
+    
+    
+    clean_matches = []
+    cleaned_count = 0
+    
+    for platforms in overlapping_matches:
+        valid_platforms = []
+        for plat in platforms:
+            #  1. 因為 plat 是物件，改用 getattr 安全地獲取屬性
+            raw_data = getattr(plat[0], "away_team", {}) or {}
+            tokens = raw_data
+            
+            #  2. 智慧審查：只有「當該平台有提供 token_mapping 時」，才嚴格檢查 Home 和 Away
+            if tokens:
+                if "bayern_munich" not in tokens:
+                    print(f" [資料清洗] 剔除殘缺盤口: {plat[1].platform} - {plat[1].market_name}")
+                    cleaned_count += 1
+                    continue
+                
+            valid_platforms.append(plat)
+            
+        #  必須要剩下 2 家以上的「健康平台」，這場比賽才有套利價值
+        if len(valid_platforms) >= 2:
+            clean_matches.append(valid_platforms)
+    #  測試模式：限制只跑前 10 筆交集賽事
+    overlapping_matches = clean_matches
+    total_matches = len(overlapping_matches)
+    overlapping_matches = overlapping_matches
+    print(f"\n 總共找到 {total_matches} 場交集賽事，目前限制只測試前 {len(overlapping_matches)} 場...")
+    
+    #  步驟 5：動態轉換設定檔
+    match_mapping = generate_match_mapping(overlapping_matches)
+    print(f" 成功轉換 {len(match_mapping)} 場交集賽事，準備載入大腦...")
+
+    #  步驟 6：啟動非同步套利監控
     try:
-        asyncio.run(main())
+        asyncio.run(start_trading_engine(match_mapping))
     except KeyboardInterrupt:
-        print("\n 已手動停止程式")
+        print("\n 已手動停止套利系統")
+
+
+if __name__ == "__main__":
+    main()

@@ -19,3 +19,4 @@ test.ipynb
 logs/
 *.json
 *.ipynb
+*.log

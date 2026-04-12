@@ -1,4 +1,9 @@
 import itertools
+import os
+from datetime import datetime
+
+
+from envs.got.Lib import json
 
 def check_all_arbitrage(match_id, match_mapping, price_memory):
     """
@@ -37,7 +42,7 @@ def check_all_arbitrage(match_id, match_mapping, price_memory):
                 if cost_hedge < best_hedge_cost:
                     best_hedge_cost = cost_hedge
                 
-                # 🚨 觸發對沖套利
+                #  觸發對沖套利
                 if cost_hedge < 1.0:
                     roi = ((1.0 / cost_hedge) - 1.0) * 100
                     max_size = min(pA_data.get("yes_size", 0), pB_data.get("no_size", 0))
@@ -94,4 +99,21 @@ def check_all_arbitrage(match_id, match_mapping, price_memory):
                         plat = combo[i]
                         p = price_memory[match_id][outcome][plat].get("yes_price")
                         print(f"    在 {plat:<9} 買入 [{outcome:<15}] (Yes) | 成本: {p:.4f}")
+                    if roi>3:
+                        os.makedirs(f"arbitrage_opportunities", exist_ok=True)
+                        # 取得目前時間，格式為：20231027_143005 (年月日_時分秒)
+                        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                        with open(f"arbitrage_opportunities/{match_id}_{num_outcomes}way_{timestamp}.json", "w", encoding="utf-8") as f:
+                            json.dump({
+                                "match_id": match_id,
+                                "match_title": match_data['title'],
+                                "strategy": f"{num_outcomes}-Way 組合套利",
+                                "total_cost": cost_multi,
+                                "roi_percent": roi,
+                                "max_size": max_size,
+                                "profit": profit,
+                                "match_data": match_data,
+                                "price_memory": price_memory[match_id]
+                            }, f, indent=4, ensure_ascii=False)
+
                     print("-" * 50)
