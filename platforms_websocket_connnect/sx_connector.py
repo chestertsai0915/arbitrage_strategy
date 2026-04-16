@@ -307,4 +307,4 @@ if __name__ == "__main__":
     try:
         asyncio.run(main_test())
     except KeyboardInterrupt:
-        print("\n⏹️ 已手動停止")
+        print("\n已手動停止")

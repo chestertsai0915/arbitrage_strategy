@@ -123,7 +123,7 @@ class LimitlessConnector:
 if __name__ == "__main__":
     def dummy_callback(data):
         import json
-        print(f"📢 [回報] Limitless 最新報價:")
+        print(f" [回報] Limitless 最新報價:")
         print(json.dumps(data, indent=4, ensure_ascii=False))
         print("-" * 60)
 

@@ -129,7 +129,7 @@ class PolyConnector:
 # === 單獨測試用 ===
 if __name__ == "__main__":
     def dummy_callback(data):
-        print(f"\n📢 [回報測試] SX Bet 完整原始報價資料:")
+        print(f"\n [回報測試] SX Bet 完整原始報價資料:")
         # 使用 json.dumps 將整個 dict 格式化，indent=4 會讓它自動縮排，方便閱讀
         try:
             formatted_data = json.dumps(data, indent=4, ensure_ascii=False)

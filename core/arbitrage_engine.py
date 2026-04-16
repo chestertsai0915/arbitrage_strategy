@@ -215,8 +215,8 @@ def check_all_arbitrage(match_id, match_mapping, price_memory):
                             }, f, indent=4, ensure_ascii=False)
                         print("-" * 50)
                 else:
-                    # 💡 套利空間關閉 (報價還在，但成本 >= 1.0)
+                    #  套利空間關閉 (報價還在，但成本 >= 1.0)
                     check_and_close_opportunity(arb_key, match_id, match_data['title'], cost_multi)
             else:
-                # 💡 套利空間關閉 (有選項報價缺失)
+                #  套利空間關閉 (有選項報價缺失)
                 check_and_close_opportunity(arb_key, match_id, match_data['title'], current_cost=999.0)
