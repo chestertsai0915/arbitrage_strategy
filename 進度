@@ -3,4 +3,6 @@ SX的orderbook有問題(yes 跟no 反了)
 模糊算法threshold
 !!!必須作但還未做 用webstock
 !!!最終型式:系統會有一個背景程式，每隔幾小時或每天自動抓取各平台的賽事清單 之後訂閱websocket 有價格變化就去算賠率
+
 arbitragy max size 要調整
+確認最賺錢時機(盤中、盤前、)
