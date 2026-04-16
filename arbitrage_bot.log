@@ -1,0 +1,42 @@
+2026-04-14 12:34:16,220 [ERROR] packet queue is empty, aborting
+2026-04-14 12:34:16,227 [ERROR] disconnect async handler error
+Traceback (most recent call last):
+  File "D:\investment\博弈套利\venv\Lib\site-packages\socketio\async_client.py", line 472, in _trigger_event
+    ret = await handler(*args)
+                ^^^^^^^^^^^^^^
+TypeError: LimitlessConnector.start.<locals>.disconnect() takes 0 positional arguments but 1 was given
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\investment\博弈套利\venv\Lib\site-packages\engineio\async_client.py", line 484, in _trigger_event
+    ret = await self.handlers[event](*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\investment\博弈套利\venv\Lib\site-packages\socketio\async_client.py", line 597, in _handle_eio_disconnect
+    await self._trigger_event('disconnect', n, reason)
+  File "D:\investment\博弈套利\venv\Lib\site-packages\socketio\async_client.py", line 477, in _trigger_event
+    ret = await handler(*args[:-1])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\investment\博弈套利\platforms_websocket_connnect\limitless_connector.py", line 65, in disconnect
+    self.current_state[slug] = {"ask_price": None, "ask_size": 0, "bid_price": None, "bid_size": 0}
+                                                            ^^^^^^^^^^^^^^^^
+AttributeError: 'LimitlessConnector' object has no attribute 'market_slug'
+2026-04-15 10:31:39,794 [ERROR] packet queue is empty, aborting
+2026-04-16 01:06:07,869 [ERROR] packet queue is empty, aborting
+2026-04-16 01:15:57,360 [ERROR] packet queue is empty, aborting
+2026-04-16 01:18:45,143 [ERROR] packet queue is empty, aborting
+2026-04-16 01:20:44,430 [ERROR] packet queue is empty, aborting
+2026-04-16 01:24:59,020 [ERROR] packet queue is empty, aborting
+2026-04-16 01:38:18,076 [ERROR] packet queue is empty, aborting
+2026-04-16 01:40:11,655 [ERROR] packet queue is empty, aborting
+2026-04-16 01:42:01,893 [ERROR] packet queue is empty, aborting
+2026-04-16 01:48:49,388 [ERROR] packet queue is empty, aborting
+2026-04-16 02:17:15,935 [ERROR] packet queue is empty, aborting
+2026-04-16 02:24:36,454 [ERROR] packet queue is empty, aborting
+2026-04-16 02:36:02,938 [ERROR] packet queue is empty, aborting
+2026-04-16 02:44:09,576 [ERROR] packet queue is empty, aborting
+2026-04-16 02:50:31,340 [ERROR] packet queue is empty, aborting
+2026-04-16 02:56:38,147 [ERROR] packet queue is empty, aborting
+2026-04-16 02:57:46,625 [ERROR] packet queue is empty, aborting
+2026-04-16 03:07:18,016 [ERROR] packet queue is empty, aborting
+2026-04-16 05:42:58,932 [ERROR] packet queue is empty, aborting

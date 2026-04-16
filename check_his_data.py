@@ -99,7 +99,7 @@ def count_unreasonable_quotes(directory_path="arbitrage_opportunities2"):
         print(" ✅ 皆正常")
     else:
         for p, c in sorted(anomaly_multiway_counts.items(), key=lambda x: x[1], reverse=True):
-            print(f" 🚩 {p:<12} : {c} 次")
+            print(f"  {p:<12} : {c} 次")
     print("=" * 65)
 
 if __name__ == "__main__":
