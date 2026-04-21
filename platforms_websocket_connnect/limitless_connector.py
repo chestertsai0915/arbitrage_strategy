@@ -46,32 +46,37 @@ class LimitlessConnector:
         best_ask = min(asks.keys()) if asks else None
         best_bid = max(bids.keys()) if bids else None
 
-        if best_ask is None or best_bid is None:
-            return
+        # 🚨 移除原本的 early return！
+        # 如果發生倒掛，我們不要跳過，而是把它視為「無效/空報價」，強制清空
+        if best_ask is not None and best_bid is not None:
+            if best_ask <= best_bid:
+                # print(f" [SANITY] {slug} orderbook 倒掛，視為無效報價")
+                best_ask = None
+                best_bid = None
 
-        # Sanity check：ask 必須大於 bid
-        if best_ask <= best_bid:
-            print(f" [SANITY] {slug} orderbook 倒掛 ask={best_ask} <= bid={best_bid}，略過")
-            return
+        # 安全地計算買入成本 (防呆處理 None)
+        if best_ask is not None:
+            buy_yes_cost = best_ask * (1 + self._get_buy_fee_rate(best_ask))
+            buy_yes_size = asks[best_ask]
+        else:
+            buy_yes_cost = None
+            buy_yes_size = 0.0
 
-        buy_yes_cost = best_ask * (1 + self._get_buy_fee_rate(best_ask))
-
-        raw_no_price = 1.0 - best_bid
-        buy_no_cost = raw_no_price * (1 + self._get_buy_fee_rate(raw_no_price))
-
-        # Sanity check：yes + no 加總合理範圍
-        total = buy_yes_cost + buy_no_cost
-        if not (0.97 <= total <= 1.13):
-            print(f"[SANITY] {slug} yes+no={total:.4f} 不合理，略過")
-            return
+        if best_bid is not None:
+            raw_no_price = 1.0 - best_bid
+            buy_no_cost = raw_no_price * (1 + self._get_buy_fee_rate(raw_no_price))
+            buy_no_size = bids[best_bid]
+        else:
+            buy_no_cost = None
+            buy_no_size = 0.0
 
         new_state = {
             "platform": "LIMITLESS",
             "market_hash": slug,
             "buy_outcome_1_cost": buy_yes_cost,
-            "buy_outcome_1_size": asks[best_ask],
+            "buy_outcome_1_size": buy_yes_size,
             "buy_outcome_2_cost": buy_no_cost,
-            "buy_outcome_2_size": bids[best_bid],
+            "buy_outcome_2_size": buy_no_size,
             "total_active_orders": len(asks) + len(bids),
         }
 
@@ -128,7 +133,7 @@ if __name__ == "__main__":
         print("-" * 60)
 
     async def test():
-        connector = LimitlessConnector(["bayern-munchen-1775034007384"], dummy_callback)
+        connector = LimitlessConnector(["sc-freiburg-1775120414586"], dummy_callback)
         try:
             await connector.start()
         finally:

@@ -40,3 +40,10 @@ AttributeError: 'LimitlessConnector' object has no attribute 'market_slug'
 2026-04-16 02:57:46,625 [ERROR] packet queue is empty, aborting
 2026-04-16 03:07:18,016 [ERROR] packet queue is empty, aborting
 2026-04-16 05:42:58,932 [ERROR] packet queue is empty, aborting
+2026-04-17 04:45:45,888 [ERROR] packet queue is empty, aborting
+2026-04-17 14:01:00,710 [ERROR] packet queue is empty, aborting
+2026-04-18 04:54:36,892 [ERROR] packet queue is empty, aborting
+2026-04-18 16:30:45,547 [ERROR] packet queue is empty, aborting
+2026-04-18 22:40:29,290 [ERROR] packet queue is empty, aborting
+2026-04-19 14:51:12,262 [ERROR] packet queue is empty, aborting
+2026-04-19 21:45:45,654 [ERROR] packet queue is empty, aborting

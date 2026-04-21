@@ -1,12 +1,10 @@
-import json
 import time
 import asyncio
 import os
 from dotenv import load_dotenv
-
+from utils.paper_trader import PaperTrader
 # 匯入各平台 API (REST 靜態爬蟲用)
 import logging
-from envs.got.Lib import json
 from platforms import AVAILABLE_PLATFORMS
 
 # 匯入配對引擎與工具
@@ -64,7 +62,7 @@ def generate_match_mapping(overlapping_matches):
     return match_mapping
 
 
-async def start_trading_engine(match_mapping):
+async def start_trading_engine(match_mapping, paper_trader=None):
     """啟動 WebSocket 監聽網與核心套利引擎"""
     print("\n" + "=" * 60)
     print(" 啟動多平台即時套利監控網 (WebSocket & Arbitrage Engine)")
@@ -110,11 +108,11 @@ async def start_trading_engine(match_mapping):
             "no_size": bbo_data.get("buy_outcome_2_size", 0)
         }
         
-        check_all_arbitrage(target_match, match_mapping, price_memory)
+        check_all_arbitrage(target_match, match_mapping, price_memory, paper_trader)
 
-    # ==========================================
-    #  新增：獨立的背景儀表板任務 (每 0.5 秒刷新一次畫面)
-    # ==========================================
+   
+    #  新增：獨立的背景任務 (每 0.5 秒刷新一次畫面)
+   
     async def dashboard_task():
         while True:
             sx = f"{len(active_pipes['SX_BET'])}/{expected_pipes['SX_BET']}"
@@ -137,31 +135,22 @@ async def start_trading_engine(match_mapping):
 
     tasks = []
     sx_api_key = os.environ.get("SX_bet")
-    def dummy_callback(data):
-        print(f"\n📢 [回報測試] SX Bet 完整原始報價資料:")
-        # 使用 json.dumps 將整個 dict 格式化，indent=4 會讓它自動縮排，方便閱讀
-        try:
-            formatted_data = json.dumps(data, indent=4, ensure_ascii=False)
-            print(formatted_data)
-        except Exception as e:
-            # 如果 data 裡面有無法 JSON 序列化的物件，退回使用普通 print
-            print(data)
-        print("-" * 60)
+
     # 2. 每個平台「只建立 1 個」Connector，把幾百個 ID 一次傳進去！
     if platform_targets["SX_BET"]:
         hashes = list(platform_targets["SX_BET"])
         expected_pipes["SX_BET"] = len(hashes)
-        tasks.append(CONNECTOR_MAP["SX_BET"](sx_api_key, hashes, dummy_callback).start())
+        tasks.append(CONNECTOR_MAP["SX_BET"](sx_api_key, hashes, arbitrage_callback).start())
 
     if platform_targets["POLY"]:
         hashes = list(platform_targets["POLY"])
         expected_pipes["POLY"] = len(hashes)
-        tasks.append(CONNECTOR_MAP["POLY"](hashes, dummy_callback).start())
+        tasks.append(CONNECTOR_MAP["POLY"](hashes, arbitrage_callback).start())
 
     if platform_targets["LIMITLESS"]:
         hashes = list(platform_targets["LIMITLESS"])
         expected_pipes["LIMITLESS"] = len(hashes)
-        tasks.append(CONNECTOR_MAP["LIMITLESS"](hashes, dummy_callback).start())
+        tasks.append(CONNECTOR_MAP["LIMITLESS"](hashes, arbitrage_callback).start())
 
     if not tasks:
         print(" 沒有找到可監聽的目標。")
@@ -176,10 +165,10 @@ async def start_trading_engine(match_mapping):
 
 def main():  
     print(" 啟動 Total Search 賽事掃描引擎")
-    
+    trader = PaperTrader(initial_balance=200000000.0, max_bet_per_trade=400.0)
     # 步驟 1：初始化系統工具與平台
     mapper = TeamNameMapper()
-    match_engine = MatchEngine(threshold=70.0, min_platforms=2)
+    match_engine = MatchEngine(threshold=80.0, min_platforms=2)
     platforms = [PlatformClass(mapper) for PlatformClass in AVAILABLE_PLATFORMS]
 
     # 步驟 2：盤前靜態資料收集
@@ -200,7 +189,7 @@ def main():
     print(f"\n 總計獲取 {len(all_events)} 場比賽。")
     print(f" 過濾後剩下 {len(moneyline_events)} 場高品質 Moneyline (獨贏盤) 賽事準備進行配對。")
 
-    # 步驟 4：啟動 AI 配對引擎，尋找 Overlap
+    # 步驟 4：啟動配對，尋找 Overlap
     overlapping_matches = match_engine.match_events(moneyline_events)
 
    
@@ -209,41 +198,63 @@ def main():
         return
     
     
+
+    
+    #  防呆：資料清洗 (Data Cleansing) 全域濾網
+  
     clean_matches = []
     cleaned_count = 0
     
-    for platforms in overlapping_matches:
-        valid_platforms = []
-        for plat in platforms:
-            #  1. 因為 plat 是物件，改用 getattr 安全地獲取屬性
-            raw_data = getattr(plat[0], "away_team", {}) or {}
-            tokens = raw_data
+    # 1. 遍歷每一場交集賽事，並直接將 Tuple 解包為 match_name (0) 和 events_data (1)
+    for match_name, events_data in overlapping_matches:
+        valid_events = []
+        
+        # 判斷 events_data 是字典還是陣列，統一轉成可迭代的 List
+        # 如果是字典 {"SX_BET": obj, "POLY": obj}，就取 .values()
+        # 如果已經是陣列 [obj1, obj2]，就直接用
+        event_list = events_data.values() if isinstance(events_data, dict) else events_data
+        
+        # 2. 檢查這場比賽底下的「每一個平台物件」
+        for event_obj in event_list:
+            raw_data = getattr(event_obj, "raw_data", {}) or {}
+            tokens = raw_data.get("token_mapping", {})
             
-            #  2. 智慧審查：只有「當該平台有提供 token_mapping 時」，才嚴格檢查 Home 和 Away
+            # 嚴格檢查這家平台的 3-Way 是否完整
             if tokens:
-                if "bayern_munich" not in tokens:
-                    print(f" [資料清洗] 剔除殘缺盤口: {plat[1].platform} - {plat[1].market_name}")
+                if "Home" not in tokens or "Away" not in tokens or "Draw" not in tokens:
+                    plat_name = getattr(event_obj, "platform", "Unknown")
+                    print(f"🧹 [資料清洗] 剔除殘缺盤口: {plat_name} - {match_name}")
                     cleaned_count += 1
-                    continue
-                
-            valid_platforms.append(plat)
+                    continue # 剔除這家平台，直接換檢查下一家
+                    
+            # 如果這家平台是健康的，加進保留名單
+            valid_events.append(event_obj)
             
-        #  必須要剩下 2 家以上的「健康平台」，這場比賽才有套利價值
-        if len(valid_platforms) >= 2:
-            clean_matches.append(valid_platforms)
+        # 3. 如果清洗完後，這場比賽剩下的健康平台還有 2 家(含)以上，才保留這場比賽
+        if len(valid_events) >= 2:
+            #  記得把資料「重新包裝回原本的 Tuple 格式」塞回去，這樣後面的程式才不會報錯！
+            # 如果你原本的 events_data 是字典，這裡可能需要轉回字典，
+            # 但通常配對引擎後面的 generate_match_mapping 吃陣列也沒問題。
+            clean_matches.append((match_name, valid_events))
+
+    # 用清洗過後的乾淨資料，覆蓋掉原本的資料
+    overlapping_matches = clean_matches
+    
+    print(f"\n 資料清洗完畢！共攔截了 {cleaned_count} 個殘缺盤口。")
+    print(f" 準備將 {len(overlapping_matches)} 場 100% 健康交集賽事送入引擎...")
     #  測試模式：限制只跑前 10 筆交集賽事
     overlapping_matches = clean_matches
     total_matches = len(overlapping_matches)
     overlapping_matches = overlapping_matches
     print(f"\n 總共找到 {total_matches} 場交集賽事，目前限制只測試前 {len(overlapping_matches)} 場...")
-    
+
     #  步驟 5：動態轉換設定檔
     match_mapping = generate_match_mapping(overlapping_matches)
     print(f" 成功轉換 {len(match_mapping)} 場交集賽事，準備載入大腦...")
 
     #  步驟 6：啟動非同步套利監控
     try:
-        asyncio.run(start_trading_engine(match_mapping))
+        asyncio.run(start_trading_engine(match_mapping, paper_trader=trader))
     except KeyboardInterrupt:
         print("\n 已手動停止套利系統")
 

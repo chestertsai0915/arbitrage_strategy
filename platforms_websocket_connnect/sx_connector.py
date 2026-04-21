@@ -143,13 +143,14 @@ class SXMarketState:
         yes = best_o1_cost if best_o1_cost != float('inf') else None
         no = best_o2_cost if best_o2_cost != float('inf') else None
 
+        """
         # Sanity check
         if yes and no:
             total_cost = yes + no
             if not (0.95 <= total_cost <= 1.10):
                 print(f"⚠️  [SANITY] {self.market_hash[:8]} yes+no={total_cost:.4f}，略過")
                 return
-
+        """
         self.update_callback({
             "platform": "SX_BET",
             "market_hash": self.market_hash,

@@ -1,9 +1,6 @@
 import itertools
-import os
 import time
 from datetime import datetime
-
-from envs.got.Lib import json
 
 # 建立全域快取字典，用於記錄已發現的套利機會，加入生命週期追蹤
 seen_arbs = {}
@@ -11,7 +8,6 @@ seen_arbs = {}
 def is_new_or_better(arb_key, roi, max_size):
     """
     檢查這個套利機會是否是全新的，或者比起上次記錄有顯著的變化。
-    升級：加入 `first_seen` 與 `is_active` 狀態追蹤。
     """
     current_time = time.time()
     
@@ -43,39 +39,24 @@ def is_new_or_better(arb_key, roi, max_size):
 
 def check_and_close_opportunity(arb_key, match_id, match_title, current_cost):
     """
-    檢查並結算已經消失的套利機會，計算存活時間並存檔。
+    檢查並結算已經消失的套利機會。
+    (已移除存檔 JSON 邏輯，維持程式輕量化)
     """
     if arb_key in seen_arbs and seen_arbs[arb_key].get('is_active', False):
         current_time = time.time()
         first_seen = seen_arbs[arb_key]['first_seen']
         duration = current_time - first_seen
-        last_best_roi = seen_arbs[arb_key]['roi']
         
         # 標記為關閉，避免重複結算
         seen_arbs[arb_key]['is_active'] = False
         
-        print(f" ⚠️ [套利機會消失] 賽事: {match_title} | 存活時間: {duration:.2f} 秒 | 最終關閉成本: {current_cost:.4f}")
-        print("-" * 50)
-        
-        # 記錄關閉事件至 JSON，供後續回測生命週期使用
-        os.makedirs("arbitrage_opportunities2", exist_ok=True)
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        with open(f"arbitrage_opportunities2/{match_id}_closed_{timestamp}.json", "w", encoding="utf-8") as f:
-            json.dump({
-                "event": "opportunity_closed",
-                "arb_key": arb_key,
-                "match_id": match_id,
-                "match_title": match_title,
-                "duration_seconds": duration,
-                "closing_cost": current_cost,
-                "last_best_roi_percent": last_best_roi,
-                "close_time": timestamp
-            }, f, indent=4, ensure_ascii=False)
+        # 若需要觀察套利存活時間，可以把下面這行取消註解
+        # print(f" ⚠️ [套利機會消失] 賽事: {match_title} | 存活時間: {duration:.2f} 秒 | 最終關閉成本: {current_cost:.4f}")
 
 
-def check_all_arbitrage(match_id, match_mapping, price_memory):
+def check_all_arbitrage(match_id, match_mapping, price_memory, paper_trader=None):
     """
-    核心套利引擎邏輯 (支援動態多平台、多賽果)，加入消失追蹤
+    核心套利引擎邏輯 (支援動態多平台、多賽果)，加入 paper_trader 串接
     """
     match_data = match_mapping[match_id]
     outcomes = match_data["outcomes"]
@@ -113,35 +94,31 @@ def check_all_arbitrage(match_id, match_mapping, price_memory):
                     max_size = min(pA_data.get("yes_size", 0), pB_data.get("no_size", 0))
                     
                     if is_new_or_better(arb_key, roi, max_size):
+                        # ----------------------------------------------------
                         profit = max_size * (roi / 100)
                         
                         print(f"\n [跨平台對沖套利出現!] 賽事: {match_data['title']} | 選項: {outcome} ")
                         print(f" 總成本: {cost_hedge:.4f} | ROI: +{roi:.2f}% | Max Size: {max_size:.2f} U | 淨利: {profit:.2f} U")
                         print(f"    在 {plat_A:<9} 買入 [Yes] | 成本: {yes_price:.4f}")
                         print(f"    在 {plat_B:<9} 買入 [No ] | 成本: {no_price:.4f}")
-                        
-                        os.makedirs("arbitrage_opportunities2", exist_ok=True)
-                        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                        with open(f"arbitrage_opportunities2/{match_id}_hedge_open_{timestamp}.json", "w", encoding="utf-8") as f:
-                            json.dump({
-                                "event": "opportunity_opened",
+                        # ----------------------------------------------------
+                        # 🌟 觸發虛擬下單 (打包資料給 Paper Trader)
+                        # ----------------------------------------------------
+                        # 設定最低過濾門檻 (例: ROI > 1% 才觸發模擬下單)
+                        if paper_trader and roi > 0.2: 
+                            arb_signal = {
                                 "arb_key": arb_key,
-                                "match_id": match_id,
                                 "match_title": match_data['title'],
                                 "strategy": "跨平台對沖 (Yes vs No)",
-                                "target_outcome": outcome,
                                 "total_cost": cost_hedge,
                                 "roi_percent": roi,
                                 "max_size": max_size,
-                                "profit": profit,
                                 "legs": {
-                                    "Yes": {"platform": plat_A, "price": yes_price},
-                                    "No": {"platform": plat_B, "price": no_price}
-                                },
-                                "match_data": match_data,
-                                "price_memory": price_memory[match_id]
-                            }, f, indent=4, ensure_ascii=False)
-                        print("-" * 50)
+                                    "Yes": {"platform": plat_A, "price": yes_price, "side": "yes", "market_hash": match_data[plat_A][outcome]},
+                                    "No": {"platform": plat_B, "price": no_price, "side": "no", "market_hash": match_data[plat_B][outcome]}
+                                }
+                            }
+                            paper_trader.execute_virtual_trade(arb_signal)
                 else:
                     # 💡 套利空間關閉 (報價還在，但成本 >= 1.0)
                     check_and_close_opportunity(arb_key, match_id, match_data['title'], cost_hedge)
@@ -187,36 +164,35 @@ def check_all_arbitrage(match_id, match_mapping, price_memory):
                     max_size = min(sizes)
                     
                     if is_new_or_better(arb_key, roi, max_size):
-                        profit = max_size * (roi / 100)
                         
-                        print(f"\n [{num_outcomes}-Way 組合套利出現!] 賽事: {match_data['title']} ")
-                        print(f" 總成本: {cost_multi:.4f} | ROI: +{roi:.2f}% | Max Size: {max_size:.2f} U | 淨利: {profit:.2f} U")
-                        for i, outcome in enumerate(outcomes):
-                            plat = combo[i]
-                            p = price_memory[match_id][outcome][plat].get("yes_price")
-                            print(f"    在 {plat:<9} 買入 [{outcome:<15}] (Yes) | 成本: {p:.4f}")
-                        
-                        os.makedirs("arbitrage_opportunities2", exist_ok=True)
-                        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                        with open(f"arbitrage_opportunities2/{match_id}_{num_outcomes}way_open_{timestamp}.json", "w", encoding="utf-8") as f:
-                            json.dump({
-                                "event": "opportunity_opened",
+                        # ----------------------------------------------------
+                        # 🌟 觸發虛擬下單 (打包資料給 Paper Trader)
+                        # ----------------------------------------------------
+                        if paper_trader and roi > 0.2:
+                            legs_data = {}
+                            for i, outcome in enumerate(outcomes):
+                                plat = combo[i]
+                                p = price_memory[match_id][outcome][plat].get("yes_price")
+                                legs_data[outcome] = {
+                                    "platform": plat, 
+                                    "price": p,
+                                    "side": "yes", # 🌟 組合套利全部都是買 Yes
+                                    "market_hash": match_data[plat][outcome] # 🌟 傳入該平台的盤口ID
+                                }
+                                
+                            arb_signal = {
                                 "arb_key": arb_key,
-                                "match_id": match_id,
                                 "match_title": match_data['title'],
                                 "strategy": f"{num_outcomes}-Way 組合套利",
                                 "total_cost": cost_multi,
                                 "roi_percent": roi,
                                 "max_size": max_size,
-                                "profit": profit,
-                                "combo_platforms": combo,
-                                "match_data": match_data,
-                                "price_memory": price_memory[match_id]
-                            }, f, indent=4, ensure_ascii=False)
-                        print("-" * 50)
+                                "legs": legs_data
+                            }
+                            paper_trader.execute_virtual_trade(arb_signal)
                 else:
-                    #  套利空間關閉 (報價還在，但成本 >= 1.0)
+                    # 💡 套利空間關閉 (報價還在，但成本 >= 1.0)
                     check_and_close_opportunity(arb_key, match_id, match_data['title'], cost_multi)
             else:
-                #  套利空間關閉 (有選項報價缺失)
+                # 💡 套利空間關閉 (有選項報價缺失)
                 check_and_close_opportunity(arb_key, match_id, match_data['title'], current_cost=999.0)
